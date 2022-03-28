@@ -17,6 +17,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.lang.reflect.Method;
 
+import javax.swing.JFrame;
+import javax.swing.JRootPane;
+
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 //* 关于java支持窗口透明的详细信息请见：http://docs.oracle.com/javase/tutorial/uiswing/misc/trans_shaped_windows.html#uniform
@@ -121,7 +124,7 @@ public class WindowTranslucencyHelper
 
         return isTranslucencySupported;
     }
-    
+
     /**
      * Sets the opacity.
      *
@@ -130,17 +133,8 @@ public class WindowTranslucencyHelper
      */
     public static void setOpacity(Window w, float opacity)
     {
-//        //## Fix for: Issue BELNF-5, 目前因lornwolf手头没有Linux等测试环境，目前就暂时先让这
-//        //## 些平台不支持窗口透明吧，起码先把BE LNF跑起来再说，此问题以后再彻底解决
-//        if(!Platform.isWindows())
-//        {
-//            System.out.println(UN_WINDOWS_SORRY);
-//            return;
-//        }
-        
         try
         {
-//            com.sun.awt.AWTUtilities.setWindowOpacity(w, opacity);
             //1.6.0_u12及以后版本
             if(JVM.current().isOneDotSixUpdate12OrAfter())//JDK1_6_U10//为什么要到u12才支持？因u10里的窗口透明存在BUG 6750920
             {
@@ -149,7 +143,6 @@ public class WindowTranslucencyHelper
                     LogHelper.debug("Your OS can't supported translucency.");
                     return;
                 }
-                
                 //1.7.0及以后版本
                 if(JVM.current().isOrLater(JVM.JDK1_7))
                     ReflectHelper.invokeMethod(Window.class, w, "setOpacity"
@@ -168,7 +161,7 @@ public class WindowTranslucencyHelper
             LogHelper.debug("您的JRE版本不支持每像素半透明(需jre1.6_u12及以上版本)，BeautyEye外观将不能达到最佳视觉效果哦."+e.getMessage());
         }
     }
-    
+
     /**
      * Sets the window opaque.
      *
@@ -177,17 +170,12 @@ public class WindowTranslucencyHelper
      */
     public static void setWindowOpaque(Window w, boolean opaque)
     {
-//        //## Fix for: Issue BELNF-5, 目前因lornwolf手头没有Linux等测试环境，目前就暂时先让这
-//        //## 些平台不支持窗口透明吧，起码先把BE LNF跑起来再说，此问题以后再彻底解决
-//        if(!Platform.isWindows())
-//        {
-//            System.out.println(UN_WINDOWS_SORRY);
-//            return;
-//        }
-        
+        if (w.getClass().getName().equals("com.lornwolf.onebar.plugins.webapps.MiniBrowser")
+            || w.getClass().getName().equals("com.lornwolf.onebar.plugins.webapps.MemoBrowser")) {
+            return;
+        }
         try
         {
-//            com.sun.awt.AWTUtilities.setWindowOpaque(w, opaque);
             //1.6.0_u12及以后版本
             if(JVM.current().isOneDotSixUpdate12OrAfter())//JDK1_6_U10//为什么要到u12才支持？因u10里的窗口透明存在BUG 6750920
             {
@@ -196,11 +184,9 @@ public class WindowTranslucencyHelper
                     LogHelper.debug("Your OS can't supported translucency.");
                     return;
                 }
-                
                 //1.7.0及以后版本
                 if(JVM.current().isOrLater(JVM.JDK1_7))
                 {
-//                    if(isWindowTranslucencySupported())
                     Color bgc = w.getBackground();
                     //* 2012-09-22 由lornwolf注释：在群友机器上（win7+java1.7.0.1）的生产系统下
                     //* 下使用BeautyEye有时w.getBackground()返回值是null，但为什么返回是null，Jack 没
@@ -222,12 +208,6 @@ public class WindowTranslucencyHelper
             if(BeautyEyeLNFHelper.debug)
                 e.printStackTrace();
             LogHelper.debug("您的JRE版本不支持窗口透明(需jre1.6_u12及以上版本)，BeautyEye外观将不能达到最佳视觉效果哦."+e.getMessage());
-//            e.printStackTrace();
         }
     }
-    
-//    public static void main(String[] args)
-//    {
-//        System.out.println(WindowTranslucencyHelper.isTranslucencySupported());
-//    }
 }

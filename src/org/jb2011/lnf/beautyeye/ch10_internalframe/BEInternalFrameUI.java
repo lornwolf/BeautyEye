@@ -27,17 +27,12 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
- * 内部窗体UI实现类.
+ * 内部窗体UI实现类。
  * 
  * @author lornwolf
  */
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
-//BeautyEye外观实现中取消了isPalette的所有特殊处理，isPalette及相关属性在
-//该外观中将失去意义，请注意。
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
 public class BEInternalFrameUI extends BasicInternalFrameUI
 {
-    
     /** The title pane. */
     private BEInternalFrameTitlePane titlePane;
 
@@ -47,16 +42,14 @@ public class BEInternalFrameUI extends BasicInternalFrameUI
     /** The Constant handyEmptyBorder. */
     private static final Border handyEmptyBorder = new EmptyBorder(0, 0, 0, 0);
 
-//    protected static String IS_PALETTE = "JInternalFrame.isPalette";
-
     /** The FRAM e_ type. */
-private static String FRAME_TYPE = "JInternalFrame.frameType";
-    
+    private static String FRAME_TYPE = "JInternalFrame.frameType";
+
     /** The NORMA l_ frame. */
     private static String NORMAL_FRAME = "normal";
-//    private static String PALETTE_FRAME = "palette";
+
     /** The OPTIO n_ dialog. */
-private static String OPTION_DIALOG = "optionDialog";
+    private static String OPTION_DIALOG = "optionDialog";
 
     /**
      * Instantiates a new bE internal frame ui.
@@ -86,16 +79,10 @@ private static String OPTION_DIALOG = "optionDialog";
     {
         super.installUI(c);
 
-//        Object paletteProp = c.getClientProperty(IS_PALETTE);
-//        if (paletteProp != null)
-//        {
-//            setPalette(((Boolean) paletteProp).booleanValue());
-//        }
-
         Container content = frame.getContentPane();
         stripContentBorder(content);
-        //c.setOpaque(false);
-        
+        // c.setOpaque(true);
+
         frame.setOpaque(false);
     }
 
@@ -205,41 +192,18 @@ private static String OPTION_DIALOG = "optionDialog";
         if (frameType.equals(OPTION_DIALOG))
         {
             LookAndFeel.installBorder(frame, "InternalFrame.optionDialogBorder");
-//            titlePane.setPalette(false);
         }
-//        else if (frameType.equals(PALETTE_FRAME))
-//        {
-//            LookAndFeel.installBorder(frame, "InternalFrame.paletteBorder");
-////            titlePane.setPalette(true);
-//        }
         else
         {
             LookAndFeel.installBorder(frame, "InternalFrame.border");
-//            titlePane.setPalette(false);
         }
     }
 
-//    // this should be deprecated - jcs
-//    public void setPalette(boolean isPalette)
-//    {
-////        if (isPalette)
-////        {
-////            LookAndFeel.installBorder(frame, "InternalFrame.paletteBorder");
-////        }
-////        else
-//        {
-//            LookAndFeel.installBorder(frame, "InternalFrame.border");
-//        }
-////        titlePane.setPalette(isPalette);
-//    }
-
     /**
- * The Class XZCMetalPropertyChangeHandler.
- */
-private static class XZCMetalPropertyChangeHandler implements
-            PropertyChangeListener
+     * The Class XZCMetalPropertyChangeHandler.
+     */
+    private static class XZCMetalPropertyChangeHandler implements PropertyChangeListener
     {
-        
         /* (non-Javadoc)
          * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
          */
@@ -261,17 +225,6 @@ private static class XZCMetalPropertyChangeHandler implements
                     ui.setFrameType((String) e.getNewValue());
                 }
             }
-//            else if (name.equals(IS_PALETTE))
-//            {
-//                if (e.getNewValue() != null)
-//                {
-//                    ui.setPalette(((Boolean) e.getNewValue()).booleanValue());
-//                }
-//                else
-//                {
-//                    ui.setPalette(false);
-//                }
-//            }
             else if (name.equals(JInternalFrame.CONTENT_PANE_PROPERTY))
             {
                 ui.stripContentBorder(e.getNewValue());
