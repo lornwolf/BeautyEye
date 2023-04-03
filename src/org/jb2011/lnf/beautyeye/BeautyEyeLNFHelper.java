@@ -123,7 +123,7 @@ public class BeautyEyeLNFHelper
      * 默认是深灰色（new Color(255,255,255)）. 
      * @since 3.2 */
     public static Color commonSelectionForegroundColor = new Color(255,255,255);
-    
+
     /**
      * 开关量：用于默认设置或不设置窗口（Frame及其子类）的设置此窗体的最大化边界.
      * <p>
@@ -213,7 +213,7 @@ public class BeautyEyeLNFHelper
         //自定义JFileChooser的L&F实现
         org.jb2011.lnf.beautyeye.ch20_filechooser.__UI__.uiImpl();
     }
-    
+
     /**
      * Gets the beauty eye lnf str cross platform.
      *
@@ -223,7 +223,7 @@ public class BeautyEyeLNFHelper
     {
         return "org.jb2011.lnf.beautyeye.BeautyEyeLookAndFeelCross";
     }
-    
+
     /**
      * Gets the beauty eye lnf str windows platform.
      *
@@ -233,7 +233,7 @@ public class BeautyEyeLNFHelper
     {
         return "org.jb2011.lnf.beautyeye.BeautyEyeLookAndFeelWin";
     }
-    
+
     /**
      * Gets the beauty eye lnf cross platform.
      *
@@ -243,7 +243,7 @@ public class BeautyEyeLNFHelper
     {
         return new BeautyEyeLookAndFeelCross();
     }
-    
+
     /**
      * Gets the beauty eye lnf windows platform.
      *
@@ -253,7 +253,7 @@ public class BeautyEyeLNFHelper
     {
         return new BeautyEyeLookAndFeelWin();
     }
-    
+
     /**
      * 实施BeautyEye外观.<b>开发者使用BeautyEye L&F时应首选本方法.</b>
      * <p>
@@ -341,65 +341,12 @@ public class BeautyEyeLNFHelper
                 return new PlainGrayBorder();
         }
     }
-//    /**
-//     * <b>开发者无需关注本方法.</b>
-//     * <p>
-//     * 根据设置的frameBorderStyle来返回正确的窗口边框边角的拖动区大小.
-//     * <p>
-//     * <b>重要说明：</b>本方法中的边框类型及其对应的边框类必须与方法 {@link #__getFrameBorder()}
-//     * 完全一致！
-//     * 
-//     * @return 当frameBorderStyle=={@link FrameBorderStyle#defaultLookAndFeelDecorated}
-//     * 时返回null，否则返回指定边框对象
-//     */
-//    public static int __getFrameBorder_CORNER_DRAG_WIDTH()
-//    {
-//        switch(frameBorderStyle)
-//        {
-//            case osLookAndFeelDecorated:
-//                return 16;
-//            case translucencyAppleLike:
-//                return BEShadowBorder3.CORNER_DRAG_WIDTH();
-//            case translucencySmallShadow:
-//                return new BEShadowBorder().CORNER_DRAG_WIDTH();
-//            case generalNoTranslucencyShadow:
-//            default:
-//                return new PlainGrayBorder().CORNER_DRAG_WIDTH();
-//        }
-//    }
-//    /**
-//     * <b>开发者无需关注本方法.</b>
-//     * <p>
-//     * 根据设置的frameBorderStyle来返回正确的窗口边框拖动区大小.
-//     * <p>
-//     * <b>重要说明：</b>本方法中的边框类型及其对应的边框类必须与方法 {@link #__getFrameBorder()}
-//     * 完全一致！
-//     * 
-//     * @return 当frameBorderStyle=={@link FrameBorderStyle#defaultLookAndFeelDecorated}
-//     * 时返回null，否则返回指定边框对象
-//     */
-//    public static int __getFrameBorder_BORDER_DRAG_THICKNESS()
-//    {
-//        switch(frameBorderStyle)
-//        {
-//            case osLookAndFeelDecorated:
-//                return 5;
-//            case translucencyAppleLike:
-//                return BEShadowBorder3.BORDER_DRAG_THICKNESS();
-//            case translucencySmallShadow:
-//                return new BEShadowBorder().BORDER_DRAG_THICKNESS();
-//            case generalNoTranslucencyShadow:
-//            default:
-//                return new PlainGrayBorder().BORDER_DRAG_THICKNESS();
-//        }
-//    }
-    
+
     /**
      * BeautyEye LNF 的窗口边框样式.
      */
     public enum FrameBorderStyle
     {
-        
         /** 使用本地系统的窗口装饰样式（本样式将能带来最佳性能，使用操作系统默认窗口样式）. */
         osLookAndFeelDecorated,
         
@@ -411,7 +358,7 @@ public class BeautyEyeLNFHelper
         /** 使用不透明的普通边框（这是本LNF在Java1.5版默认使用的样式，因为java1.5不支持窗口透明） */
         generalNoTranslucencyShadow
     }
-    
+
     /**
      * <b>开发者暂时无需关注此接口.</b>
      * <p>
@@ -421,7 +368,6 @@ public class BeautyEyeLNFHelper
      */
     public interface __UseParentPaintSurported
     {
-        
         /**
          * 是否使用父类的绘制实现方法，true表示是.
          * <p>
