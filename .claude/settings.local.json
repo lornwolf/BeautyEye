@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find . -name \"module-info.java\" -o -name \"*.java\" | head -1 | xargs dirname)",
+      "Bash(java -version 2>&1 && javac -version 2>&1)",
+      "Bash(cd \"C:/workspace_eclipse/BeautyEye\" && \\\\\nmkdir -p build/classes && \\\\\nfind src -name \"*.java\" > sources.txt && \\\\\njavac -encoding UTF-8 \\\\\n  -source 8 -target 8 \\\\\n  -cp \"library/ninepatch4j.jar\" \\\\\n  -d build/classes \\\\\n  @sources.txt 2>&1)",
+      "Bash(cd \"C:/workspace_eclipse/BeautyEye\" && \\\\\njavac -encoding UTF-8 \\\\\n  --add-exports java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED \\\\\n  -cp \"library/ninepatch4j.jar\" \\\\\n  -d build/classes \\\\\n  @sources.txt 2>&1)",
+      "Bash(cd \"C:/workspace_eclipse/BeautyEye/build/classes\" && jar xf \"../../library/ninepatch4j.jar\" && echo \"OK\")",
+      "Bash(cd \"C:/workspace_eclipse/BeautyEye\" && xcopy /s /e /y /q \"src\\\\org\" \"build\\\\classes\\\\org\\\\\" 2>&1 | tail -3)",
+      "Bash(cd \"C:/workspace_eclipse/BeautyEye\" && \\\\\njar cf beautyeye-3.6-java17.jar -C build/classes . 2>&1 && \\\\\necho \"JAR 打包成功\" && \\\\\njar tf beautyeye-3.6-java17.jar | grep -E \"\\\\.\\(class|png|properties\\)$\" | wc -l)",
+      "Bash(cd \"C:/workspace_eclipse/BeautyEye\" && jar cf beautyeye-3.6-java17.jar -C build/classes . && echo \"success\")",
+      "Bash(jar tf:*)"
+    ]
+  }
+}
