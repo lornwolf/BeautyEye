@@ -96,6 +96,17 @@ public class __UI__
         //单选按钮式的菜单项选中与否的图标实现设定
         UIManager.put("RadioButtonMenuItem.checkIcon",new org.jb2011.lnf.beautyeye.ch9_menu.BERadioButtonMenuItemUI.RadioButtonMenuItemIcon());
         
+        //为Menu和MenuItem设置统一尺寸的checkIcon，确保子菜单目录与普通菜单项左侧文本对齐
+        //Swing的MenuItemLayoutHelper会取同一弹出菜单中所有项的最大checkIcon宽度来统一缩进，
+        //如果Menu和MenuItem的checkIcon尺寸不一致就会导致文本左侧不对齐
+        javax.swing.Icon emptyCheckIcon = new javax.swing.Icon() {
+            public void paintIcon(java.awt.Component c, java.awt.Graphics g, int x, int y) {}
+            public int getIconWidth() { return 16; }
+            public int getIconHeight() { return 16; }
+        };
+        UIManager.put("Menu.checkIcon", emptyCheckIcon);
+        UIManager.put("MenuItem.checkIcon", emptyCheckIcon);
+        
         //加高菜单条，提升视觉体验
         UIManager.put("MenuBar.height",30);//default value is 19
         
