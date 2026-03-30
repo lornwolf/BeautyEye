@@ -133,11 +133,25 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
     /**
      * {@inheritDoc}
      */
+    @Override
+    public UIDefaults getDefaults()
+    {
+        UIDefaults table = super.getDefaults();
+        // MetalLookAndFeel.getDefaults()在super.initComponentDefaults()之后
+        // 还会调用currentTheme.addCustomEntriesToTable(table)，重新用ActiveValue
+        // 覆盖字体设置。因此必须在getDefaults()返回前再次替换字体，
+        // 确保所有Metal主题的字体覆盖都被清除。
+        overrideMetalFontsWithSystemFont(table);
+        return table;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     protected void initComponentDefaults(UIDefaults table)
     {
         super.initComponentDefaults(table);
         initOtherResourceBundle(table);
-        overrideMetalFontsWithSystemFont(table);
     }
 
     /**

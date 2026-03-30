@@ -31,7 +31,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicMenuUI;
 
 import org.jb2011.lnf.beautyeye.utils.BEUtils;
-import org.jb2011.lnf.beautyeye.winlnfutils.WinUtils;
 
 
 // TODO: Auto-generated Javadoc
@@ -200,6 +199,12 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
     /**
      * Method which renders the text of the current menu item.
      * <p>
+     * 原实现调用WinUtils.paintText()（内部通过MySwingUtilities2反射调用
+     * sun.swing.SwingUtilities2），在Java 9+模块系统下反射失败，回退到
+     * 普通g.drawString()，丢失ClearType等文本渲染提示，导致文字外观与
+     * JMenuItem不一致。改为调用super.paintText()，直接使用JDK内建的
+     * SwingUtilities2进行文本渲染，保证与JMenuItem一致的文字效果。
+     *
      * @param g Graphics context
      * @param menuItem Current menu item to render
      * @param textRect Bounding rectangle to render the text.
@@ -207,54 +212,20 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
      * @since 1.4
      */
     protected void paintText(Graphics g, JMenuItem menuItem,
-            Rectangle textRect, String text) 
+            Rectangle textRect, String text)
     {
-        //================= commet by lornwolf START
-//        if (WindowsMenuItemUI.isVistaPainting()) {
-//            WindowsMenuItemUI.paintText(accessor, g, menuItem, textRect, text);
-//            return;
-//        }
-        //================= commet by lornwolf END
         JMenu menu = (JMenu)menuItem;
-        ButtonModel model = menuItem.getModel();
         Color oldColor = g.getColor();
 
-        // Only paint rollover if no other menu on menubar is selected
-        boolean paintRollover = model.isRollover();
-        if (paintRollover && menu.isTopLevelMenu()) {
-            MenuElement[] menus = ((JMenuBar)menu.getParent()).getSubElements();
-            for (int i = 0; i < menus.length; i++) {
-                if (((JMenuItem)menus[i]).isSelected()) {
-                    paintRollover = false;
-                    break;
-                }
-            }
-        }
-
-        if ((model.isSelected() && 
-                                (
-//                                WindowsLookAndFeel.isClassicWindows() ||
-                                !menu.isTopLevelMenu())) 
-                ||
-                (
-//                        BEXPStyle.getXP() != null && 
-                        (paintRollover ||model.isArmed() ||model.isSelected())
-                )
-        ) 
-        {
-            g.setColor(selectionForeground); // Uses protected field.
-        }
-
-        //================= add by lornwolf START
-        //特殊处理顶级菜单项（就是直接放在JMenuBar上的那一层），使之在被选中或rover等状态时保持黑色（或其它颜色）
-        //，目的是为了配合整个菜单项的L&F效果，并没有过多的用途，此颜色可提取作为UIManager的自定义属性哦
+        //特殊处理顶级菜单项（就是直接放在JMenuBar上的那一层），使之保持黑色
         if(menu.isTopLevelMenu())
-            g.setColor(new Color(35,35,35));//用MaxOS X的经典黑
-        //================= add by lornwolf END
-        
-//        WindowsGraphicsUtils.paintText(g, menuItem, textRect, text, 0);
-        WinUtils.paintText(g, menuItem, textRect, text, 0);
-        
+            g.setColor(new Color(35,35,35));
+
+        // 使用父类（BasicMenuItemUI）的paintText，内部直接调用
+        // sun.swing.SwingUtilities2（同模块，无反射问题），
+        // 保证文本渲染与JMenuItem完全一致。
+        super.paintText(g, menuItem, textRect, text);
+
         g.setColor(oldColor);
     }
     
