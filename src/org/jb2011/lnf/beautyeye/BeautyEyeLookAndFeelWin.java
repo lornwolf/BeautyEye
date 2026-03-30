@@ -83,14 +83,23 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
             UIManager.put("MenuItem.margin",new InsetsUIResource(0,0,0,0));
 
             UIManager.put("Menu.border",new BorderUIResource(BorderFactory.createEmptyBorder(1,3,2,3)));
-            UIManager.put("MenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(1,0,2,0)));
-            UIManager.put("CheckBoxMenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(4,2,4,2)));
-            UIManager.put("RadioButtonMenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(4,0,4,0)));
+            UIManager.put("MenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(1,3,2,3)));
+            UIManager.put("CheckBoxMenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(4,3,4,3)));
+            UIManager.put("RadioButtonMenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(4,3,4,3)));
 
             UIManager.put("CheckBoxMenuItem.checkIcon"
                     ,new org.jb2011.lnf.beautyeye.ch9_menu.BECheckBoxMenuItemUI.CheckBoxMenuItemIcon().setUsedForVista(true));
             UIManager.put("RadioButtonMenuItem.checkIcon"
                     ,new org.jb2011.lnf.beautyeye.ch9_menu.BERadioButtonMenuItemUI.RadioButtonMenuItemIcon().setUsedForVista(true));
+
+            //为Menu和MenuItem设置统一尺寸的checkIcon，确保Vista下子菜单目录与普通菜单项左侧对齐
+            javax.swing.Icon emptyCheckIcon = new javax.swing.Icon() {
+                public void paintIcon(java.awt.Component c, java.awt.Graphics g, int x, int y) {}
+                public int getIconWidth() { return 16; }
+                public int getIconHeight() { return 16; }
+            };
+            UIManager.put("Menu.checkIcon", emptyCheckIcon);
+            UIManager.put("MenuItem.checkIcon", emptyCheckIcon);
         }
     }
 
