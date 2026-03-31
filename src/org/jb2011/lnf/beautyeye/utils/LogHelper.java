@@ -20,16 +20,14 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
  * @since 3.5
  * @see BeautyEyeLNFHelper#debug
  */
-public class LogHelper
-{
+public class LogHelper {
     /**
      * Error.
      *
      * @param msg the msg
      */
-    public static void error(String msg)
-    {
-        if(BeautyEyeLNFHelper.debug)
+    public static void error(String msg) {
+        if (BeautyEyeLNFHelper.debug)
             System.err.println("[BE-ERROR] - "+msg);
     }
     
@@ -38,9 +36,8 @@ public class LogHelper
      *
      * @param msg the msg
      */
-    public static void debug(String msg)
-    {
-        if(BeautyEyeLNFHelper.debug)
+    public static void debug(String msg) {
+        if (BeautyEyeLNFHelper.debug)
             System.err.println("[BE-DEBUG] - "+msg);
     }
     
@@ -49,8 +46,7 @@ public class LogHelper
      *
      * @param msg the msg
      */
-    public static void info(String msg)
-    {
+    public static void info(String msg) {
         System.err.println("[BE-INFO] - "+msg);
     }
 }

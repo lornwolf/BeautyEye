@@ -46,16 +46,11 @@ public class BEScrollBarUI extends BasicScrollBarUI
      * @param c the text field
      * @return the UI
      */
-    public static ComponentUI createUI(JComponent c) 
-    {
+    public static ComponentUI createUI(JComponent c) {
         return new BEScrollBarUI();
     }
     
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicScrollBarUI#createDecreaseButton(int)
-     */
-    protected JButton createDecreaseButton(int orientation) 
-    {
+    protected JButton createDecreaseButton(int orientation) {
         return new WindowsArrowButton(orientation,
                 UIManager.getColor("ScrollBar.thumb"),
                 UIManager.getColor("ScrollBar.thumbShadow"),
@@ -63,11 +58,7 @@ public class BEScrollBarUI extends BasicScrollBarUI
                 UIManager.getColor("ScrollBar.thumbHighlight"));
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicScrollBarUI#createIncreaseButton(int)
-     */
-    protected JButton createIncreaseButton(int orientation)  
-    {
+    protected JButton createIncreaseButton(int orientation) {
         return new WindowsArrowButton(orientation,
                 UIManager.getColor("ScrollBar.thumb"),
                 UIManager.getColor("ScrollBar.thumbShadow"),
@@ -107,11 +98,7 @@ public class BEScrollBarUI extends BasicScrollBarUI
             super(direction);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.plaf.basic.BasicArrowButton#paint(java.awt.Graphics)
-         */
-        public void paint(Graphics g) 
-        {
+        public void paint(Graphics g) {
             {
                 ButtonModel model = getModel();
                 Graphics2D g2 = (Graphics2D)g;
@@ -145,11 +132,7 @@ public class BEScrollBarUI extends BasicScrollBarUI
             }
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.plaf.basic.BasicArrowButton#getPreferredSize()
-         */
-        public Dimension getPreferredSize() 
-        {
+        public Dimension getPreferredSize() {
             int size = 16;
             if (scrollbar != null) 
             {
@@ -168,11 +151,7 @@ public class BEScrollBarUI extends BasicScrollBarUI
         }
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicScrollBarUI#paintTrack(java.awt.Graphics, javax.swing.JComponent, java.awt.Rectangle)
-     */
-    protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds)  
-    {
+    protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
         if(c==null||g==null)    
             return;
         Graphics2D g2 = (Graphics2D)g;
@@ -236,8 +215,7 @@ public class BEScrollBarUI extends BasicScrollBarUI
      * @param c the c
      * @param thumbBounds the thumb bounds
      */
-    protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds)  
-    {
+    protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
         if(thumbBounds.isEmpty() || !scrollbar.isEnabled())    
         {
             return;
@@ -302,8 +280,7 @@ public class BEScrollBarUI extends BasicScrollBarUI
      * @param w the w
      * @param h the h
      */
-    protected void paintThumbIfSoSmall(Graphics2D g2, int x, int y, int w, int h)
-    {
+    protected void paintThumbIfSoSmall(Graphics2D g2, int x, int y, int w, int h) {
         final int NORMAL_ARC = 6;//定义圆角直径
         //如果w或h太小时，则就不绘制圆角了(直角即可)，要不然就没法绘全圆角而很难看
         int arc = ((w <= NORMAL_ARC || h <= NORMAL_ARC)?0:NORMAL_ARC);

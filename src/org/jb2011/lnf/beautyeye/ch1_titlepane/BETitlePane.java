@@ -73,12 +73,7 @@ import org.jb2011.lnf.beautyeye.utils.ReflectHelper;
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
 //* 本类的实现参考了java1.5中的MetalTitlePane.
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
-public class BETitlePane extends JComponent
-{
-//    MetalTitlePane
-    
-//    MetalLookAndFeel
-//    WindowsLookAndFeel
+public class BETitlePane extends JComponent {
     
     /** The Constant handyEmptyBorder. */
     private static final Border handyEmptyBorder = new EmptyBorder(0, 0, 0, 0);
@@ -211,8 +206,7 @@ public class BETitlePane extends JComponent
      * @param root the root
      * @param ui the ui
      */
-    public BETitlePane(JRootPane root, BERootPaneUI ui)
-    {
+    public BETitlePane(JRootPane root, BERootPaneUI ui) {
         this.rootPane = root;
         rootPaneUI = ui;
 
@@ -228,8 +222,7 @@ public class BETitlePane extends JComponent
     /**
      * Uninstalls the necessary state.
      */
-    private void uninstall()
-    {
+    private void uninstall() {
         uninstallListeners();
         window = null;
         removeAll();
@@ -238,10 +231,8 @@ public class BETitlePane extends JComponent
     /**
      * Installs the necessary listeners.
      */
-    private void installListeners()
-    {
-        if (window != null)
-        {
+    private void installListeners() {
+        if (window != null) {
             windowListener = createWindowListener();
             window.addWindowListener(windowListener);
             propertyChangeListener = createWindowPropertyChangeListener();
@@ -252,10 +243,8 @@ public class BETitlePane extends JComponent
     /**
      * Uninstalls the necessary listeners.
      */
-    private void uninstallListeners()
-    {
-        if (window != null)
-        {
+    private void uninstallListeners() {
+        if (window != null) {
             window.removeWindowListener(windowListener);
             window.removePropertyChangeListener(propertyChangeListener);
         }
@@ -267,8 +256,7 @@ public class BETitlePane extends JComponent
      *
      * @return the window listener
      */
-    private WindowListener createWindowListener()
-    {
+    private WindowListener createWindowListener() {
         return new WindowHandler();
     }
 
@@ -278,8 +266,7 @@ public class BETitlePane extends JComponent
      *
      * @return the property change listener
      */
-    private PropertyChangeListener createWindowPropertyChangeListener()
-    {
+    private PropertyChangeListener createWindowPropertyChangeListener() {
         return new PropertyChangeHandler();
     }
 
@@ -288,8 +275,7 @@ public class BETitlePane extends JComponent
      *
      * @return the root pane
      */
-    public JRootPane getRootPane()
-    {
+    public JRootPane getRootPane() {
         return rootPane;
     }
 
@@ -298,16 +284,11 @@ public class BETitlePane extends JComponent
      *
      * @return the window decoration style
      */
-    private int getWindowDecorationStyle()
-    {
+    private int getWindowDecorationStyle() {
         return getRootPane().getWindowDecorationStyle();
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.JComponent#addNotify()
-     */
-    public void addNotify()
-    {
+    public void addNotify() {
         try{
             super.addNotify();
         }
@@ -362,11 +343,7 @@ public class BETitlePane extends JComponent
         f.setMaximizedBounds(new Rectangle(x, y, w, h));
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.JComponent#removeNotify()
-     */
-    public void removeNotify()
-    {
+    public void removeNotify() {
         super.removeNotify();
 
         uninstallListeners();
@@ -376,8 +353,7 @@ public class BETitlePane extends JComponent
     /**
      * Adds any sub-Components contained in the <code>MetalTitlePane</code>.
      */
-    private void installSubcomponents()
-    {
+    private void installSubcomponents() {
         int decorationStyle = getWindowDecorationStyle();
         
         if (decorationStyle == JRootPane.FRAME||decorationStyle == JRootPane.PLAIN_DIALOG)
@@ -404,10 +380,7 @@ public class BETitlePane extends JComponent
                 menuBar.setEnabled(false);
             }
         }
-        else if 
-        (
-//                decorationStyle == JRootPane.PLAIN_DIALOG
-//                ||
+        else if (
                 decorationStyle == JRootPane.INFORMATION_DIALOG
                 || decorationStyle == JRootPane.ERROR_DIALOG
                 || decorationStyle == JRootPane.COLOR_CHOOSER_DIALOG
@@ -424,10 +397,8 @@ public class BETitlePane extends JComponent
     /**
      * Determines the Colors to draw with.
      */
-    private void determineColors()
-    {
-        switch (getWindowDecorationStyle())
-        {
+    private void determineColors() {
+        switch (getWindowDecorationStyle()) {
             case JRootPane.FRAME:
                 activeBackground = UIManager.getColor("activeCaption");
                 activeForeground = UIManager.getColor("activeCaptionText");
@@ -472,16 +443,14 @@ public class BETitlePane extends JComponent
     /**
      * Installs the fonts and necessary properties on the MetalTitlePane.
      */
-    private void installDefaults()
-    {
+    private void installDefaults() {
         setFont(UIManager.getFont("InternalFrame.titleFont", getLocale()));
     }
 
     /**
      * Uninstalls any previously installed UI values.
      */
-    private void uninstallDefaults()
-    {
+    private void uninstallDefaults() {
     }
 
     /**
@@ -490,8 +459,7 @@ public class BETitlePane extends JComponent
      *
      * @return the j menu bar
      */
-    protected JMenuBar createMenuBar()
-    {
+    protected JMenuBar createMenuBar() {
         menuBar = new SystemMenuBar();
         menuBar.setOpaque(false);
         menuBar.setFocusable(false);
@@ -503,8 +471,7 @@ public class BETitlePane extends JComponent
     /**
      * Closes the Window.
      */
-    private void close()
-    {
+    private void close() {
         Window window = getWindow();
 
         if (window != null)
@@ -517,8 +484,7 @@ public class BETitlePane extends JComponent
     /**
      * Iconifies the Frame.
      */
-    private void iconify()
-    {
+    private void iconify() {
         Frame frame = getFrame();
         if (frame != null)
         {
@@ -529,8 +495,7 @@ public class BETitlePane extends JComponent
     /**
      * Maximizes the Frame.
      */
-    private void maximize()
-    {
+    private void maximize() {
         Frame frame = getFrame();
         if (frame != null)
         {
@@ -541,8 +506,7 @@ public class BETitlePane extends JComponent
     /**
      * Restores the Frame size.
      */
-    private void restore()
-    {
+    private void restore() {
         Frame frame = getFrame();
 
         if (frame == null)
@@ -564,8 +528,7 @@ public class BETitlePane extends JComponent
      * Create the <code>Action</code>s that get associated with the
      * buttons and menu items.
      */
-    private void createActions()
-    {
+    private void createActions() {
         closeAction = new CloseAction();
         if (getWindowDecorationStyle() == JRootPane.FRAME)
         {
@@ -593,10 +556,8 @@ public class BETitlePane extends JComponent
      *
      * @return the j menu
      */
-    private JMenu createMenu()
-    {
+    private JMenu createMenu() {
         JMenu menu = new JMenu("");
-//        menu.setRolloverEnabled(false);//本行一定要！这是Java 1.5之Metal主题的Bug! -- jack,2009-09-11
         menu.setOpaque(false);//本行一定要，否则将导致窗口图标区会绘制Menu的背景！这是Java Metal主题的Bug! -- jack,2009-09-11
         if (getWindowDecorationStyle() == JRootPane.FRAME
                 ||getWindowDecorationStyle() == JRootPane.PLAIN_DIALOG//现在也给dialog加上菜单项（但只有关闭项）
@@ -612,8 +573,7 @@ public class BETitlePane extends JComponent
      *
      * @param menu the menu
      */
-    private void addMenuItems(JMenu menu)
-    {
+    private void addMenuItems(JMenu menu) {
         Locale locale = getRootPane().getLocale();
         menu.setToolTipText(//"窗口相关操作.");
                 UIManager.getString("BETitlePane.titleMenuToolTipText",getLocale()));
@@ -665,8 +625,7 @@ public class BETitlePane extends JComponent
      *
      * @return the j button
      */
-    private JButton createTitleButton()
-    {
+    private JButton createTitleButton() {
         JButton button = new JButton();
 
         button.setFocusPainted(false);
@@ -678,19 +637,14 @@ public class BETitlePane extends JComponent
     /**
      * Creates the Buttons that will be placed on the TitlePane.
      */
-    private void createButtons()
-    {
+    private void createButtons() {
         
         setupButton = createTitleButton();
         setupButton.setAction(setupAction);
-//        setupButton.setText("设置 ");
-//        setupButton.putClientProperty("paintActive", Boolean.TRUE);
         setupButton.setBorder(handyEmptyBorder);
-//        setupButton.getAccessibleContext().setAccessibleName("Close");
         setupButton.setIcon(UIManager.getIcon("Frame.setupIcon"));
         setButtonIcon(setupButton, setupButton.getIcon());// @since 3.5：同时设置rover和pressed时的icon效果
         setupButton.setContentAreaFilled(false);
-//        setupButton.setToolTipText("设置");
         
         closeButton = createTitleButton();
         closeButton.setAction(closeAction);
@@ -767,8 +721,7 @@ public class BETitlePane extends JComponent
      *
      * @return the layout manager
      */
-    private LayoutManager createLayout()
-    {
+    private LayoutManager createLayout() {
         return new TitlePaneLayout();
     }
 
@@ -777,8 +730,7 @@ public class BETitlePane extends JComponent
      *
      * @param isActive the new active
      */
-    private void setActive(boolean isActive)
-    {
+    private void setActive(boolean isActive) {
         Boolean activeB = isActive ? Boolean.TRUE : Boolean.FALSE;
         closeButton.putClientProperty("paintActive", activeB);
         if (getWindowDecorationStyle() == JRootPane.FRAME)
@@ -796,8 +748,7 @@ public class BETitlePane extends JComponent
      *
      * @param state the new state
      */
-    private void setState(int state)
-    {
+    private void setState(int state) {
         setState(state, false);
     }
 
@@ -808,8 +759,7 @@ public class BETitlePane extends JComponent
      * @param state the state
      * @param updateRegardless the update regardless
      */
-    private void setState(int state, boolean updateRegardless)
-    {
+    private void setState(int state, boolean updateRegardless) {
         Window w = getWindow();
 
         if (w != null && getWindowDecorationStyle() == JRootPane.FRAME)
@@ -897,11 +847,9 @@ public class BETitlePane extends JComponent
      * @param icon the icon
      */
     private void updateToggleButton(Action action, Icon icon
-            , Icon iconRover, Icon iconPressed)
-    {
+            , Icon iconRover, Icon iconPressed) {
         toggleButton.setAction(action);
         toggleButton.setIcon(icon);
-//        setButtonIcon(toggleButton, toggleButton.getIcon());// @since 3.5：同时设置rover和pressed时的icon效果：同时设置rover和pressed时的icon效果
         toggleButton.setRolloverIcon(iconRover);
         toggleButton.setPressedIcon(iconPressed);
         toggleButton.setText(null);
@@ -913,8 +861,7 @@ public class BETitlePane extends JComponent
      *
      * @return the frame
      */
-    private Frame getFrame()
-    {
+    private Frame getFrame() {
         Window window = getWindow();
         
         if (window instanceof Frame)
@@ -931,8 +878,7 @@ public class BETitlePane extends JComponent
      *
      * @return the window
      */
-    private Window getWindow()
-    {
+    private Window getWindow() {
         return window;
     }
 
@@ -941,8 +887,7 @@ public class BETitlePane extends JComponent
      *
      * @return the title
      */
-    private String getTitle()
-    {
+    private String getTitle() {
         Window w = getWindow();
 
         if (w instanceof Frame)
@@ -961,8 +906,7 @@ public class BETitlePane extends JComponent
      *
      * @param g the g
      */
-    public void paintComponent(Graphics g)
-    {
+    public void paintComponent(Graphics g) {
         // As state isn't bound, we need a convenience place to check
         // if it has changed. Changing the state typically changes the
         if (getFrame() != null)
@@ -1070,22 +1014,16 @@ public class BETitlePane extends JComponent
     /**
      * Actions used to <code>close</code> the <code>Window</code>.
      */
-    private class CloseAction extends AbstractAction
-    {
+    private class CloseAction extends AbstractAction {
         
         /**
          * Instantiates a new close action.
          */
-        public CloseAction()
-        {
+        public CloseAction() {
             super(UIManager.getString("BETitlePane.closeButtonToolTipext",getLocale()));
         }
 
-        /* (non-Javadoc)                    
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             close();
         }
     }
@@ -1093,23 +1031,17 @@ public class BETitlePane extends JComponent
     /**
      * Actions used to <code>iconfiy</code> the <code>Frame</code>.
      */
-    private class IconifyAction extends AbstractAction
-    {
+    private class IconifyAction extends AbstractAction {
         
         /**
          * Instantiates a new iconify action.
          */
-        public IconifyAction()
-        {
+        public IconifyAction() {
             super(//"最小化(N)");
                     UIManager.getString("BETitlePane.iconifyButtonText",getLocale()));
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             iconify();
         }
     }
@@ -1117,23 +1049,17 @@ public class BETitlePane extends JComponent
     /**
      * Actions used to <code>restore</code> the <code>Frame</code>.
      */
-    private class RestoreAction extends AbstractAction
-    {
+    private class RestoreAction extends AbstractAction {
         
         /**
          * Instantiates a new restore action.
          */
-        public RestoreAction()
-        {
+        public RestoreAction() {
             super(//"还原(R)");
                     UIManager.getString("BETitlePane.restoreButtonText",getLocale()));
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             restore();
         }
     }
@@ -1141,23 +1067,17 @@ public class BETitlePane extends JComponent
     /**
      * Actions used to <code>restore</code> the <code>Frame</code>.
      */
-    private class MaximizeAction extends AbstractAction
-    {
+    private class MaximizeAction extends AbstractAction {
         
         /**
          * Instantiates a new maximize action.
          */
-        public MaximizeAction()
-        {
+        public MaximizeAction() {
             super(//"最大化(X)");
                     UIManager.getString("BETitlePane.maximizeButtonText",getLocale()));
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             maximize();
         }
     }
@@ -1167,28 +1087,17 @@ public class BETitlePane extends JComponent
      * image to draw from the Frame associated with the
      * <code>JRootPane</code>.
      */
-    private class SystemMenuBar extends JMenuBar
-    {
+    private class SystemMenuBar extends JMenuBar {
         
-        /* (non-Javadoc)
-         * @see javax.swing.JComponent#paint(java.awt.Graphics)
-         */
-        public void paint(Graphics g)
-        {
-            //## Bug FIX: Issue BELNF-10, 之前是用的MetalLNF中的代码（
-            //## 它设计为不显示Dialog及其子类的图标）,此处就是要加上Dialog及其子类
-            //## 窗口图标的处理
-//            Frame frame = getFrame();// getFrame()方法意味只处理Frame及其子类图标（Dialog的就错误地跳过了）
+        public void paint(Graphics g) {
             Window frame = getWindow();
 
-            if (isOpaque())
-            {
+            if (isOpaque()) {
                 g.setColor(getBackground());
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
             
             //## Bug FIX: Issue BELNF-10
-//            Image image = (frame != null) ? frame.getIconImage() : null;
             Image image = null;
             if(frame != null)
             {
@@ -1201,14 +1110,9 @@ public class BETitlePane extends JComponent
                 // ，它样处理虽跨平台考虑不足但总比MetalTitlePane里不显示Dialog图标强
                 else
                 {
-                    try
-                    {
-                        //* JDK1.6 or later
-//                        if(frame.getIconImages()!=null && frame.getIconImages().size()>0)
-//                            image = frame.getIconImages().get(0);
+                    try {
                         //* Use reflect for compatible to JDK1.5 - by lornwolf at 2013-03-20, @since v3.5
-                        if(JVM.current().isOrLater(JVM.JDK1_6))
-                        {
+                        if (JVM.current().isOrLater(JVM.JDK1_6)) {
                             List<Image> iis = (List<Image>)(
                                     ReflectHelper.invokeMethod(JFrame.class, frame, "getIconImages", new Class[]{}
                                     , new Object[]{}));
@@ -1237,19 +1141,11 @@ public class BETitlePane extends JComponent
             }
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.JComponent#getMinimumSize()
-         */
-        public Dimension getMinimumSize()
-        {
+        public Dimension getMinimumSize() {
             return getPreferredSize();
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.JComponent#getPreferredSize()
-         */
-        public Dimension getPreferredSize()
-        {
+        public Dimension getPreferredSize() {
             Dimension size = super.getPreferredSize();
 
             return new Dimension(Math.max(IMAGE_WIDTH, size.width), Math.max(
@@ -1260,37 +1156,20 @@ public class BETitlePane extends JComponent
     /**
      * The Class TitlePaneLayout.
      */
-    private class TitlePaneLayout implements LayoutManager
-    {
+    private class TitlePaneLayout implements LayoutManager {
         
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager#addLayoutComponent(java.lang.String, java.awt.Component)
-         */
-        public void addLayoutComponent(String name, Component c)
-        {
+        public void addLayoutComponent(String name, Component c) {
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager#removeLayoutComponent(java.awt.Component)
-         */
-        public void removeLayoutComponent(Component c)
-        {
+        public void removeLayoutComponent(Component c) {
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager#preferredLayoutSize(java.awt.Container)
-         */
-        public Dimension preferredLayoutSize(Container c)
-        {
+        public Dimension preferredLayoutSize(Container c) {
             int height = computeHeight();
             return new Dimension(height, height);
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager#minimumLayoutSize(java.awt.Container)
-         */
-        public Dimension minimumLayoutSize(Container c)
-        {
+        public Dimension minimumLayoutSize(Container c) {
             return preferredLayoutSize(c);
         }
 
@@ -1315,11 +1194,7 @@ public class BETitlePane extends JComponent
             return finalHeight+2;//* 改变此处的返回结果将直接改变窗口标题的高度哦
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager#layoutContainer(java.awt.Container)
-         */
-        public void layoutContainer(Container c)
-        {
+        public void layoutContainer(Container c) {
             boolean leftToRight = (window == null) ? getRootPane()
                     .getComponentOrientation().isLeftToRight() : window
                     .getComponentOrientation().isLeftToRight();
@@ -1355,9 +1230,6 @@ public class BETitlePane extends JComponent
                 //* 原MetalTitledPane的Bug:当存在关闭按钮时，窗口图标的大小是已关闭按钮的大小来决定的，这样不合理
                 menuBar.setBounds(x
                         , y + 2//+2偏移量由lornwolf于2012-09-24日加上，目的是使得图标与文本保持在同一中心位置
-                               // TODO 目前BueautyEye和MetalLookAndFeel的标题图标位置算法都有优化的余地：y轴坐标自动按title高度居中会
-                               //            适用更多场景，现在的算法如果title高度变的很大，则这些位置都是固定。不过按MetalLNF的思路，这些高度
-                               //            是与整体美感一样，不应被随意改动的，也可以说不需要优化，目前就这么的吧，没有关系。
                         , IMAGE_HEIGHT,IMAGE_WIDTH);//buttonWidth, buttonHeight);
             }
 
@@ -1421,14 +1293,9 @@ public class BETitlePane extends JComponent
      * PropertyChangeListener installed on the Window. Updates the necessary
      * state as the state of the Window changes.
      */
-    private class PropertyChangeHandler implements PropertyChangeListener
-    {
+    private class PropertyChangeHandler implements PropertyChangeListener {
         
-        /* (non-Javadoc)
-         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-         */
-        public void propertyChange(PropertyChangeEvent pce)
-        {
+        public void propertyChange(PropertyChangeEvent pce) {
             String name = pce.getPropertyName();
 
             // Frame.state isn't currently bound.
@@ -1461,22 +1328,13 @@ public class BETitlePane extends JComponent
     /**
      * WindowListener installed on the Window, updates the state as necessary.
      */
-    private class WindowHandler extends WindowAdapter
-    {
+    private class WindowHandler extends WindowAdapter {
         
-        /* (non-Javadoc)
-         * @see java.awt.event.WindowAdapter#windowActivated(java.awt.event.WindowEvent)
-         */
-        public void windowActivated(WindowEvent ev)
-        {
+        public void windowActivated(WindowEvent ev) {
             setActive(true);
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.WindowAdapter#windowDeactivated(java.awt.event.WindowEvent)
-         */
-        public void windowDeactivated(WindowEvent ev)
-        {
+        public void windowDeactivated(WindowEvent ev) {
             setActive(false);
         }
     }

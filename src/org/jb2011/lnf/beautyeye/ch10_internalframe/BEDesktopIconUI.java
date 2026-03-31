@@ -26,12 +26,9 @@ import javax.swing.plaf.basic.BasicDesktopIconUI;
  *
  * @author lornwolf
  */
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
 //本类的实现参考了WindowsDesktopIconUI (JDK1.6.0_u18)
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
-public class BEDesktopIconUI extends BasicDesktopIconUI 
-{
-    
+public class BEDesktopIconUI extends BasicDesktopIconUI {
+
     /** The width. */
     private int width;
 
@@ -41,8 +38,7 @@ public class BEDesktopIconUI extends BasicDesktopIconUI
      * @param c the c
      * @return the component ui
      */
-    public static ComponentUI createUI(JComponent c) 
-    {
+    public static ComponentUI createUI(JComponent c) {
         return new BEDesktopIconUI();
     }
 
@@ -50,8 +46,7 @@ public class BEDesktopIconUI extends BasicDesktopIconUI
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicDesktopIconUI#installDefaults()
      */
-    public void installDefaults() 
-    {
+    public void installDefaults() {
         super.installDefaults();
         width = UIManager.getInt("DesktopIcon.width");
     }
@@ -59,21 +54,19 @@ public class BEDesktopIconUI extends BasicDesktopIconUI
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicDesktopIconUI#installUI(javax.swing.JComponent)
      */
-    public void installUI(JComponent c)   
-    {
+    public void installUI(JComponent c) {
         super.installUI(c);
 
         //modified by jb2011
-//        c.setOpaque(XPStyle.getXP() == null);
         c.setOpaque(false);
     }
+
 
     //copy from WindowsDesktopIconUI and no modified
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicDesktopIconUI#uninstallUI(javax.swing.JComponent)
      */
-    public void uninstallUI(JComponent c) 
-    {
+    public void uninstallUI(JComponent c) {
         BEInternalFrameTitlePane thePane = (BEInternalFrameTitlePane)iconPane;
         super.uninstallUI(c);
         thePane.uninstallListeners();
@@ -82,13 +75,11 @@ public class BEDesktopIconUI extends BasicDesktopIconUI
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicDesktopIconUI#installComponents()
      */
-    protected void installComponents()
-    {
-        iconPane = new BEInternalFrameTitlePane(frame){
+    protected void installComponents() {
+        iconPane = new BEInternalFrameTitlePane(frame) {
             //重写父类方法 by jb2011
             protected void paintTitlePaneImpl(Insets frameInsets,Graphics g
-                    , int width,int height, boolean isSelected)
-            {
+                    , int width,int height, boolean isSelected) {
                 //** Swing BUG补尝：重写父类的目的就是想用Insets(0,0,0,0)来调用paintTitlePaneImpl(否则因
                 //** BasicInternalFrameTitlePane中的布局bug，将会导致填充错位)
                 Insets instes = new Insets(0,0,0,0);
@@ -97,10 +88,6 @@ public class BEDesktopIconUI extends BasicDesktopIconUI
         };
         desktopIcon.setLayout(new BorderLayout());
         desktopIcon.add(iconPane, BorderLayout.CENTER);
-
-//        if (XPStyle.getXP() != null) {
-//                desktopIcon.setBorder(null);
-//        }
         
         //add by jb2011 2012-06-19
         desktopIcon.setBorder(UIManager.getBorder("InternalFrame.border"));
@@ -110,8 +97,7 @@ public class BEDesktopIconUI extends BasicDesktopIconUI
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicDesktopIconUI#getPreferredSize(javax.swing.JComponent)
      */
-    public Dimension getPreferredSize(JComponent c)
-    {
+    public Dimension getPreferredSize(JComponent c) {
         // Windows desktop icons can not be resized.  Therefore, we should
         // always return the minimum size of the desktop icon. See
         // getMinimumSize(JComponent c).
@@ -126,17 +112,13 @@ public class BEDesktopIconUI extends BasicDesktopIconUI
      * @param c the c
      * @return the minimum size
      */
-    public Dimension getMinimumSize(JComponent c) 
-    {
+    public Dimension getMinimumSize(JComponent c) {
         //## Bug FIX：see Issue 60(https://code.google.com/p/beautyeye/issues/detail?id=60&can=1)
         //## bug起源：此bug源自WindowsDesktopIconUI，BeautyEye因参考了它的实现因而也把该bug带了过来。
         //## 是否解决：已于2012-10-19日由lornwolf解决。
         //## bug描述：在某些情况下（比如在cpcns的定制be lnf项目中，它的内部窗口先最大化后再最小化时，该DesptopIcon
         //##          的高度就变的较小（与正常状态下有差异），具体原因待深究。
         //## 解决方法：参考MetalDesktopIconUI里的实现，用现在的代码即可解决这个问题。
-//        Dimension dim = super.getMinimumSize(c);
-//        dim.width = width;
-//        return dim;
         return new Dimension(width,
                 desktopIcon.getLayout().minimumLayoutSize(desktopIcon).height);
     }

@@ -26,14 +26,12 @@ import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 
-// TODO: Auto-generated Javadoc
 /**
  * 一个用于判断操作系统类型的实用工具类。.
  *
  * @author lornwolf
  */
-public class Platform
-{
+public class Platform {
     /** Operating system is Windows NT. */
     public static final int OS_WINNT = 1 << 0;
 

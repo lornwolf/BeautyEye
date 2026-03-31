@@ -22,8 +22,7 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
  * @author lornwolf, 2012-08-29
  * @version 1.0
  */
-public class ReflectHelper
-{
+public class ReflectHelper {
     /**
      * 通过反射调用指定类名的指定静态方法.
      * 
@@ -34,8 +33,7 @@ public class ReflectHelper
      * @return 如果该方法有返回值且正常调用则返回该值，否则返回null
      */
     public static Object invokeStaticMethod(String theClassFullName, String methodName
-            , Class[] paramsType, Object[] paramsValue)
-    {
+            , Class[] paramsType, Object[] paramsValue) {
         return invokeStaticMethod(getClass(theClassFullName), methodName, paramsType, paramsValue);
     }
     /**
@@ -48,8 +46,7 @@ public class ReflectHelper
      * @return 如果该方法有返回值且正常调用则返回该值，否则返回null
      */
     public static Object invokeStaticMethod(Class theClass, String methodName
-            , Class[] paramsType, Object[] paramsValue)
-    {
+            , Class[] paramsType, Object[] paramsValue) {
         return invokeMethod(theClass, theClass, methodName, paramsType, paramsValue);
     }
     
@@ -64,8 +61,7 @@ public class ReflectHelper
      * @return 如果该方法有返回值且正常调用则返回该值，否则返回null
      */
     public static Object invokeMethod(String theClassFullName, Object theObject, String methodName
-            , Class[] paramsType, Object[] paramsValue)
-    {
+            , Class[] paramsType, Object[] paramsValue) {
         Class theClass = getClass(theClassFullName);
         //静态方法的被调用对象就是这个类的Class对象本身哦
         return invokeMethod(theClass, theClass, methodName, paramsType, paramsValue);
@@ -81,21 +77,15 @@ public class ReflectHelper
      * @return 如果该方法有返回值且正常调用则返回该值，否则返回null
      */
     public static Object invokeMethod(Class theClass, Object theObject, String methodName
-            , Class[] paramsType, Object[] paramsValue)
-    {
+            , Class[] paramsType, Object[] paramsValue) {
         Object ret = null;
-        if(theClass != null)
-        {
-            try
-            {
+        if (theClass != null) {
+            try {
                 Method m = theClass.getMethod(methodName, paramsType);
                 ret = m.invoke(theObject, paramsValue);
-//                 System.out.println("@通过反射调用方法"+theClass.getName()+"."+methodName
-//                                           +"("+Arrays.toString(paramsType)+")成功.");
             }
-            catch (Exception e)
-            {
-                if(BeautyEyeLNFHelper.debug)
+            catch (Exception e) {
+                if (BeautyEyeLNFHelper.debug)
                     e.printStackTrace();
                 
                 LogHelper.error("通过反射调用方法"+theClass.getName()+"."+methodName
@@ -111,14 +101,11 @@ public class ReflectHelper
      * @param className 全类名，形如：javax.swing.JTable
      * @return 如果成功则返回该类的Class对象，否则返回null
      */
-    public static Class getClass(String className)
-    {
-        try
-        {
+    public static Class getClass(String className) {
+        try {
             return Class.forName(className);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LogHelper.error("通过反射获得"+className+"的Class对象失败，您的JRE版本可能需要更新，"+e.getMessage());
             return null;
         }

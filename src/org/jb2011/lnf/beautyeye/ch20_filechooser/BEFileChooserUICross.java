@@ -22,7 +22,6 @@ import javax.swing.JViewport;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.metal.MetalFileChooserUI;
 
-// TODO: Auto-generated Javadoc
 /**
  * BeautyEye L&F implementation of a FileChooser.
  * <p>
@@ -31,16 +30,14 @@ import javax.swing.plaf.metal.MetalFileChooserUI;
  * @author lornwolf, 2012-09-17
  * @version 1.0
  */
-public class BEFileChooserUICross extends MetalFileChooserUI 
-{
-    
+public class BEFileChooserUICross extends MetalFileChooserUI {
+
     /**
      * Instantiates a new bE file chooser ui cross.
      *
      * @param filechooser the filechooser
      */
-    public BEFileChooserUICross(JFileChooser filechooser)
-    {
+    public BEFileChooserUICross(JFileChooser filechooser) {
         super(filechooser);
     }
 
@@ -53,10 +50,10 @@ public class BEFileChooserUICross extends MetalFileChooserUI
      * @param c the c
      * @return the component ui
      */
-    public static ComponentUI createUI(JComponent c) 
-    {
+    public static ComponentUI createUI(JComponent c) {
         return new BEFileChooserUICross((JFileChooser) c);
     }
+
     
     //* modified by lornwolf 2012-09-17
     /**
@@ -71,24 +68,19 @@ public class BEFileChooserUICross extends MetalFileChooserUI
      * @param fc the fc
      * @return the j panel
      */
-    protected JPanel createList(JFileChooser fc) 
-    {
+    protected JPanel createList(JFileChooser fc) {
         JPanel p = super.createList(fc);
         
         //* 以下代码的作用就是将文件列表JList对象引用给找回来（通过从它的父面板中层层向下搜索）
         //* ，因无法从父类中直接获得列表对象的直接引用，只能用此笨办法了
-        if(p.getComponentCount() > 0)
-        {
+        if (p.getComponentCount() > 0) {
             Component scollPane = p.getComponent(0);
-            if(scollPane != null && scollPane instanceof JScrollPane)
-            {
+            if (scollPane != null && scollPane instanceof JScrollPane) {
                 JViewport vp = ((JScrollPane)scollPane).getViewport();
-                if(vp != null)
-                {
+                if (vp != null) {
                     Component fileListView = vp.getView();
                     //终于找到了文件列表的实例引用
-                    if(fileListView != null && fileListView instanceof JList)
-                    {
+                    if (fileListView != null && fileListView instanceof JList) {
                         //把列表的行高改成-1（即自动计算列表每个单元的行高而不指定固定值）
                         //* 说明：在BeautyEye LNF中，为了便JList的UI更好看，在没有其它方法有前
                         //* 提下就在JList的BEListUI中给它设置了默写行高32，而JFildChooser中的
@@ -109,46 +101,4 @@ public class BEFileChooserUICross extends MetalFileChooserUI
         
         return p;
     }
-    
-//    //
-//    // Renderer for Types ComboBox
-//    //
-//    protected FilterComboBoxRenderer createFilterComboBoxRenderer() 
-//    {
-//        return new BEFilterComboBoxRenderer();
-//    }
-//    /**
-//     * Render different type sizes and styles.
-//     */
-//    protected class BEFilterComboBoxRenderer extends FilterComboBoxRenderer 
-//    {
-//        public BEFilterComboBoxRenderer()
-//        {
-//            super();
-//            
-////            //设置成透明背景则意味着不需要背景填充，但本类中的应用场景有点特殊
-////            //——默认的render的UI里不需要绘制背景的情况下本类才可进行NinePatch图作为背景进行填充
-////            setOpaque(false);
-//            //TODO 此border（render的内衬）可以作为一个UIManager的属性哦，方便以后设置
-//            //注：此内衬是决定列表单元间的上下左右空白的关键哦！
-////            setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
-//        }
-//        
-//        //按理说本方法中的是否选中背景填充实现逻辑在Render的UI中实现最为合理，但由于
-//        //本类就是处理于UI实现中，所以容易产生冲突，故而不适宜自定义Ui实现，干脆硬编码则更直接
-//        public void paintComponent(Graphics g) 
-//        {
-//            //** 本HACK是为了解决 Issue 30：因JFileChooser中的文件类型选择下拉框的render
-//            //** （即本render）是自定义的（不是使用的ComboxUI里由BE LNF定义好的render而
-//            //** 导致的视觉效果不佳的问题
-//            //##### HACK：强行把绘制坐标右移、下移——以便使得与左边的空折多一点，要不然就太难看了
-//            g.translate(5, 1);
-//            
-//            //照常绘制（只是之前的坐标被移了一下而已）
-//            super.paintComponent(g);
-//            
-//            //##### HACK：恢复坐标
-//            g.translate(-5, -1);
-//         }
-//    }
 }

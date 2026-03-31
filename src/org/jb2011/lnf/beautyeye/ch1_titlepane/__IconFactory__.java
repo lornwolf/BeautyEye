@@ -15,15 +15,13 @@ import javax.swing.ImageIcon;
 
 import org.jb2011.lnf.beautyeye.utils.RawCache;
 
-// TODO: Auto-generated Javadoc
 /**
  * 普通图片工厂类.
  * 
  * @author lornwolf
  * @version 1.0
  */
-public class __IconFactory__ extends RawCache<ImageIcon>
-{
+public class __IconFactory__ extends RawCache<ImageIcon> {
     
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs";
@@ -36,19 +34,14 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return single instance of __IconFactory__
      */
-    public static __IconFactory__ getInstance()
-    {
-        if(instance==null)
+    public static __IconFactory__ getInstance() {
+        if (instance==null)
             instance = new __IconFactory__();
         return instance;
     }
     
-    /* (non-Javadoc)
-     * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
-     */
     @Override
-    protected ImageIcon getResource(String relativePath, Class baseClass)
-    {
+    protected ImageIcon getResource(String relativePath, Class baseClass) {
         return new ImageIcon(baseClass.getResource(relativePath));
     }
     
@@ -58,8 +51,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      * @param relativePath the relative path
      * @return the image
      */
-    public ImageIcon getImage(String relativePath)
-    {
+    public ImageIcon getImage(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
     
@@ -68,8 +60,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame close icon
      */
-    public ImageIcon getFrameCloseIcon()
-    {
+    public ImageIcon getFrameCloseIcon() {
         return getImage(IMGS_ROOT+"/frame_close_normal.png");
     }
     /**
@@ -77,8 +68,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame close icon
      */
-    public ImageIcon getFrameCloseIcon_rover()
-    {
+    public ImageIcon getFrameCloseIcon_rover() {
         return getImage(IMGS_ROOT+"/frame_close_rover.png");
     }
     /**
@@ -86,8 +76,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame close icon
      */
-    public ImageIcon getFrameCloseIcon_pressed()
-    {
+    public ImageIcon getFrameCloseIcon_pressed() {
         return getImage(IMGS_ROOT+"/frame_close_pressed.png");
     }
     
@@ -96,8 +85,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame min icon
      */
-    public ImageIcon getFrameMinIcon()
-    {
+    public ImageIcon getFrameMinIcon() {
         return getImage(IMGS_ROOT+"/frame_maxwin.png");
     }
     /**
@@ -105,8 +93,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame min icon
      */
-    public ImageIcon getFrameMinIcon_rover()
-    {
+    public ImageIcon getFrameMinIcon_rover() {
         return getImage(IMGS_ROOT+"/frame_maxwin_rover.png");
     }
     /**
@@ -114,8 +101,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame min icon
      */
-    public ImageIcon getFrameMinIcon_pressed()
-    {
+    public ImageIcon getFrameMinIcon_pressed() {
         return getImage(IMGS_ROOT+"/frame_maxwin_pressed.png");
     }
     
@@ -124,8 +110,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame max icon
      */
-    public ImageIcon getFrameMaxIcon()
-    {
+    public ImageIcon getFrameMaxIcon() {
         return getImage(IMGS_ROOT+"/frame_max_normal.png");
     }
     /**
@@ -133,8 +118,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame max icon
      */
-    public ImageIcon getFrameMaxIcon_rover()
-    {
+    public ImageIcon getFrameMaxIcon_rover() {
         return getImage(IMGS_ROOT+"/frame_max_rover.png");
     }
     /**
@@ -142,8 +126,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame max icon
      */
-    public ImageIcon getFrameMaxIcon_pressed()
-    {
+    public ImageIcon getFrameMaxIcon_pressed() {
         return getImage(IMGS_ROOT+"/frame_max_pressed.png");
     }
     
@@ -152,8 +135,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal iconfied icon
      */
-    public ImageIcon getIconfiedIcon()
-    {
+    public ImageIcon getIconfiedIcon() {
         return getImage(IMGS_ROOT+"/frame_min_normal.png");
     }
     /**
@@ -161,8 +143,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal iconfied icon
      */
-    public ImageIcon getIconfiedIcon_rover()
-    {
+    public ImageIcon getIconfiedIcon_rover() {
         return getImage(IMGS_ROOT+"/frame_min_rover.png");
     }
     /**
@@ -170,28 +151,16 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal iconfied icon
      */
-    public ImageIcon getIconfiedIcon_pressed()
-    {
+    public ImageIcon getIconfiedIcon_pressed() {
         return getImage(IMGS_ROOT+"/frame_min_pressed.png");
     }
-    
-//    /**
-//     * Gets the internel frame icon.
-//     *
-//     * @return the internel frame icon
-//     */
-//    public ImageIcon getFrameIcon()
-//    {
-//        return getImage(IMGS_ROOT+"/ifi1.png");
-//    }
     
     /**
      * Gets the frame icon_16_16.
      *
      * @return the frame icon_16_16
      */
-    public ImageIcon getFrameIcon_16_16()
-    {
+    public ImageIcon getFrameIcon_16_16() {
         return getImage(IMGS_ROOT+"/default_frame_icon.png");
     }
     
@@ -200,8 +169,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the frame title head bg_active
      */
-    public ImageIcon getFrameTitleHeadBg_active()
-    {
+    public ImageIcon getFrameTitleHeadBg_active() {
         return getImage(IMGS_ROOT+"/head_bg.png");
     }
     
@@ -210,8 +178,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the frame title head bg_inactive
      */
-    public ImageIcon getFrameTitleHeadBg_inactive()
-    {
+    public ImageIcon getFrameTitleHeadBg_inactive() {
         return getImage(IMGS_ROOT+"/head_inactive.png");
     }
     
@@ -220,8 +187,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the internal frame setup icon
      */
-    public ImageIcon getFrameSetupIcon()
-    {
+    public ImageIcon getFrameSetupIcon() {
         return getImage(IMGS_ROOT+"/frame_setup_normal.png");
     }
 }

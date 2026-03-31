@@ -23,18 +23,15 @@ import javax.swing.plaf.basic.BasicBorders.MarginBorder;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
+public class __UI__ {
     
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> JButton相关ui属性设定
         UIManager.put("Button.background",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         //Button.foreground的设定不起效，这可能是LNF里的bug，因NLLookAndFeel
@@ -68,7 +65,6 @@ public class __UI__
         UIManager.put("ToggleButtonUI",org.jb2011.lnf.beautyeye.ch3_button.BEToggleButtonUI.class.getName());
         //以下设置对ToggleButton在不加入到JToolBar时是有效果的哦！！！！！！！！！！！
         Border toggleButtonBorder = new BorderUIResource(new MarginBorder());
-//        UIManager.put("ToggleButton.margin",new InsetsUIResource(2, 30, 2, 30));
         UIManager.put("ToggleButton.border",toggleButtonBorder);
         /* ~~注：这个属性是lornwolf为了更好的ui效果自已加的属性：焦点虚线的颜色 */
         UIManager.put("ToggleButton.focusLine"

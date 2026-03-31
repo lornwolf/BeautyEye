@@ -21,7 +21,6 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
-// TODO: Auto-generated Javadoc
 /**
  * 分隔条的border实现类.
  * <p>
@@ -30,91 +29,32 @@ import javax.swing.plaf.basic.BasicSplitPaneUI;
  * 
  * @author lornwolf
  */
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
 //本类参考自jdk1.6_u18的javax.swing.plaf.basic.BasicBorders
 //    .SplitPaneDividerBorder的源码，主要修改了UI填充实现部分
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
-public class SplitPaneDividerBorder implements Border, UIResource
-{
-//    javax.swing.plaf.basic.BasicBorders.SplitPaneDividerBorder
-//    private Color highlight;
-//    private Color shadow;
-
-//    public SplitPaneDividerBorder(Color highlight, Color shadow)
-//    {
-//        this.highlight = highlight;
-//        this.shadow = shadow;
-//    }
+public class SplitPaneDividerBorder implements Border, UIResource {
 
     /* (non-Javadoc)
- * @see javax.swing.border.Border#paintBorder(java.awt.Component, java.awt.Graphics, int, int, int, int)
- */
-public void paintBorder(Component c, Graphics g, int x, int y, int width,
-            int height)
-    {
+     * @see javax.swing.border.Border#paintBorder(java.awt.Component, java.awt.Graphics, int, int, int, int)
+     */
+    public void paintBorder(Component c, Graphics g, int x, int y, int width,
+            int height) {
         //在目前的视觉效果下不需要这个border的绘制哦
-//        Graphics2D g2d = (Graphics2D) g;
-//        Component child;
-//        Rectangle cBounds;
-//        JSplitPane splitPane = ((BasicSplitPaneDivider) c).getBasicSplitPaneUI().getSplitPane();
-//        Dimension size = c.getSize();
-//
-//        child = splitPane.getLeftComponent();
-//        // This is needed for the space between the divider and end of
-//        // splitpane.
-//        g.setColor(c.getBackground());
-//        g.drawRect(x, y, width - 1, height - 1);
-//        
-//        if (splitPane.getOrientation() == JSplitPane.HORIZONTAL_SPLIT)
-//        {
-////            if (child != null)
-////            {
-////                g.setColor(shadow);//highlight);
-////                g.drawLine(0, 0, 0, size.height);
-////            }
-////            child = splitPane.getRightComponent();
-////            if (child != null)
-////            {
-////                g.setColor(shadow);
-////                g.drawLine(size.width - 1, 0, size.width - 1, size.height);
-////            }
-//        }
-//        else
-//        {
-////            if (child != null)
-////            {
-////                g.setColor(shadow);//highlight);
-////                g.drawLine(0, 0, size.width, 0);
-////            }
-////            child = splitPane.getRightComponent();
-////            if (child != null)
-////            {
-////                g.setColor(shadow);
-////                g.drawLine(0, size.height - 1, size.width,size.height - 1);
-////
-////            }
-//        }
     }
 
     /* (non-Javadoc)
      * @see javax.swing.border.Border#getBorderInsets(java.awt.Component)
      */
-    public Insets getBorderInsets(Component c)
-    {
+    public Insets getBorderInsets(Component c) {
         Insets insets = new Insets(0, 0, 0, 0);
-        if (c instanceof BasicSplitPaneDivider)
-        {
+        if (c instanceof BasicSplitPaneDivider) {
             BasicSplitPaneUI bspui = ((BasicSplitPaneDivider) c)
                     .getBasicSplitPaneUI();
 
-            if (bspui != null)
-            {
+            if (bspui != null) {
                 JSplitPane splitPane = bspui.getSplitPane();
 
-                if (splitPane != null)
-                {
-                    if (splitPane.getOrientation() == JSplitPane.HORIZONTAL_SPLIT)
-                    {
+                if (splitPane != null) {
+                    if (splitPane.getOrientation() == JSplitPane.HORIZONTAL_SPLIT) {
                         insets.top = insets.bottom = 0;
                         insets.left = insets.right = 1;
                         return insets;
@@ -133,8 +73,7 @@ public void paintBorder(Component c, Graphics g, int x, int y, int width,
     /* (non-Javadoc)
      * @see javax.swing.border.Border#isBorderOpaque()
      */
-    public boolean isBorderOpaque()
-    {
+    public boolean isBorderOpaque() {
         return true;
     }
 }

@@ -21,8 +21,7 @@ import org.jb2011.ninepatch4j.NinePatch;
  * @author lornwolf
  * @version 1.0
  */
-public class __Icon9Factory__ extends RawCache<NinePatch>
-{
+public class __Icon9Factory__ extends RawCache<NinePatch> {
     
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs/np";
@@ -35,19 +34,14 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return single instance of __Icon9Factory__
      */
-    public static __Icon9Factory__ getInstance()
-    {
-        if(instance==null)
+    public static __Icon9Factory__ getInstance() {
+        if (instance==null)
             instance = new __Icon9Factory__();
         return instance;
     }
     
-    /* (non-Javadoc)
-     * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
-     */
     @Override
-    protected NinePatch getResource(String relativePath, Class baseClass)
-    {
+    protected NinePatch getResource(String relativePath, Class baseClass) {
         return NinePatchHelper.createNinePatch(baseClass.getResource(relativePath), false);
     }
 
@@ -57,8 +51,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      * @param relativePath the relative path
      * @return the raw
      */
-    public NinePatch getRaw(String relativePath)
-    {
+    public NinePatch getRaw(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
 
@@ -68,8 +61,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar_v
      */
-    public NinePatch getScrollBar_v()
-    {
+    public NinePatch getScrollBar_v() {
         return getRaw(IMGS_ROOT+"/scroll_bar_v.9.png");
     }
     
@@ -78,8 +70,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar_rover_v
      */
-    public NinePatch getScrollBar_rover_v()
-    {
+    public NinePatch getScrollBar_rover_v() {
         return getRaw(IMGS_ROOT+"/scroll_bar_rover_v.9.png");
     }
     
@@ -88,8 +79,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar_pressed_v
      */
-    public NinePatch getScrollBar_pressed_v()
-    {
+    public NinePatch getScrollBar_pressed_v() {
         return getRaw(IMGS_ROOT+"/scroll_bar_pressed_v.9.png");
     }
     
@@ -98,8 +88,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar_h
      */
-    public NinePatch getScrollBar_h()
-    {
+    public NinePatch getScrollBar_h() {
         return getRaw(IMGS_ROOT+"/scroll_bar_h.9.png");
     }
     
@@ -108,8 +97,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar_rover_h
      */
-    public NinePatch getScrollBar_rover_h()
-    {
+    public NinePatch getScrollBar_rover_h() {
         return getRaw(IMGS_ROOT+"/scroll_bar_rover_h.9.png");
     }
     
@@ -118,8 +106,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar_pressed_h
      */
-    public NinePatch getScrollBar_pressed_h()
-    {
+    public NinePatch getScrollBar_pressed_h() {
         return getRaw(IMGS_ROOT+"/scroll_bar_pressed_h.9.png");
     }
     
@@ -128,8 +115,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar arrow_to bottom
      */
-    public NinePatch getScrollBarArrow_toBottom()
-    {
+    public NinePatch getScrollBarArrow_toBottom() {
         return getRaw(IMGS_ROOT+"/arrow_toBottom.9.png");
     }
     
@@ -138,8 +124,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar arrow_to top
      */
-    public NinePatch getScrollBarArrow_toTop()
-    {
+    public NinePatch getScrollBarArrow_toTop() {
         return getRaw(IMGS_ROOT+"/arrow_toTop.9.png");
     }
     
@@ -148,8 +133,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar arrow_to left
      */
-    public NinePatch getScrollBarArrow_toLeft()
-    {
+    public NinePatch getScrollBarArrow_toLeft() {
         return getRaw(IMGS_ROOT+"/arrow_toLeft.9.png");
     }
     
@@ -158,8 +142,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar arrow_to right
      */
-    public NinePatch getScrollBarArrow_toRight()
-    {
+    public NinePatch getScrollBarArrow_toRight() {
         return getRaw(IMGS_ROOT+"/arrow_toRight.9.png");
     }
     
@@ -168,8 +151,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar arrow_to top_rover
      */
-    public NinePatch getScrollBarArrow_toTop_rover()
-    {
+    public NinePatch getScrollBarArrow_toTop_rover() {
         return getRaw(IMGS_ROOT+"/arrow_toTop_rover.9.png");
     }
     
@@ -178,8 +160,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar arrow_to bottom_rover
      */
-    public NinePatch getScrollBarArrow_toBottom_rover()
-    {
+    public NinePatch getScrollBarArrow_toBottom_rover() {
         return getRaw(IMGS_ROOT+"/arrow_toBottom_rover.9.png");
     }
     
@@ -188,8 +169,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar arrow_to left_rover
      */
-    public NinePatch getScrollBarArrow_toLeft_rover()
-    {
+    public NinePatch getScrollBarArrow_toLeft_rover() {
         return getRaw(IMGS_ROOT+"/arrow_toLeft_rover.9.png");
     }
     
@@ -198,8 +178,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll bar arrow_to right_rover
      */
-    public NinePatch getScrollBarArrow_toRight_rover()
-    {
+    public NinePatch getScrollBarArrow_toRight_rover() {
         return getRaw(IMGS_ROOT+"/arrow_toRight_rover.9.png");
     }
     
@@ -208,8 +187,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return the scroll pane border bg
      */
-    public NinePatch getScrollPaneBorderBg()
-    {
+    public NinePatch getScrollPaneBorderBg() {
         return getRaw(IMGS_ROOT+"/scroll_pane_bg1.9.png");
     }
 }

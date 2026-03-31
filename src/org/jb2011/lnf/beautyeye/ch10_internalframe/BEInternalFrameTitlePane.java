@@ -43,18 +43,12 @@ import org.jb2011.lnf.beautyeye.winlnfutils.WinUtils;
  * 
  * @author lornwolf
  */
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
 //BeautyEye外观实现中取消了isPalette的所有特殊处理，isPalette及相关属性在
 //该外观中将失去意义，请注意！
 //虽然beautyEye是参考自MetalLookAndFeel，但因beautyEye使用了Insets很大的立体边框，
 //则如果还要像MetalLookAndFeel实现Palette类型的JInternalFrame则效果会很难看，干脆就就像
 //WindowsLookAndFeel一样，不去理会什么Palette，在当前的L&F下没有任何减分。
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
-public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
-{
-//    protected boolean isPalette = false;
-//    protected Icon paletteCloseIcon;
-//    protected int paletteTitleHeight;
+public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane {
 
     /** The Constant handyEmptyBorder. */
     private static final Border handyEmptyBorder = new EmptyBorder(0, 0, 0, 0);
@@ -88,16 +82,14 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
      *
      * @param f the f
      */
-    public BEInternalFrameTitlePane(JInternalFrame f)
-    {
+    public BEInternalFrameTitlePane(JInternalFrame f) {
         super(f);
     }
 
     /* (non-Javadoc)
      * @see javax.swing.JComponent#addNotify()
      */
-    public void addNotify()
-    {
+    public void addNotify() {
         super.addNotify();
         // This is done here instead of in installDefaults as I was worried
         // that the BasicInternalFrameUI might not be fully initialized, and
@@ -109,29 +101,23 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane#installDefaults()
      */
-    protected void installDefaults()
-    {
+    protected void installDefaults() {
         super.installDefaults();
         setFont(UIManager.getFont("InternalFrame.titleFont"));
-//        paletteTitleHeight = UIManager
-//                .getInt("InternalFrame.paletteTitleHeight");
-//        paletteCloseIcon = UIManager.getIcon("InternalFrame.paletteCloseIcon");
         wasClosable = frame.isClosable();
         selectedForegroundKey = selectedBackgroundKey = null;
-        if (true)
-        {
+        if (true) {
             setOpaque(false);
         }
     }
 
+
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane#uninstallDefaults()
      */
-    protected void uninstallDefaults()
-    {
+    protected void uninstallDefaults() {
         super.uninstallDefaults();
-        if (wasClosable != frame.isClosable())
-        {
+        if (wasClosable != frame.isClosable()) {
             frame.setClosable(wasClosable);
         }
     }
@@ -139,8 +125,7 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane#createButtons()
      */
-    protected void createButtons()
-    {
+    protected void createButtons() {
         super.createButtons();
 
         Boolean paintActive = frame.isSelected() ? Boolean.TRUE : Boolean.FALSE;
@@ -157,8 +142,7 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
         // This makes sure palette close buttons have the right background.
         closeButton.setBackground(MetalLookAndFeel.getPrimaryControlShadow());
 
-        if (true)
-        {
+        if (true) {
             iconButton.setContentAreaFilled(false);
             maxButton.setContentAreaFilled(false);
             closeButton.setContentAreaFilled(false);
@@ -169,8 +153,7 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
      * Override the parent's method to do nothing. Metal frames do not 
      * have system menus.
      */
-    protected void assembleSystemMenu()
-    {
+    protected void assembleSystemMenu() {
     }
 
     /**
@@ -179,24 +162,22 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
      *
      * @param systemMenu the system menu
      */
-    protected void addSystemMenuItems(JMenu systemMenu)
-    {
+    protected void addSystemMenuItems(JMenu systemMenu) {
     }
+
 
     /**
      * Override the parent's method to do nothing. Metal frames do not 
      * have system menus.
      */
-    protected void showSystemMenu()
-    {
+    protected void showSystemMenu() {
     }
 
     /**
      * Override the parent's method avoid creating a menu bar. Metal frames
      * do not have system menus.
      */
-    protected void addSubComponents()
-    {
+    protected void addSubComponents() {
         add(iconButton);
         add(maxButton);
         add(closeButton);
@@ -205,16 +186,14 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane#createPropertyChangeListener()
      */
-    protected PropertyChangeListener createPropertyChangeListener()
-    {
+    protected PropertyChangeListener createPropertyChangeListener() {
         return new MetalPropertyChangeHandler();
     }
 
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane#createLayout()
      */
-    protected LayoutManager createLayout()
-    {
+    protected LayoutManager createLayout() {
         return new XMetalTitlePaneLayout();
     }
 
@@ -222,24 +201,19 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
      * The Class MetalPropertyChangeHandler.
      */
     class MetalPropertyChangeHandler extends
-            BasicInternalFrameTitlePane.PropertyChangeHandler
-    {
-        
+            BasicInternalFrameTitlePane.PropertyChangeHandler {
+
         /* (non-Javadoc)
          * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane.PropertyChangeHandler#propertyChange(java.beans.PropertyChangeEvent)
          */
-        public void propertyChange(PropertyChangeEvent evt)
-        {
+        public void propertyChange(PropertyChangeEvent evt) {
             String prop = (String) evt.getPropertyName();
-            if (prop.equals(JInternalFrame.IS_SELECTED_PROPERTY))
-            {
+            if (prop.equals(JInternalFrame.IS_SELECTED_PROPERTY)) {
                 Boolean b = (Boolean) evt.getNewValue();
                 iconButton.putClientProperty("paintActive", b);
                 closeButton.putClientProperty("paintActive", b);
                 maxButton.putClientProperty("paintActive", b);
-            }
-            else if ("JInternalFrame.messageType".equals(prop))
-            {
+            } else if ("JInternalFrame.messageType".equals(prop)) {
                 updateOptionPaneState();
                 frame.repaint();
             }
@@ -247,51 +221,44 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
         }
     }
 
+
     /**
      * The Class XZCMetalTitlePaneLayout.
      */
-    class XMetalTitlePaneLayout extends TitlePaneLayout
-    {
-        
+    class XMetalTitlePaneLayout extends TitlePaneLayout {
+
         /* (non-Javadoc)
          * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane.TitlePaneLayout#addLayoutComponent(java.lang.String, java.awt.Component)
          */
-        public void addLayoutComponent(String name, Component c)
-        {
+        public void addLayoutComponent(String name, Component c) {
         }
 
         /* (non-Javadoc)
          * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane.TitlePaneLayout#removeLayoutComponent(java.awt.Component)
          */
-        public void removeLayoutComponent(Component c)
-        {
+        public void removeLayoutComponent(Component c) {
         }
 
         /* (non-Javadoc)
          * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane.TitlePaneLayout#preferredLayoutSize(java.awt.Container)
          */
-        public Dimension preferredLayoutSize(Container c)
-        {
+        public Dimension preferredLayoutSize(Container c) {
             return minimumLayoutSize(c);
         }
 
         /* (non-Javadoc)
          * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane.TitlePaneLayout#minimumLayoutSize(java.awt.Container)
          */
-        public Dimension minimumLayoutSize(Container c)
-        {
+        public Dimension minimumLayoutSize(Container c) {
             // Compute width.
             int width = 30;
-            if (frame.isClosable())
-            {
+            if (frame.isClosable()) {
                 width += 21;
             }
-            if (frame.isMaximizable())
-            {
+            if (frame.isMaximizable()) {
                 width += 16 + (frame.isClosable() ? 10 : 4);
             }
-            if (frame.isIconifiable())
-            {
+            if (frame.isIconifiable()) {
                 width += 16 + (frame.isMaximizable() ? 2
                         : (frame.isClosable() ? 10 : 4));
             }
@@ -301,33 +268,24 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
                     frame, fm, frameTitle) : 0;
             int title_length = frameTitle != null ? frameTitle.length() : 0;
 
-            if (title_length > 2)
-            {
+            if (title_length > 2) {
                 int subtitle_w = MySwingUtilities2.stringWidth(frame, fm, frame
                         .getTitle().substring(0, 2)
                         + "...");
                 width += (title_w < subtitle_w) ? title_w : subtitle_w;
-            }
-            else
-            {
+            } else {
                 width += title_w;
             }
 
+
             // Compute height.
             int height = 0;
-            
-//            if (isPalette)
-//            {
-//                height = paletteTitleHeight;
-//            }
-//            else
             {
                 int fontHeight = fm.getHeight();
                 fontHeight += 4;//默认是 +=7 
                 Icon icon = frame.getFrameIcon();
                 int iconHeight = 0;
-                if (icon != null)
-                {
+                if (icon != null) {
                     // SystemMenuBar forces the icon to be 16x16 or less.
                     iconHeight = Math.min(icon.getIconHeight(), 16);
                 }
@@ -341,8 +299,7 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
         /* (non-Javadoc)
          * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane.TitlePaneLayout#layoutContainer(java.awt.Container)
          */
-        public void layoutContainer(Container c)
-        {
+        public void layoutContainer(Container c) {
             boolean leftToRight = WinUtils.isLeftToRight(frame);
 
             int w = getWidth();
@@ -355,18 +312,7 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
             int buttonHeight = closeButton.getIcon().getIconHeight();
             int buttonWidth = closeButton.getIcon().getIconWidth();
 
-            if (frame.isClosable())
-            {
-//                if (isPalette)
-//                {
-//                    spacing = 3;
-//                    x += leftToRight ? -spacing - (buttonWidth + 2) : spacing;
-//                    closeButton.setBounds(x, y, buttonWidth + 2,
-//                            getHeight() - 4);
-//                    if (!leftToRight)
-//                        x += (buttonWidth + 2);
-//                }
-//                else
+            if (frame.isClosable()) {
                 {
                     spacing = 4;
                     x += leftToRight ? -spacing - buttonWidth : spacing;
@@ -376,17 +322,16 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
                 }
             }
 
-            if (frame.isMaximizable())// && !isPalette)
-            {
-                spacing = frame.isClosable() ? 2 : 4; //10 : 40
+            if (frame.isMaximizable()) {
+                spacing = frame.isClosable() ? 2 : 4;
                 x += leftToRight ? -spacing - buttonWidth : spacing;
                 maxButton.setBounds(x, y, buttonWidth, buttonHeight);
                 if (!leftToRight)
                     x += buttonWidth;
             }
 
-            if (frame.isIconifiable())// && !isPalette)
-            {
+
+            if (frame.isIconifiable()) {
                 spacing = frame.isMaximizable() ? 2 : (frame.isClosable() ? 10
                         : 4);
                 x += leftToRight ? -spacing - buttonWidth : spacing;
@@ -399,31 +344,10 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
         }
     }
 
-//    public void paintPalette(Graphics g)
-//    {
-//        boolean leftToRight = WinUtils.isLeftToRight(frame);
-//
-//        int width = getWidth();
-//        int height = getHeight();
-//
-//        Color background = MetalLookAndFeel.getPrimaryControlShadow();
-//        Color darkShadow = MetalLookAndFeel.getPrimaryControlDarkShadow();
-//
-//        NLTitlePane.paintTitlePane(g, 0, 0, width , height, false
-//                , background, darkShadow);
-//    }
-
     /* (non-Javadoc)
      * @see javax.swing.plaf.basic.BasicInternalFrameTitlePane#paintComponent(java.awt.Graphics)
      */
-    public void paintComponent(Graphics g)
-    {
-//        if (isPalette)
-//        {
-//            paintPalette(g);
-//            return;
-//        }
-
+    public void paintComponent(Graphics g) {
         boolean leftToRight = WinUtils.isLeftToRight(frame);
         boolean isSelected = frame.isSelected();//! 选中与否的判断方式，参见border部分的注释
 
@@ -434,43 +358,27 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
         Color foreground = null;
         Color shadow = null;
         
-        if (isSelected)
-        {
-//            if (!true)
-//            {
-//                closeButton.setContentAreaFilled(true);
-//                maxButton.setContentAreaFilled(true);
-//                iconButton.setContentAreaFilled(true);
-//            }
-            if (selectedBackgroundKey != null)
-            {
+        if (isSelected) {
+            if (selectedBackgroundKey != null) {
                 background = UIManager.getColor(selectedBackgroundKey);
             }
-            if (background == null)
-            {
+            if (background == null) {
                 background = UIManager.getColor("activeCaption");
             }
-            if (selectedForegroundKey != null)
-            {
+            if (selectedForegroundKey != null) {
                 foreground = UIManager.getColor(selectedForegroundKey);
             }
-            if (selectedShadowKey != null)
-            {
+            if (selectedShadowKey != null) {
                 shadow = UIManager.getColor(selectedShadowKey);
             }
-            if (shadow == null)
-            {
+            if (shadow == null) {
                 shadow = UIManager.getColor("activeCaptionBorder");
             }
-            if (foreground == null)
-            {
+            if (foreground == null) {
                 foreground = UIManager.getColor("activeCaptionText");
             }
-        }
-        else
-        {
-            if (!true)
-            {
+        } else {
+            if (!true) {
                 closeButton.setContentAreaFilled(false);
                 maxButton.setContentAreaFilled(false);
                 iconButton.setContentAreaFilled(false);
@@ -480,13 +388,8 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
             shadow = UIManager.getColor("inactiveCaptionBorder");
         }
 
+
         //---------------------------------------------------绘制标题栏背景
-//        Color topDarkShadow2 = LNFUtils.getColor(
-//                background, -40, -40, -40)
-//                ,topHightLight2 = LNFUtils.getColor(background,
-//                        60, 60, 60)
-//                ,topDarkHightLight2 = LNFUtils.getColor(background,
-//                        20, 20, 20);
         /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 绘制标题栏背景START */
         /*
          * ** bug修正 by js,2009-09-30（这因是JDK1.5的Swing底层BUG）
@@ -500,43 +403,6 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
          * 解决方法：当确知这个bug发生后，只能以人工方式弥补这种异相，如 强制修正其(x,y)的坐标，并相应地调整
          *             titlePane的填充区域。
          */
-//        Border b=frame.getBorder();
-//        Insets is=b.getBorderInsets(frame);
-//        Rectangle bounds = this.getBounds();
-//        int paintTitlePaneX = bounds.x,paintTitlePaneY = bounds.y;
-////        boolean isBUG = false;
-//////        System.out.println("JInternalFrame的UI是否处于正常isBUG="+isBUG);
-////        if(isBUG=(is.left!=bounds.x))//当is.left!=bounds.x即可认定已经产生了BUG
-////            paintTitlePaneX = is.left;
-////        if(isBUG=(is.top!=bounds.y))//当is.left!=bounds.x同样可认定已经产生了BUG
-////            paintTitlePaneY = is.top;
-////        if(isBUG)//有BUG时的填充
-////        {
-////            //----------------------------- 以下代码是为了弥补因BUG而产生的填充异常
-////            //*以下(1),(2),(3)部分代码是用于弥补BUG下的border外观被titlePane覆盖的错误
-////            //*请参见JInternalFrameDialogBorder的边框填充代码（尽量在此处模拟出边框的TOP部分效果）>
-////            //水平第一条线(1)
-////            g.setColor(topDarkShadow2);
-////            g.drawLine(0, 0, width, 0);
-////            g.drawLine(0, 1, 0, height);//左坚线
-////            g.drawLine(width, 1, width, height);//右坚线
-////            //水平第二条线(2)
-////            g.setColor(topHightLight2);
-////            g.drawLine(1, 1, width-NLMetalBorders.InternalFrameDialogBorder.insets.left, 1);
-////            //水平第三条线(3)
-////            g.setColor(topDarkHightLight2);
-////            g.drawLine(2, 2, width-NLMetalBorders.InternalFrameDialogBorder.insets.left, 2);
-////            
-////            NLTitlePane.paintTitlePane(g//左右空起的部分由Border绘制
-////                    , paintTitlePaneX//ZCMetalBorders.InternalFrameDialogBorder.insets.left
-////                    , paintTitlePaneY//ZCMetalBorders.InternalFrameDialogBorder.insets.left
-////                    , width-is.left*2    //注意此处也因BUG而作了填充区域的调整
-////                    , height, isSelected
-////                    , background, shadow);
-////            //----------------------------- END
-////        }
-////        //正常无BUG时的填充
-////        else
         {
             Insets frameInsets = frame.getInsets();
             //** Swing BUG：按理说，此处是不需要传入frameInstes的，因父类BasicInternalFrameTitlePane的布局
@@ -544,13 +410,6 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
             //进行增益，否则填充的图璩形肯定就因没有算上borderInstes而错位，详见父类中的
             //BasicInternalFrameTitlePane中内部类Handler的layoutContainer方法里
             //getNorthPane().setBounds(..)这一段
-//            NLTitlePane.paintTitlePane(g
-//                    , frameInsets.left//0
-//                    , frameInsets.top//0
-//                    , width-frameInsets.left-frameInsets.right//-0
-//                    , height, isSelected
-////                    , background, shadow
-//                    );
             paintTitlePaneImpl(frameInsets, g, width,height, isSelected);
         }
         /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 绘制标题栏背景END */
@@ -561,8 +420,7 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
         String frameTitle = frame.getTitle();
 
         Icon icon = frame.getFrameIcon();
-        if (icon != null)
-        {
+        if (icon != null) {
             if (!leftToRight)
                 xOffset -= icon.getIconWidth();
             int iconY = ((height / 2) - (icon.getIconHeight() / 2));
@@ -570,8 +428,7 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
             xOffset += leftToRight ? icon.getIconWidth() + 5 : -5;
         }
 
-        if (frameTitle != null)
-        {
+        if (frameTitle != null) {
             Font f = getFont();
             g.setFont(f);
             FontMetrics fm = MySwingUtilities2.getFontMetrics(frame, g, f);
@@ -580,31 +437,22 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
             int yOffset = ((height - fm.getHeight()) / 2) + fm.getAscent();
 
             Rectangle rect = new Rectangle(0, 0, 0, 0);
-            if (frame.isIconifiable())
-            {
+            if (frame.isIconifiable()) {
                 rect = iconButton.getBounds();
-            }
-            else if (frame.isMaximizable())
-            {
+            } else if (frame.isMaximizable()) {
                 rect = maxButton.getBounds();
-            }
-            else if (frame.isClosable())
-            {
+            } else if (frame.isClosable()) {
                 rect = closeButton.getBounds();
             }
             int titleW;
 
-            if (leftToRight)
-            {
-                if (rect.x == 0)
-                {
+            if (leftToRight) {
+                if (rect.x == 0) {
                     rect.x = frame.getWidth() - frame.getInsets().right - 2;
                 }
                 titleW = rect.x - xOffset - 4;
                 frameTitle = getTitle(frameTitle, fm, titleW);
-            }
-            else
-            {
+            } else {
                 titleW = xOffset - rect.x - rect.width - 4;
                 frameTitle = getTitle(frameTitle, fm, titleW);
                 xOffset -= MySwingUtilities2.stringWidth(frame, fm, frameTitle);
@@ -612,14 +460,8 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
 
             titleLength = MySwingUtilities2.stringWidth(frame, fm, frameTitle);
             
-//            g.setColor(Color.DARK_GRAY);//
-//            NLUtils.drawString(frame, g, frameTitle, xOffset+1, yOffset+1);
             g.setColor(foreground);
-//            if(NLLookAndFeel.windowTitleAntialising)
-//                NLLookAndFeel.setAntiAliasing((Graphics2D) g,true);
             MySwingUtilities2.drawString(frame, g, frameTitle, xOffset, yOffset);
-//            if(NLLookAndFeel.windowTitleAntialising)
-//                NLLookAndFeel.setAntiAliasing((Graphics2D) g,false);
             xOffset += leftToRight ? titleLength + 5 : -5;
         }
     }
@@ -634,62 +476,33 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
      * @param isSelected the is selected
      */
     protected void paintTitlePaneImpl(Insets frameInsets,Graphics g
-            , int width,int height, boolean isSelected)
-    {
+            , int width,int height, boolean isSelected) {
         BETitlePane.paintTitlePane(g
                 , frameInsets.left//0
                 , frameInsets.top//0
                 , width-frameInsets.left-frameInsets.right//-0
                 , height, isSelected
-//                , background, shadow
                 );
     }
 
-//    public void setPalette(boolean b)
-//    {
-//        isPalette = b;
-//
-//        if (isPalette)
-//        {
-//            closeButton.setIcon(paletteCloseIcon);
-//            if (frame.isMaximizable())
-//                remove(maxButton);
-//            if (frame.isIconifiable())
-//                remove(iconButton);
-//        }
-//        else
-//        {
-//            closeButton.setIcon(closeIcon);
-//            if (frame.isMaximizable())
-//                add(maxButton);
-//            if (frame.isIconifiable())
-//                add(iconButton);
-//        }
-//        revalidate();
-//        repaint();
-//    }
 
     /**
      * Updates any state dependant upon the JInternalFrame being shown in
      * a <code>JOptionPane</code>.
      */
-    private void updateOptionPaneState()
-    {
+    private void updateOptionPaneState() {
         int type = -2;
         boolean closable = wasClosable;
         Object obj = frame.getClientProperty("JInternalFrame.messageType");
 
-        if (obj == null)
-        {
+        if (obj == null) {
             // Don't change the closable state unless in an JOptionPane.
             return;
         }
-        if (obj instanceof Integer)
-        {
+        if (obj instanceof Integer) {
             type = ((Integer) obj).intValue();
         }
-        switch (type)
-        {
+        switch (type) {
             case JOptionPane.ERROR_MESSAGE:
                 selectedBackgroundKey = "OptionPane.errorDialog.titlePane.background";
                 selectedForegroundKey = "OptionPane.errorDialog.titlePane.foreground";
@@ -717,8 +530,7 @@ public class BEInternalFrameTitlePane extends BasicInternalFrameTitlePane
                 selectedBackgroundKey = selectedForegroundKey = selectedShadowKey = null;
                 break;
         }
-        if (closable != frame.isClosable())
-        {
+        if (closable != frame.isClosable()) {
             frame.setClosable(closable);
         }
     }

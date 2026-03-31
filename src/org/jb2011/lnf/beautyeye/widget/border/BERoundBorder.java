@@ -24,26 +24,24 @@ import javax.swing.plaf.UIResource;
 import javax.swing.text.JTextComponent;
 
 import org.jb2011.lnf.beautyeye.utils.BEUtils;
-// TODO: Auto-generated Javadoc
+
 /**
  * 圆角实线边框Border.
  * 
  * @author lornwolf
  */
-public class BERoundBorder  extends LineBorder implements UIResource 
-{
-    
+public class BERoundBorder extends LineBorder implements UIResource {
+
     /** 默认绘制的色调. */
-    public final static Color defaultLineColor = new Color(188,188,188);//154,154,155);// new Color(171,168,163);
-    
+    public final static Color defaultLineColor = new Color(188, 188, 188);
+
     /** 圆角的半径. */
-    protected int arcWidth = 0;//6
+    protected int arcWidth = 0;
 
     /**
      * Instantiates a new bE round border.
      */
-    public BERoundBorder() 
-    {
+    public BERoundBorder() {
         this(defaultLineColor, 1);
     }
 
@@ -52,18 +50,16 @@ public class BERoundBorder  extends LineBorder implements UIResource
      *
      * @param color the color
      */
-    public BERoundBorder(Color color) 
-    {
+    public BERoundBorder(Color color) {
         this(color, 1);
     }
-    
+
     /**
      * Instantiates a new bE round border.
      *
      * @param thickness the thickness
      */
-    public BERoundBorder(int thickness) 
-    {
+    public BERoundBorder(int thickness) {
         this(defaultLineColor, thickness);
     }
 
@@ -73,79 +69,54 @@ public class BERoundBorder  extends LineBorder implements UIResource
      * @param color the color
      * @param thickness the thickness
      */
-    public BERoundBorder(Color color, int thickness) 
-    {
+    public BERoundBorder(Color color, int thickness) {
         super(color, thickness);
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.border.AbstractBorder#getBorderInsets(java.awt.Component)
-     */
-    public Insets getBorderInsets(Component c)       
-    {
-        return getBorderInsets(c, new Insets(0,0,0,0));
+    @Override
+    public Insets getBorderInsets(Component c) {
+        return getBorderInsets(c, new Insets(0, 0, 0, 0));
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.border.LineBorder#getBorderInsets(java.awt.Component, java.awt.Insets)
-     */
-    public Insets getBorderInsets(Component c, Insets insets)      
-    {
+    @Override
+    public Insets getBorderInsets(Component c, Insets insets) {
         Insets margin = null;
 
-        if (c instanceof AbstractButton)
-        {
+        if (c instanceof AbstractButton) {
             margin = ((AbstractButton)c).getMargin();
-        } 
-        else if (c instanceof JToolBar) 
-        {
+        } else if (c instanceof JToolBar) {
             margin = ((JToolBar)c).getMargin();
-        } 
-        else if (c instanceof JTextComponent) 
-        {
+        } else if (c instanceof JTextComponent) {
             margin = ((JTextComponent)c).getMargin();
         }
-        insets.top    = (margin != null? margin.top : 0)    + thickness;
-        insets.left   = (margin != null? margin.left : 0)   + thickness;
-        insets.bottom = (margin != null? margin.bottom : 0) + thickness;
-        insets.right =  (margin != null? margin.right : 0)  + thickness;
+        insets.top    = (margin != null ? margin.top : 0)    + thickness;
+        insets.left   = (margin != null ? margin.left : 0)   + thickness;
+        insets.bottom = (margin != null ? margin.bottom : 0) + thickness;
+        insets.right  = (margin != null ? margin.right : 0)  + thickness;
 
         return insets;
     }
 
-
-    /* (non-Javadoc)
-     * @see javax.swing.border.LineBorder#paintBorder(java.awt.Component, java.awt.Graphics, int, int, int, int)
-     */
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
-    {
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         Color oldColor = g.getColor();
 
         BEUtils.setAntiAliasing((Graphics2D)g, true);
-//        ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//                RenderingHints.VALUE_ANTIALIAS_ON);
-        Component cp=c.getParent();
-        if(cp!=null)
-        {
+        Component cp = c.getParent();
+        if (cp != null) {
             //** 因java的textField边框默认是直角的，为了在LNF级别使加上圆连框后自然些，就得给这原始的直角先做隐藏处理（不要看见它）
-            //                Color parentBackground=c.getParent().getBackground();
-            //                g.setColor(parentBackground);
-            //                g.drawRect(x, y, width-1, height-1);
         }
 
         //据thickness画出边框（当前是圆角的）
         g.setColor(lineColor);
         int i;
-        for(i = 0; i < thickness; i++)  
-        {
-            g.drawRoundRect(x+i, y+i, width-i-i-1, height-i-i-1,this.arcWidth,this.arcWidth);
-            if(thickness>1)
-                g.setColor(BEUtils.getColor(g.getColor(), 70, 70, 70,-50));
+        for (i = 0; i < thickness; i++) {
+            g.drawRoundRect(x + i, y + i, width - i - i - 1, height - i - i - 1, this.arcWidth, this.arcWidth);
+            if (thickness > 1)
+                g.setColor(BEUtils.getColor(g.getColor(), 70, 70, 70, -50));
         }
 
         g.setColor(oldColor);
-//        ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//                RenderingHints.VALUE_ANTIALIAS_OFF);
         BEUtils.setAntiAliasing((Graphics2D)g, false);
     }
 
@@ -155,17 +126,13 @@ public class BERoundBorder  extends LineBorder implements UIResource
      * @param c the c
      * @return the bE round border
      */
-    public BERoundBorder setLineColor(Color c)
-    {
+    public BERoundBorder setLineColor(Color c) {
         lineColor = c;
         return this;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.border.LineBorder#getLineColor()
-     */
-    public Color getLineColor()
-    {
+    @Override
+    public Color getLineColor() {
         return lineColor;
     }
 
@@ -175,18 +142,14 @@ public class BERoundBorder  extends LineBorder implements UIResource
      * @param t the t
      * @return the bE round border
      */
-    public BERoundBorder setThickness(int t)
-    {
-        thickness =t;
+    public BERoundBorder setThickness(int t) {
+        thickness = t;
         return this;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#clone()
-     */
-    public Object clone()
-    {
-        BERoundBorder bb = new BERoundBorder(this.getLineColor(),this.getThickness());
+    @Override
+    public Object clone() {
+        BERoundBorder bb = new BERoundBorder(this.getLineColor(), this.getThickness());
         return bb;
     }
 
@@ -195,8 +158,7 @@ public class BERoundBorder  extends LineBorder implements UIResource
      *
      * @return the arc width
      */
-    public int getArcWidth()
-    {
+    public int getArcWidth() {
         return arcWidth;
     }
 
@@ -206,8 +168,7 @@ public class BERoundBorder  extends LineBorder implements UIResource
      * @param arcWidth the arc width
      * @return the bE round border
      */
-    public BERoundBorder setArcWidth(int arcWidth)
-    {
+    public BERoundBorder setArcWidth(int arcWidth) {
         this.arcWidth = arcWidth;
         return this;
     }

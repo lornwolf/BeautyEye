@@ -75,12 +75,6 @@ public class BERootPaneUI extends BasicRootPaneUI
     
     //* 2012-09-19 在BeautyEye v3.2中此常量被lornwolf取消了，因为
     //* v3.2中启用了相比原MetalRootPaneUI中更精确更好的边框拖放算法
-//    /**
-//     * The amount of space (in pixels) that the cursor is changed on.
-//     */
-//    //MetalLookAndFeel中默认是16
-//    private static final int CORNER_DRAG_WIDTH = 16; 
-//        //BeautyEyeLNFHelper.__getFrameBorder_CORNER_DRAG_WIDTH();//为了便 得用户的敏感触点区更大，提高用户体验，此值可加大
 
     /**
      * Region from edges that dragging is active from.
@@ -268,12 +262,10 @@ public class BERootPaneUI extends BasicRootPaneUI
                     windowsListener = new WindowAdapter(){
                         public void windowActivated(WindowEvent e) {
                             if(window != null)
-                                //AWTUtilities.setWindowOpacity(window, 1.0f);
                                 WindowTranslucencyHelper.setOpacity(window, 1.0f);
                         }
                         public void windowDeactivated(WindowEvent e) {
                             if(window != null)
-                                //AWTUtilities.setWindowOpacity(window, 0.94f);
                                 WindowTranslucencyHelper.setOpacity(window, 0.94f);
                         }
                     };
@@ -354,9 +346,8 @@ public class BERootPaneUI extends BasicRootPaneUI
                 && window != null)
         {
             //** 20111222 by jb2011，让窗口全透明（用以实现窗口的透明边框效果）
-//            AWTUtilities.setWindowOpaque(window, false);
-            // TODO BUG：1）目前可知，在jdk1.7.0_u6下，JDialog的半透明边框的透明度比原设计深一倍
-            // TODO BUG：2）目前可知，在jdk1.6.0_u33下+win7平台下，JFrame窗口被调置成透明后，
+            // BUG：1）目前可知，在jdk1.7.0_u6下，JDialog的半透明边框的透明度比原设计深一倍
+            // BUG：2）目前可知，在jdk1.6.0_u33下+win7平台下，JFrame窗口被调置成透明后，
             //                该窗口内所在文本都会被反走样（不管你要没有要求反走样），真悲具，这应该
             //                是官方AWTUtilities.setWindowOpaque(..)bug导致的,1.7.0_u6同样存在该问题，
             //                使用BeautyEye时，遇到这样的问题只能自行使用__isFrameBorderOpaque中指定的
@@ -816,34 +807,16 @@ public class BERootPaneUI extends BasicRootPaneUI
             }
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager#addLayoutComponent(java.lang.String, java.awt.Component)
-         */
         public void addLayoutComponent(String name, Component comp) {}
         
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager#removeLayoutComponent(java.awt.Component)
-         */
         public void removeLayoutComponent(Component comp) {}
         
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager2#addLayoutComponent(java.awt.Component, java.lang.Object)
-         */
         public void addLayoutComponent(Component comp, Object constraints) {}
         
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager2#getLayoutAlignmentX(java.awt.Container)
-         */
         public float getLayoutAlignmentX(Container target) { return 0.0f; }
         
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager2#getLayoutAlignmentY(java.awt.Container)
-         */
         public float getLayoutAlignmentY(Container target) { return 0.0f; }
         
-        /* (non-Javadoc)
-         * @see java.awt.LayoutManager2#invalidateLayout(java.awt.Container)
-         */
         public void invalidateLayout(Container target) {}
     }
 
@@ -930,11 +903,7 @@ public class BERootPaneUI extends BasicRootPaneUI
             }
         };
 
-        /* (non-Javadoc)
-         * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
-         */
-        public void mousePressed(MouseEvent ev)
-        {
+        public void mousePressed(MouseEvent ev) {
             JRootPane rootPane = getRootPane();
 
             if (rootPane.getWindowDecorationStyle() == JRootPane.NONE)
@@ -983,22 +952,16 @@ public class BERootPaneUI extends BasicRootPaneUI
                     && ((frameState & Frame.MAXIMIZED_BOTH) == 0)
                     || (d != null && d.isResizable()))
             {
-//                System.out.println("dragOffsetX="+dragOffsetX+" dragOffsetY="+dragOffsetY); TODO
                 dragOffsetX = dragWindowOffset.x;
                 dragOffsetY = dragWindowOffset.y;
                 dragWidth = w.getWidth();
                 dragHeight = w.getHeight();
                 dragCursor = 
-//                getCursor(calculateCorner(w, dragWindowOffset.x,dragWindowOffset.y)); // TODO TEST
                         getCursor_new(w, dragWindowOffset.x,dragWindowOffset.y);
             }
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-         */
-        public void mouseReleased(MouseEvent ev)
-        {
+        public void mouseReleased(MouseEvent ev) {
             if (dragCursor != 0 && window != null && !window.isValid())
             {
                 // Some Window systems validate as you resize, others won't,
@@ -1010,11 +973,7 @@ public class BERootPaneUI extends BasicRootPaneUI
             dragCursor = 0;
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
-         */
-        public void mouseMoved(MouseEvent ev)
-        {
+        public void mouseMoved(MouseEvent ev) {
             JRootPane root = getRootPane();
 
             if (root.getWindowDecorationStyle() == JRootPane.NONE)
@@ -1037,8 +996,7 @@ public class BERootPaneUI extends BasicRootPaneUI
             }
 
             // Update the cursor
-            int cursor = //接下来1）测试算法的正确性 2）测试极端情况：即border小于或部分小于BORDER_THINNESS，3）写注释、整理代码！
-//                getCursor(calculateCorner(w, ev.getX(), ev.getY()));// TODO Test!!
+            int cursor =
                 getCursor_new(w, ev.getX(), ev.getY());
 
             if (cursor != 0
@@ -1093,11 +1051,7 @@ public class BERootPaneUI extends BasicRootPaneUI
             }
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
-         */
-        public void mouseDragged(MouseEvent ev)
-        {
+        public void mouseDragged(MouseEvent ev) {
             Window w = (Window) ev.getSource();
             Point pt = ev.getPoint();
 
@@ -1169,36 +1123,23 @@ public class BERootPaneUI extends BasicRootPaneUI
             }
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-         */
-        public void mouseEntered(MouseEvent ev)
-        {
+        public void mouseEntered(MouseEvent ev) {
             Window w = (Window) ev.getSource();
             lastCursor = w.getCursor();
             mouseMoved(ev);
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-         */
-        public void mouseExited(MouseEvent ev)
-        {
+        public void mouseExited(MouseEvent ev) {
             Window w = (Window) ev.getSource();
-            // TODO ###### Hack：因Swing鼠标事件问题，拖动过快的话很多时候没法正常地保留和设置lastCursor
-            //                    从而导致经常性的退出拖动后，拖动时的鼠标样式还在，这样很不爽，这应该是swing
-            //                    的鼠标事件不精确导致的或其它问题。目前不如干脃在退出拖动时强制还原到默认鼠标，
-            //                    虽然在极少情况下可能回不到用户真正的lastCursor，但起码能解决目前在BueatyEye中
-            //                    因大border而频繁出现的这个问题了，先这么滴吧！
-//            w.setCursor(lastCursor);
+            // Hack：因Swing鼠标事件问题，拖动过快的话很多时候没法正常地保留和设置lastCursor
+            //       从而导致经常性的退出拖动后，拖动时的鼠标样式还在，这样很不爽，这应该是swing
+            //       的鼠标事件不精确导致的或其它问题。目前不如干脃在退出拖动时强制还原到默认鼠标，
+            //       虽然在极少情况下可能回不到用户真正的lastCursor，但起码能解决目前在BueatyEye中
+            //       因大border而频繁出现的这个问题了，先这么滴吧！
             w.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
 
-        /* (non-Javadoc)
-         * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-         */
-        public void mouseClicked(MouseEvent ev)
-        {
+        public void mouseClicked(MouseEvent ev) {
             Window w = (Window) ev.getSource();
             Frame f = null;
 
@@ -1246,74 +1187,6 @@ public class BERootPaneUI extends BasicRootPaneUI
         //**             范围是17，余下的原本是border里insets的10个像素也被算进窗口内容面板了，这样导致移动到下方时，明明
         //**            是在边缘位置，却不是处于拖动范围内（要再往下移10像素到达inset的第10~27像素范围内才行），这样就严重
         //**             影响了用户体验。
-        //* 2012-09-19 在BeautyEye v3.2中的BERootPaneUI，lornwolf启用了相比
-        //* 原MetalRootPaneUI中更精确更好的边框拖放算法，以下方法暂时弃用，以后可以删除了！ START
-//        /**
-//         * Returns the corner that contains the point <code>x</code>,
-//         * <code>y</code>, or -1 if the position doesn't match a corner.
-//         */
-//        private int calculateCorner(Window w, int x, int y)
-//        {
-//            Insets insets = w.getInsets();
-//            int xPosition = calculatePosition(x - insets.left, w.getWidth()
-//                    - insets.left - insets.right);
-//            int yPosition = calculatePosition(y - insets.top, w.getHeight()
-//                    - insets.top - insets.bottom);
-//            
-//            if (xPosition == -1 || yPosition == -1)
-//            {
-//                return -1;
-//            }
-//            return yPosition * 5 + xPosition;
-//        }
-
-//        /**
-//         * Returns the Cursor to render for the specified corner. This returns
-//         * 0 if the corner doesn't map to a valid Cursor
-//         */
-//        private int getCursor(int corner)
-//        {
-//            if (corner == -1)
-//            {
-//                return 0;
-//            }
-//            return cursorMapping[corner];
-//        }
-
-//        /**
-//         * Returns an integer indicating the position of <code>spot</code>
-//         * in <code>width</code>. The return value will be:
-//         * 0 if < BORDER_DRAG_THICKNESS
-//         * 1 if < CORNER_DRAG_WIDTH
-//         * 2 if >= CORNER_DRAG_WIDTH && < width - BORDER_DRAG_THICKNESS
-//         * 3 if >= width - CORNER_DRAG_WIDTH
-//         * 4 if >= width - BORDER_DRAG_THICKNESS
-//         * 5 otherwise
-//         */
-//        private int calculatePosition(int spot, int width)
-//        {
-////            Insets iss = getRootPane().getInsets();
-////            System.out.println("ississ="+iss); //TODO
-//            
-//            if (spot < BORDER_DRAG_THICKNESS)
-//            {
-//                return 0;
-//            }
-//            if (spot < CORNER_DRAG_WIDTH)
-//            {
-//                return 1;
-//            }
-//            if (spot >= (width - BORDER_DRAG_THICKNESS))
-//            {
-//                return 4;
-//            }
-//            if (spot >= (width - CORNER_DRAG_WIDTH))
-//            {
-//                return 3;
-//            }
-//            return 2;
-//        }//********************************************************************* v3.2前的老边框拖放核心算法 END
-        
         //********************************************************************* v3.2版启用的新边框拖放核心算法 SART
         //** 新算法说明：v3.2中启用的新算法的原理是把可拖动范围限定在内容区（即整个窗体大小减去Border后的真正工作区）
         //**            往外的一个固定的BORDER_DRAG_THICKNESS区域内，即不管理你把窗口的border设置多么不规划，我的用户拖
@@ -1393,44 +1266,21 @@ public class BERootPaneUI extends BasicRootPaneUI
             Point p = new Point(x,y);
             int cc = 0;
             
-            if(r1.contains(p))
-            {
-//                System.out.println("西北-NW");
+            if (r1.contains(p)) {
                 cc = Cursor.NW_RESIZE_CURSOR; 
-            }
-            else if(r3.contains(p))
-            {
-//                System.out.println("东北-NE");
+            } else if (r3.contains(p)) {
                 cc = Cursor.NE_RESIZE_CURSOR; 
-            }
-            else if(r5.contains(p))
-            {
-//                System.out.println("东南-SE");
+            } else if (r5.contains(p)) {
                 cc = Cursor.SE_RESIZE_CURSOR; 
-            }
-            else if(r7.contains(p))
-            {
-//                System.out.println("西南-SW");
+            } else if (r7.contains(p)) {
                 cc = Cursor.SW_RESIZE_CURSOR; 
-            }
-            else if(r2.contains(p))
-            {
-//                System.out.println("北-N");
+            } else if (r2.contains(p)) {
                 cc = Cursor.N_RESIZE_CURSOR; 
-            }
-            else if(r4.contains(p))
-            {
-//                System.out.println("东-E");
+            } else if (r4.contains(p)) {
                 cc = Cursor.E_RESIZE_CURSOR; 
-            }
-            else if(r6.contains(p))
-            {
-//                System.out.println("南-S");
+            } else if (r6.contains(p)) {
                 cc = Cursor.S_RESIZE_CURSOR; 
-            }
-            else if(r8.contains(p))
-            {
-//                System.out.println("西-W");
+            } else if (r8.contains(p)) {
                 cc = Cursor.W_RESIZE_CURSOR; 
             }
             

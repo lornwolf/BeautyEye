@@ -21,18 +21,15 @@ import javax.swing.plaf.InsetsUIResource;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
-    
+public class __UI__ {
+
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         UIManager.put("Spinner.background",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         UIManager.put("Spinner.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));
         UIManager.put("SpinnerUI", org.jb2011.lnf.beautyeye.ch18_spinner.BESpinnerUI.class.getName());

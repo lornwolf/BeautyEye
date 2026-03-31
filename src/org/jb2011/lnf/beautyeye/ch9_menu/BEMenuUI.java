@@ -33,26 +33,21 @@ import javax.swing.plaf.basic.BasicMenuUI;
 import org.jb2011.lnf.beautyeye.utils.BEUtils;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * JMenuU的UI实现类。.
  *
  * @author lornwolf
  */
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
-//* 本类的实现参考了WindowsMenuUI
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
-public class BEMenuUI extends BasicMenuUI//WindowsMenuUI 
-{
+public class BEMenuUI extends BasicMenuUI {
     //JMenuBar的顶层菜单项的装饰底线高度
     /** The Constant DECORATED_UNDERLINE_HEIGHT. */
-    public final static int DECORATED_UNDERLINE_HEIGHT = 2;// TODO 可以提炼成Ui属性哦
+    public final static int DECORATED_UNDERLINE_HEIGHT = 2;
     //顶层菜单项被选中的颜色
     /** The Constant MENU_SELECTED_UNDERLINE_COLOR. */
-    public final static Color MENU_SELECTED_UNDERLINE_COLOR = new Color(37,147,217);// TODO 可以提炼成Ui属性哦
+    public final static Color MENU_SELECTED_UNDERLINE_COLOR = new Color(37,147,217);
     //顶层菜单项未被选中的颜色
     /** The Constant MENU_UNSELECTED_UNDERLINE_COLOR. */
-    public final static Color MENU_UNSELECTED_UNDERLINE_COLOR = new Color(226,230,232);// TODO 可以提炼成Ui属性哦
+    public final static Color MENU_UNSELECTED_UNDERLINE_COLOR = new Color(226,230,232);
     
     /** The menu bar height. */
     protected Integer menuBarHeight;
@@ -66,22 +61,14 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
      * @param x the x
      * @return the component ui
      */
-    public static ComponentUI createUI(JComponent x) 
-    {
+    public static ComponentUI createUI(JComponent x) {
         return new BEMenuUI();
     }
     
     //* 本方法由lornwolf 2012-09-13修改自WindowsMenuUI
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicMenuUI#installDefaults()
-     */
-    protected void installDefaults() 
-    {
+    protected void installDefaults() {
         super.installDefaults();
-//        if (!WindowsLookAndFeel.isClassicWindows()) 
-        {
-            menuItem.setRolloverEnabled(true);
-        }
+        menuItem.setRolloverEnabled(true);
         
         menuBarHeight = (Integer)UIManager.getInt("MenuBar.height");
         Object obj      = UIManager.get("MenuBar.rolloverEnabled");
@@ -97,8 +84,7 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
      * @param bgColor the bg color
      * @since 1.4
      */
-    protected void paintBackground(Graphics g, JMenuItem menuItem, Color bgColor) 
-    {
+    protected void paintBackground(Graphics g, JMenuItem menuItem, Color bgColor) {
         JMenu menu = (JMenu)menuItem;
         ButtonModel model = menu.getModel();
 
@@ -106,17 +92,12 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
         int menuWidth = menu.getWidth();
         int menuHeight = menu.getHeight();
 
-//        UIDefaults table = UIManager.getLookAndFeelDefaults();
-//        Color highlight = table.getColor("controlLtHighlight");
-//        Color shadow = table.getColor("controlShadow");
-
         g.setColor(menu.getBackground());
         g.fillRect(0,0, menuWidth, menuHeight);
-        
+
         //给JMEnuBar的顶层菜单项中画一个灰色底线（看起来美观）
         //位于菜单项里的MenuItem则不需要画这个底线（要不然不好看哦）
-        if(menu.isTopLevelMenu())
-        {
+        if (menu.isTopLevelMenu()) {
             //未选中的装饰底线
             //只要放在MenuBar最顶层的JMenu才需要画哦（从而与底色融为一体）
             g.setColor(MENU_UNSELECTED_UNDERLINE_COLOR);
@@ -133,11 +114,9 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
         //* >，即把顶级menu和内层menu分的很清。
         //* >目前BeautyEye的实现即menu.isTopLevelMenu()==true时即进入本分支
         //* >才是比较合理的，当然，有待实践检验，或许官方有其它考虑。 -- commet by lornwolf 2012-09-14
-        if (menu.isTopLevelMenu())//menu.isOpaque())
-        {
+        if (menu.isTopLevelMenu()) {
             //JMebuBar的顶层菜单项被选中或鼠标停留时
-            if (model.isArmed() || model.isSelected())
-            {
+            if (model.isArmed() || model.isSelected()) {
                 Color c = MENU_SELECTED_UNDERLINE_COLOR;
                 g.setColor(c);
                 
@@ -158,36 +137,29 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
                 BEUtils.setAntiAliasing((Graphics2D)g, false);
                 
                 //再填充一个底线（用于装饰）
-                g.fillRect(0,menuHeight-DECORATED_UNDERLINE_HEIGHT, menuWidth, DECORATED_UNDERLINE_HEIGHT);//menuHeight);
-            }
-            else if (model.isRollover() && model.isEnabled())
-            {
+                g.fillRect(0,menuHeight-DECORATED_UNDERLINE_HEIGHT, menuWidth, DECORATED_UNDERLINE_HEIGHT);
+            } else if (model.isRollover() && model.isEnabled()) {
                 // Only paint rollover if no other menu on menubar is selected
                 boolean otherMenuSelected = false;
                 MenuElement[] menus = ((JMenuBar) menu.getParent())
                         .getSubElements();
-                for (int i = 0; i < menus.length; i++)
-                {
-                    if (((JMenuItem) menus[i]).isSelected())
-                    {
+                for (int i = 0; i < menus.length; i++) {
+                    if (((JMenuItem) menus[i]).isSelected()) {
                         otherMenuSelected = true;
                         break;
                     }
                 }
                 
-                if (!otherMenuSelected)
-                {
-                    g.setColor(MENU_SELECTED_UNDERLINE_COLOR);//selectionBackground);// Uses protected
-//                    g.fillRect(0, 0, menuWidth, menuHeight);
+                if (!otherMenuSelected) {
+                    g.setColor(MENU_SELECTED_UNDERLINE_COLOR);
                     //再填充一个底线（用于装饰）
-                    g.fillRect(0,menuHeight-DECORATED_UNDERLINE_HEIGHT, menuWidth, DECORATED_UNDERLINE_HEIGHT);//menuHeight);
+                    g.fillRect(0,menuHeight-DECORATED_UNDERLINE_HEIGHT, menuWidth, DECORATED_UNDERLINE_HEIGHT);
                 }
             }
         }
         // add by lornwolf，JMebuBar的内层父级菜单项的样式绘制
         else if (model.isArmed() || (menuItem instanceof JMenu &&
-                model.isSelected())) 
-        {
+                model.isSelected())) {
             //用NinePatch图来填充
             __Icon9Factory__.getInstance().getBgIcon_ItemSelected()
                 .draw((Graphics2D)g, 0, 0, menuWidth, menuHeight);
@@ -212,13 +184,12 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
      * @since 1.4
      */
     protected void paintText(Graphics g, JMenuItem menuItem,
-            Rectangle textRect, String text)
-    {
+            Rectangle textRect, String text) {
         JMenu menu = (JMenu)menuItem;
         Color oldColor = g.getColor();
 
         //特殊处理顶级菜单项（就是直接放在JMenuBar上的那一层），使之保持黑色
-        if(menu.isTopLevelMenu())
+        if (menu.isTopLevelMenu())
             g.setColor(new Color(35,35,35));
 
         // 使用父类（BasicMenuItemUI）的paintText，内部直接调用
@@ -230,9 +201,6 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
     }
     
     //* copy of WindowsMenuUI, 没有被修改
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicMenuUI#createMouseInputListener(javax.swing.JComponent)
-     */
     protected MouseInputListener createMouseInputListener(JComponent c) {
         return new BEMouseInputHandler();
     }
@@ -245,9 +213,6 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
      */
     protected class BEMouseInputHandler extends BasicMenuUI.MouseInputHandler {
         
-        /* (non-Javadoc)
-         * @see javax.swing.plaf.basic.BasicMenuUI.MouseInputHandler#mouseEntered(java.awt.event.MouseEvent)
-         */
         public void mouseEntered(MouseEvent evt) {
             super.mouseEntered(evt);
 
@@ -258,9 +223,6 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
             }
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.plaf.basic.BasicMenuUI.MouseInputHandler#mouseExited(java.awt.event.MouseEvent)
-         */
         public void mouseExited(MouseEvent evt) {
             super.mouseExited(evt);
 
@@ -274,9 +236,6 @@ public class BEMenuUI extends BasicMenuUI//WindowsMenuUI
     }
 
     //* copy of WindowsMenuUI, 没有被修改
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicMenuItemUI#getPreferredMenuItemSize(javax.swing.JComponent, javax.swing.Icon, javax.swing.Icon, int)
-     */
     protected Dimension getPreferredMenuItemSize(JComponent c,
             Icon checkIcon,
             Icon arrowIcon,

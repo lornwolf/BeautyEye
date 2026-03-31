@@ -30,9 +30,8 @@ import org.jb2011.ninepatch4j.NinePatch;
  * 
  * @author lornwolf
  */
-public class N9ComponentFactory extends JLabel
-{
-    
+public class N9ComponentFactory extends JLabel {
+
     /**
      * Creates a new N9Component object.
      *
@@ -45,19 +44,18 @@ public class N9ComponentFactory extends JLabel
      */
     public static JLabel createLabel_root(String text
             , final NinePatch n9, Insets is
-            , Color foregroundColor, Font f)
-    {
-        JLabel l = new JLabel(text){
+            , Color foregroundColor, Font f) {
+        JLabel l = new JLabel(text) {
             public void paintComponent(Graphics g) {
                 n9.draw((Graphics2D)g, 0, 0, this.getWidth(), this.getHeight());
                 super.paintComponent(g);
             }
         };
-        if(is != null)
+        if (is != null)
             l.setBorder(BorderFactory.createEmptyBorder(is.top, is.left, is.bottom, is.right));
-        if(foregroundColor != null)
+        if (foregroundColor != null)
             l.setForeground(foregroundColor);
-        if(f != null)
+        if (f != null)
             l.setFont(f);
 
         return l;
@@ -69,49 +67,45 @@ public class N9ComponentFactory extends JLabel
      * @param txt the txt
      * @return the j label
      */
-    public static JLabel createLabel_style1(String txt)
-    {
-        return createLabel_root(txt,__Icon9Factory__.getInstance().getHintBgLightBlue()
-                ,new Insets(1, 6, 1, 6),Color.white,new Font("宋体",Font.BOLD,12));
+    public static JLabel createLabel_style1(String txt) {
+        return createLabel_root(txt, __Icon9Factory__.getInstance().getHintBgLightBlue()
+                , new Insets(1, 6, 1, 6), Color.white, new Font("宋体", Font.BOLD, 12));
     }
-    
+
     /**
      * Creates a new N9Component object.
      *
      * @param txt the txt
      * @return the j label
      */
-    public static JLabel createLabel_style2(String txt)
-    {
-        return createLabel_root(txt,__Icon9Factory__.getInstance().getTipsBg()
-                ,new Insets(15, 3, 28, 3),new Color(139,119,75)
-        ,null);
+    public static JLabel createLabel_style2(String txt) {
+        return createLabel_root(txt, __Icon9Factory__.getInstance().getTipsBg()
+                , new Insets(15, 3, 28, 3), new Color(139, 119, 75)
+                , null);
     }
-    
+
     /**
      * Creates a new N9Component object.
      *
      * @param txt the txt
      * @return the j label
      */
-    public static JLabel createLabel_style3(String txt)
-    {
-        return createLabel_root(txt,__Icon9Factory__.getInstance().getOrangeBaloon()
-                ,new Insets(4, 9, 9, 9)//3, 9, 8, 9)
-                ,new Color(255,255,255)
-        ,null);
+    public static JLabel createLabel_style3(String txt) {
+        return createLabel_root(txt, __Icon9Factory__.getInstance().getOrangeBaloon()
+                , new Insets(4, 9, 9, 9)
+                , new Color(255, 255, 255)
+                , null);
     }
-    
+
     /**
      * Creates a new N9Component object.
      *
      * @param txt the txt
      * @return the j label
      */
-    public static JLabel createLabel_style4(String txt)
-    {
-        return createLabel_root(txt,__Icon9Factory__.getInstance().getHintBgLightGray()
-                ,new Insets(2, 8, 2, 8),Color.white,new Font("宋体",Font.PLAIN,12));
+    public static JLabel createLabel_style4(String txt) {
+        return createLabel_root(txt, __Icon9Factory__.getInstance().getHintBgLightGray()
+                , new Insets(2, 8, 2, 8), Color.white, new Font("宋体", Font.PLAIN, 12));
     }
 
     /**
@@ -119,22 +113,20 @@ public class N9ComponentFactory extends JLabel
      *
      * @return the image bg panel
      */
-    public static ImageBgPanel createPanel_style1()
-    {
+    public static ImageBgPanel createPanel_style1() {
         return createPanel_style1(new Insets(8, 0, 26, 10));
     }
-    
+
     /**
      * Creates a new N9Component object.
      *
      * @param is the is
      * @return the image bg panel
      */
-    public static ImageBgPanel createPanel_style1(Insets is)
-    {
+    public static ImageBgPanel createPanel_style1(Insets is) {
         ImageBgPanel p = new ImageBgPanel().setN9(__Icon9Factory__.getInstance().getPanelBg());
-        if(is != null)
-            p.setBorder(BorderFactory.createEmptyBorder(is.top,is.left,is.bottom,is.right));
+        if (is != null)
+            p.setBorder(BorderFactory.createEmptyBorder(is.top, is.left, is.bottom, is.right));
         return p;
     }
 

@@ -26,23 +26,17 @@ import javax.swing.plaf.UIResource;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
-    
+public class __UI__ {
+
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
-//        UIManager.put("CheckBox.border",new BorderUIResource(new BERoundBorder().setArcWidth(0)));
-        
+    public static void uiImpl() {
         UIManager.put("CheckBox.margin",new InsetsUIResource(4,3,4,3));
-        UIManager.put("RadioButton.margin",new InsetsUIResource(4,3,4,3));//2, 2, 2, 2));
+        UIManager.put("RadioButton.margin",new InsetsUIResource(4,3,4,3));
         
         UIManager.put("RadioButton.background",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         UIManager.put("CheckBox.background",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
@@ -58,47 +52,42 @@ public class __UI__
         UIManager.put("CheckBox.margin", new InsetsUIResource(1,1,1,1));//默认是2,2,2,2
     }
 
+
     //copy from com.sun.java.swing.plaf.windows.WindowsIconFactory.CheckBoxIcon
     //modified by lornwolf 2012-06-23
     /**
      * CheckBox的图标实现类.
      */
-    private static class CheckBoxIcon implements Icon, Serializable
-    {
-        
+    private static class CheckBoxIcon implements Icon, Serializable {
+
         /* (non-Javadoc)
          * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
          */
-        public void paintIcon(Component c, Graphics g, int x, int y)
-        {
+        public void paintIcon(Component c, Graphics g, int x, int y) {
             JCheckBox cb = (JCheckBox) c;
             ButtonModel model = cb.getModel();
 
             //选中时
-            if(model.isSelected())
-            {
+            if (model.isSelected()) {
                 //处于禁用状态
-                if(!model.isEnabled())
+                if (!model.isEnabled())
                     g.drawImage(__IconFactory__.getInstance().getCheckBoxButtonIcon_disable().getImage(), x, y, null);
-                else
-                {
+                else {
                     //处于被按住状态
-                    if(model.isPressed())
+                    if (model.isPressed())
                         g.drawImage(__IconFactory__.getInstance().getCheckBoxButtonIcon_pressed().getImage(), x, y, null);
                     else
                         g.drawImage(__IconFactory__.getInstance().getCheckBoxButtonIcon_normal().getImage(), x, y, null);
                 }
             }
             //未选中时
-            else
-            {
+            else {
                 //处于禁用状态
-                if(!model.isEnabled())
+                if (!model.isEnabled())
                     g.drawImage(__IconFactory__.getInstance().getCheckBoxButtonIcon_unchecked_disable().getImage(), x, y, null);
-                else
-                {
+                else {
                     //处于被按住状态
-                    if(model.isPressed())
+                    if (model.isPressed())
                         g.drawImage(__IconFactory__.getInstance().getCheckBoxButtonIcon_unchecked_pressed().getImage(), x, y, null);
                     else
                         g.drawImage(__IconFactory__.getInstance().getCheckBoxButtonIcon_unchecked_normal().getImage(), x, y, null);
@@ -109,16 +98,14 @@ public class __UI__
         /* (non-Javadoc)
          * @see javax.swing.Icon#getIconWidth()
          */
-        public int getIconWidth() 
-        {
+        public int getIconWidth() {
             return 24;
         }
 
         /* (non-Javadoc)
          * @see javax.swing.Icon#getIconHeight()
          */
-        public int getIconHeight() 
-        {
+        public int getIconHeight() {
             return 24;
         }
     } // end class CheckBoxIcon
@@ -128,9 +115,8 @@ public class __UI__
     /**
      * RadioButton的图标实现类.
      */
-    private static class RadioButtonIcon implements Icon, UIResource, Serializable
-    {
-        
+    private static class RadioButtonIcon implements Icon, UIResource, Serializable {
+
         /* (non-Javadoc)
          * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
          */
@@ -139,30 +125,26 @@ public class __UI__
             ButtonModel model = b.getModel();
 
             //选中时
-            if(model.isSelected())
-            {
+            if (model.isSelected()) {
                 //处于禁用状态
-                if(!model.isEnabled())
+                if (!model.isEnabled())
                     g.drawImage(__IconFactory__.getInstance().getRadioButtonIcon_disable().getImage(), x, y, null);
-                else
-                {
+                else {
                     //处于被按住状态
-                    if(model.isPressed())
+                    if (model.isPressed())
                         g.drawImage(__IconFactory__.getInstance().getRadioButtonIcon_pressed().getImage(), x, y, null);
                     else
                         g.drawImage(__IconFactory__.getInstance().getRadioButtonIcon_normal().getImage(), x, y, null);
                 }
             }
             //未选中时
-            else
-            {
+            else {
                 //处于禁用状态
-                if(!model.isEnabled())
+                if (!model.isEnabled())
                     g.drawImage(__IconFactory__.getInstance().getRadioButtonIcon_unchecked_disable().getImage(), x, y, null);
-                else
-                {
+                else {
                     //处于被按住状态
-                    if(model.isPressed())
+                    if (model.isPressed())
                         g.drawImage(__IconFactory__.getInstance().getRadioButtonIcon_unchecked_pressed().getImage(), x, y, null);
                     else
                         g.drawImage(__IconFactory__.getInstance().getRadioButtonIcon_unchecked_normal().getImage(), x, y, null);
@@ -173,16 +155,14 @@ public class __UI__
         /* (non-Javadoc)
          * @see javax.swing.Icon#getIconWidth()
          */
-        public int getIconWidth()
-        {
+        public int getIconWidth() {
             return 24;
         }
 
         /* (non-Javadoc)
          * @see javax.swing.Icon#getIconHeight()
          */
-        public int getIconHeight()
-        {
+        public int getIconHeight() {
             return 24;
         }
     } // end class RadioButtonIcon

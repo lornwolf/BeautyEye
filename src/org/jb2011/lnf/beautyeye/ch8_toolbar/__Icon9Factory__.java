@@ -21,9 +21,8 @@ import org.jb2011.ninepatch4j.NinePatch;
  * @author lornwolf
  * @version 1.0
  */
-public class __Icon9Factory__ extends RawCache<NinePatch>
-{
-    
+public class __Icon9Factory__ extends RawCache<NinePatch> {
+
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs/np";
 
@@ -35,19 +34,14 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return single instance of __Icon9Factory__
      */
-    public static __Icon9Factory__ getInstance()
-    {
-        if(instance==null)
+    public static __Icon9Factory__ getInstance() {
+        if (instance==null)
             instance = new __Icon9Factory__();
         return instance;
     }
-    
-    /* (non-Javadoc)
-     * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
-     */
+
     @Override
-    protected NinePatch getResource(String relativePath, Class baseClass)
-    {
+    protected NinePatch getResource(String relativePath, Class baseClass) {
         return NinePatchHelper.createNinePatch(baseClass.getResource(relativePath), false);
     }
 
@@ -57,74 +51,43 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      * @param relativePath the relative path
      * @return the raw
      */
-    public NinePatch getRaw(String relativePath)
-    {
+    public NinePatch getRaw(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
 
-    
-//    public NinePatch getToggleButtonIcon_CheckedGreen()
-//    {
-//        return getRaw(IMGS_ROOT+"/toggle_button_selected.9.png");
-//    }
-    
     /**
      * Gets the tool bar bg_ north.
      *
      * @return the tool bar bg_ north
      */
-    public NinePatch getToolBarBg_NORTH()
-    {
+    public NinePatch getToolBarBg_NORTH() {
         return getRaw(IMGS_ROOT+"/toolbar_bg1.9.png");
     }
-    
+
     /**
      * Gets the tool bar bg_ south.
      *
      * @return the tool bar bg_ south
      */
-    public NinePatch getToolBarBg_SOUTH()
-    {
+    public NinePatch getToolBarBg_SOUTH() {
         return getRaw(IMGS_ROOT+"/toolbar_bg1_SOUTH.9.png");
     }
-    
+
     /**
      * Gets the tool bar bg_ west.
      *
      * @return the tool bar bg_ west
      */
-    public NinePatch getToolBarBg_WEST()
-    {
+    public NinePatch getToolBarBg_WEST() {
         return getRaw(IMGS_ROOT+"/toolbar_bg1_WEST.9.png");
     }
-    
+
     /**
      * Gets the tool bar bg_ east.
      *
      * @return the tool bar bg_ east
      */
-    public NinePatch getToolBarBg_EAST()
-    {
+    public NinePatch getToolBarBg_EAST() {
         return getRaw(IMGS_ROOT+"/toolbar_bg1_EAST.9.png");
     }
-    
-//    /**
-//     * Gets the tool bar border_ h_ float touch.
-//     *
-//     * @return the tool bar border_ h_ float touch
-//     */
-//    public NinePatch getToolBarBorder_H_FloatTouch()
-//    {
-//        return getRaw(IMGS_ROOT+"/tollbar_border_h_float_touch.9.png");
-//    }
-//    
-//    /**
-//     * Gets the tool bar border_ v_ float touch.
-//     *
-//     * @return the tool bar border_ v_ float touch
-//     */
-//    public NinePatch getToolBarBorder_V_FloatTouch()
-//    {
-//        return getRaw(IMGS_ROOT+"/tollbar_border_v_float_touch.9.png");
-//    }
 }

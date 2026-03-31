@@ -23,23 +23,15 @@ import javax.swing.JMenuItem;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicMenuItemUI;
 
-// TODO: Auto-generated Javadoc
 /**
  * JMenuItem的UI实现类。.
  *
  * @author lornwolf
  */
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
-//特别注意：BasicMenuItemUI中针对Vista及后来的Windows版本预设了很多其它LNF不需要的属性，
-//预设的属性详见BasicMenuItemUI及WindowsLookAndFeel中的initVistaComponentDefaults(..)方法.
-//这些属性只能会在vista及更新的windows平台上过运行时才会起效，所以除此之外的windows测不出来,
-//容易出现ui视觉差异.
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
-public class BEMenuItemUI extends BasicMenuItemUI//WindowsMenuItemUI
-{
-    
+public class BEMenuItemUI extends BasicMenuItemUI {
+
     /** 是否强制单项透明(当强制不透明时，在普通状态下该item将不会被绘制背景）. */
-    private static boolean enforceTransparent = true;// TODO 可以提炼成UI属性
+    private static boolean enforceTransparent = true;
     
     /**
      * Creates the ui.
@@ -47,18 +39,13 @@ public class BEMenuItemUI extends BasicMenuItemUI//WindowsMenuItemUI
      * @param c the c
      * @return the component ui
      */
-    public static ComponentUI createUI(JComponent c)
-    {
+    public static ComponentUI createUI(JComponent c) {
         return new BEMenuItemUI();
     }
 
 
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicMenuItemUI#paintBackground(java.awt.Graphics, javax.swing.JMenuItem, java.awt.Color)
-     */
     @Override
-    protected void paintBackground(Graphics g, JMenuItem menuItem, Color bgColor)
-    {
+    protected void paintBackground(Graphics g, JMenuItem menuItem, Color bgColor) {
         // see parent!
         ButtonModel model = menuItem.getModel();
         Color oldColor = g.getColor();
@@ -68,16 +55,12 @@ public class BEMenuItemUI extends BasicMenuItemUI//WindowsMenuItemUI
         Graphics2D g2 = (Graphics2D)g;
         
         if (model.isArmed()
-                || (menuItem instanceof JMenu && model.isSelected()))
-        {
+                || (menuItem instanceof JMenu && model.isSelected())) {
             //菜单项的样式绘制(用NinePatch图来填充)
             __Icon9Factory__.getInstance().getBgIcon_ItemSelected()
                     .draw(g2, 0, 0, menuWidth, menuHeight);
-        }
-        else
-        {
-            if(!enforceTransparent)
-            {
+        } else {
+            if (!enforceTransparent) {
                 g.setColor(menuItem.getBackground());
                 g.fillRect(0, 0, menuWidth, menuHeight);
             }

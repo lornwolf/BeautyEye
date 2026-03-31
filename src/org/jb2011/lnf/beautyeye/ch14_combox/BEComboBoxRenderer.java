@@ -22,16 +22,14 @@ import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 import org.jb2011.lnf.beautyeye.utils.BEUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * JComboBox组件下拉选项的render默认实现类.
  * 
  * @author lornwolf, 2012-07-05
  * @see BEComboBoxUI
  */
-public class BEComboBoxRenderer extends BasicComboBoxRenderer 
-{
-    
+public class BEComboBoxRenderer extends BasicComboBoxRenderer {
+
     /** 当前下拉框里的item是否被选中：用于是否要将背景填充选中样式时使用. */
     private boolean selected = false;
     
@@ -43,14 +41,12 @@ public class BEComboBoxRenderer extends BasicComboBoxRenderer
      *
      * @param ui the ui
      */
-    public BEComboBoxRenderer(BEComboBoxUI ui)
-    {
+    public BEComboBoxRenderer(BEComboBoxUI ui) {
         super();
         this.ui = ui;
         //设置成透明背景则意味着不需要背景填充，但本类中的应用场景有点特殊
         //——默认的render的UI里不需要绘制背景的情况下本类才可进行NinePatch图作为背景进行填充
         setOpaque(false);
-        //TODO 此border（render的内衬）可以作为一个UIManager的属性哦，方便以后设置
         //注：此内衬是决定列表单元间的上下左右空白的关键哦！
         setBorder(BorderFactory.createEmptyBorder(5, 4, 5, 8));//此设置是与Combox.border UI属性配合哦
     }
@@ -64,8 +60,7 @@ public class BEComboBoxRenderer extends BasicComboBoxRenderer
             Object value,
             int index, 
             boolean isSelected, 
-            boolean cellHasFocus)
-    {
+            boolean cellHasFocus) {
         Component c = super.getListCellRendererComponent(list
                 , value, index, isSelected, cellHasFocus);
         //add by jb2011：保存选中状态
@@ -78,36 +73,29 @@ public class BEComboBoxRenderer extends BasicComboBoxRenderer
     /* (non-Javadoc)
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
-    public void paintComponent(Graphics g) 
-    {
+    public void paintComponent(Graphics g) {
         //当下拉选项弹出时 且 该item是被选中时才需要把背景填充成选中样式
-        if (ui.isPopupVisible(null) && selected)
-        {
+        if (ui.isPopupVisible(null) && selected) {
             org.jb2011.lnf.beautyeye.ch9_menu.__Icon9Factory__.getInstance().getBgIcon_ItemSelected()
                 .draw((Graphics2D)g, 0, 0, this.getWidth(), this.getHeight());
         }
         //下拉选项未弹出时JComboBox的背景样式
         //按理说，本类已设置成透明而无须填充背景，但本应用场景中，只能在默认Ui不填充背景的情况下才
         //能完成自定义NinePatch背景的填充。见 ComponentUI.update(Graphics g, JComponent c)方法
-        else
-        {
+        else {
             //只有在popup不可见 且 在combox获得焦点的情况下需要绘制好个大圆角背景以示焦点
-            if(!ui.isPopupVisible(null)
+            if (!ui.isPopupVisible(null)
                     && ui.getCombox().isFocusOwner()//没有此行，则意味着它在禁用等状态时任然会如此绘制（实际是不需要绘制）
-                    )
-            {
+                    ) {
                 g.setColor(this.getBackground());
              
                 //本Insets取this.getInsets()是符合Sun的设计初衷的，但是不合理（本身isPopupVisible==false
                 //时的背景就是特殊情况，不能与下拉项同等视之）,所以此处用自定义的Insets来处理则在UI展现上更为合理 。
-                //TODO 这个Instes可以作为UI属性“ComboBox.popupNoVisibleBgInstes”方便以后设置，暂时先硬编码吧，以后再说
-                Insets is = new Insets(2,0,2,3);//this.getInsets();////此设置是与Combox.border UI属性和render的border配合哦
-//                g.fillRect(is.left, is.top
-//                     , this.getWidth()-is.left-is.right
-//                     , this.getHeight()-is.top-is.bottom);
+                //这个Instes可以作为UI属性"ComboBox.popupNoVisibleBgInstes"方便以后设置，暂时先硬编码吧，以后再说
+                Insets is = new Insets(2,0,2,3);//此设置是与Combox.border UI属性和render的border配合哦
                 BEUtils.fillTextureRoundRec((Graphics2D)g, this.getBackground(), is.left, is.top
                         , this.getWidth()-is.left-is.right
-                        , this.getHeight()-is.top-is.bottom,20,20);//20,20
+                        , this.getHeight()-is.top-is.bottom,20,20);
             }
         }
 
@@ -115,6 +103,7 @@ public class BEComboBoxRenderer extends BasicComboBoxRenderer
         //N9图背景因先绘将会被覆盖哦。所以要使用N9图作为选中时的背景则前提是本组件必须是透明
         super.paintComponent(g);
      }
+
 
     //copy from BasicComboBoxRenderer and modified by jb2011
     /**
@@ -132,16 +121,14 @@ public class BEComboBoxRenderer extends BasicComboBoxRenderer
      * has been added to the <code>java.beans</code> package.
      * Please see {@link java.beans.XMLEncoder}.
      */
-    public static class UIResource extends BEComboBoxRenderer implements javax.swing.plaf.UIResource 
-    {
+    public static class UIResource extends BEComboBoxRenderer implements javax.swing.plaf.UIResource {
         
         /**
          * Instantiates a new uI resource.
          *
          * @param ui the ui
          */
-        public UIResource(BEComboBoxUI ui)
-        {
+        public UIResource(BEComboBoxUI ui) {
             super(ui);
         }
     }
