@@ -35,6 +35,7 @@ public class __UI__ {
         UIManager.put("control",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         UIManager.put("Separator.foreground",new ColorUIResource(new Color(180,180,180)));
         UIManager.put("ToolTip.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));
+        UIManager.put("ToolTip.font", new javax.swing.plaf.FontUIResource("Microsoft YaHei", java.awt.Font.PLAIN, 14));
         
         UIManager.put("Separator.background",new ColorUIResource(Color.white));
         UIManager.put("Panel.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));
