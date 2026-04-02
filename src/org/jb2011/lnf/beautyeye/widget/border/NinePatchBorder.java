@@ -70,6 +70,11 @@ public class NinePatchBorder extends AbstractBorder {
             int iw = width - insets.left - insets.right;
             int ih = height - insets.top - insets.bottom;
             
+            // Protect the interior window! Clip out the central pane so our shadow layers don't overlay the UI (darkening it like sunglasses).
+            java.awt.geom.Area ringClip = new java.awt.geom.Area(new java.awt.Rectangle(x, y, width, height));
+            ringClip.subtract(new java.awt.geom.Area(new java.awt.geom.RoundRectangle2D.Double(ix, iy, iw, ih, 26, 26)));
+            g2.setClip(ringClip);
+            
             // Drop shadow parameters
             int shadowSize = 18;
             int yOffset = 4;
