@@ -188,6 +188,9 @@ public class BERootPaneUI extends BasicRootPaneUI
         root = (JRootPane)c;
         int style = root.getWindowDecorationStyle();
         
+        root.setOpaque(false);
+        root.setBackground(new java.awt.Color(0,0,0,0));
+        
         if (style != JRootPane.NONE) 
         {
             installClientDecorations(root);
