@@ -11,9 +11,12 @@
  */
 package org.jb2011.lnf.beautyeye.ch1_titlepane;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -58,6 +61,31 @@ import org.jb2011.lnf.beautyeye.utils.WindowTranslucencyHelper;
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
 public class BERootPaneUI extends BasicRootPaneUI 
 {
+    @Override
+    public void update(Graphics g, JComponent c) {
+        if (!BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+            
+            Color bg = null;
+            JRootPane root = (JRootPane) c;
+            if (root.getContentPane() != null) {
+                bg = root.getContentPane().getBackground();
+            }
+            if (bg == null) bg = UIManager.getColor("Panel.background");
+            
+            g2.setColor(bg);
+            Insets i = c.getInsets();
+            // 使用更大的26号圆角
+            g2.fillRoundRect(i.left, i.top, c.getWidth() - i.left - i.right, c.getHeight() - i.top - i.bottom, 26, 26);
+            g2.dispose();
+        } else if (c.isOpaque()) {
+            g.setColor(c.getBackground());
+            g.fillRect(0, 0, c.getWidth(), c.getHeight());
+        }
+        paint(g, c);
+    }
+
     /**
      * Keys to lookup borders in defaults table.
      */
@@ -163,6 +191,10 @@ public class BERootPaneUI extends BasicRootPaneUI
         if (style != JRootPane.NONE) 
         {
             installClientDecorations(root);
+        }
+        
+        if (root.getContentPane() instanceof JComponent) {
+            ((JComponent) root.getContentPane()).setOpaque(false);
         }
     }
 
@@ -521,6 +553,12 @@ public class BERootPaneUI extends BasicRootPaneUI
             if (style != JRootPane.NONE) 
             {
                 installClientDecorations(root);
+            }
+        }
+        else if (propertyName.equals("contentPane")) 
+        {
+            if (e.getNewValue() instanceof JComponent) {
+                ((JComponent) e.getNewValue()).setOpaque(false);
             }
         }
         else if (propertyName.equals("ancestor")) 

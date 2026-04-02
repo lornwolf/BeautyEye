@@ -1001,13 +1001,14 @@ public class BETitlePane extends JComponent {
             ,int height,boolean actived)
     {
         Graphics2D g2 = (Graphics2D)g;
+        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 
         //是用图形进行填充的
         Paint oldpaint = g2.getPaint();
         g2.setPaint(BEUtils.createTexturePaint(
                 actived?__IconFactory__.getInstance().getFrameTitleHeadBg_active().getImage()
                         :__IconFactory__.getInstance().getFrameTitleHeadBg_inactive().getImage()));
-        g2.fillRect(x, y, width, height);
+        g2.fillRoundRect(x, y, width, height + 10, 26, 26);
         g2.setPaint(oldpaint);
     }
 
