@@ -60,35 +60,10 @@ public class NinePatchBorder extends AbstractBorder {
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         if (c instanceof javax.swing.JRootPane && !org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
-            // FORGET straight 9-patch textures! They have baked-in sharp corners that cause floating artifacts when sheared!
-            // We mathematically draw a perfectly round, flawless 15-layer soft drop shadow.
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-            
-            int ix = x + insets.left;
-            int iy = y + insets.top;
-            int iw = width - insets.left - insets.right;
-            int ih = height - insets.top - insets.bottom;
-            
-            // Protect the interior window! Clip out the central pane so our shadow layers don't overlay the UI (darkening it like sunglasses).
-            java.awt.geom.Area ringClip = new java.awt.geom.Area(new java.awt.Rectangle(x, y, width, height));
-            ringClip.subtract(new java.awt.geom.Area(new java.awt.geom.RoundRectangle2D.Double(ix, iy, iw, ih, 26, 26)));
-            g2.setClip(ringClip);
-            
-            // Drop shadow parameters
-            int shadowSize = 18;
-            int yOffset = 4;
-            int alphaStep = 4; // Additive alpha per layer
-            
-            // Draw from outside in
-            for (int i = shadowSize; i >= 0; i--) {
-                g2.setColor(new java.awt.Color(0, 0, 0, alphaStep));
-                // ensure outer radiuses perfectly follow concentricity: r_outer = r_inner + border_thickness
-                int arc = 26 + i * 2; 
-                g2.fillRoundRect(ix - i, iy - i + yOffset, iw + i * 2, ih + i * 2, arc, arc);
-            }
-            
-            g2.dispose();
+            // FORGET straight 9-patch textures AND clipping paths! 
+            // The shadow is strictly and perfectly drawn IN THE BACKGROUND of BERootPaneUI itself now.
+            // This class (NinePatchBorder) now simply bows out gracefully for translucent frames, leaving the perfect composite intact.
+            return;
         } else {
             // Normal execution for other components or opaque frames
             this.np.draw((Graphics2D)g, x, y, width, height);

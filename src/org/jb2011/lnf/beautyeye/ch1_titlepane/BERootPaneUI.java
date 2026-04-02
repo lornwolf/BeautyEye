@@ -67,6 +67,22 @@ public class BERootPaneUI extends BasicRootPaneUI
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
             
+            Insets i = c.getInsets();
+            int ix = i.left;
+            int iy = i.top;
+            int iw = c.getWidth() - i.left - i.right;
+            int ih = c.getHeight() - i.top - i.bottom;
+            
+            // Draw soft drop shadow FIRST, so the perfectly anti-aliased background can overpaint it! (Fixes jagged clipping edges)
+            int shadowSize = 18;
+            int yOffset = 4;
+            int alphaStep = 2; // Lighter shadow!
+            for (int j = shadowSize; j >= 0; j--) {
+                g2.setColor(new java.awt.Color(0, 0, 0, alphaStep));
+                int arc = 26 + j * 2; 
+                g2.fillRoundRect(ix - j, iy - j + yOffset, iw + j * 2, ih + j * 2, arc, arc);
+            }
+            
             Color bg = null;
             JRootPane root = (JRootPane) c;
             if (root.getContentPane() != null) {
@@ -75,9 +91,8 @@ public class BERootPaneUI extends BasicRootPaneUI
             if (bg == null) bg = UIManager.getColor("Panel.background");
             
             g2.setColor(bg);
-            Insets i = c.getInsets();
-            // 使用更大的26号圆角
-            g2.fillRoundRect(i.left, i.top, c.getWidth() - i.left - i.right, c.getHeight() - i.top - i.bottom, 26, 26);
+            // 使用更大的26号圆角覆盖在阴影上，实现完美平滑过渡！
+            g2.fillRoundRect(ix, iy, iw, ih, 26, 26);
             g2.dispose();
         } else if (c.isOpaque()) {
             g.setColor(c.getBackground());
