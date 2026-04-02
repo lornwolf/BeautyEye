@@ -11,6 +11,7 @@
  */
 package org.jb2011.lnf.beautyeye.ch1_titlepane;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -67,19 +68,22 @@ public class BERootPaneUI extends BasicRootPaneUI
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
             
+            // 动态圆角半径：开启则为 26，否则为 0 (标准直角)
+            int radius = Boolean.TRUE.equals(c.getClientProperty("BeautyEye.frameRound")) ? 26 : 0;
+            
             Insets i = c.getInsets();
             int ix = i.left;
             int iy = i.top;
             int iw = c.getWidth() - i.left - i.right;
             int ih = c.getHeight() - i.top - i.bottom;
             
-            // Draw soft drop shadow FIRST, so the perfectly anti-aliased background can overpaint it! (Fixes jagged clipping edges)
+            // 绘制高质量物理分层阴影，彻底告别九宫格黑边/白框
             int shadowSize = 18;
             int yOffset = 4;
-            int alphaStep = 2; // Lighter shadow!
+            int alphaStep = 2; 
             for (int j = shadowSize; j >= 0; j--) {
                 g2.setColor(new java.awt.Color(0, 0, 0, alphaStep));
-                int arc = 26 + j * 2; 
+                int arc = radius + j * 2; 
                 g2.fillRoundRect(ix - j, iy - j + yOffset, iw + j * 2, ih + j * 2, arc, arc);
             }
             
@@ -90,9 +94,9 @@ public class BERootPaneUI extends BasicRootPaneUI
             }
             if (bg == null) bg = UIManager.getColor("Panel.background");
             
+            g2.setComposite(AlphaComposite.SrcOver);
             g2.setColor(bg);
-            // 使用更大的26号圆角覆盖在阴影上，实现完美平滑过渡！
-            g2.fillRoundRect(ix, iy, iw, ih, 26, 26);
+            g2.fillRoundRect(ix, iy, iw, ih, radius, radius);
             g2.dispose();
         } else if (c.isOpaque()) {
             g.setColor(c.getBackground());
@@ -203,16 +207,18 @@ public class BERootPaneUI extends BasicRootPaneUI
         root = (JRootPane)c;
         int style = root.getWindowDecorationStyle();
         
-        root.setOpaque(false);
-        root.setBackground(new java.awt.Color(0,0,0,0));
+        // 如果系统支持透明且样式是半透明，则必须开启根面板透明，否则无法实现任何阴影效果
+        if (!BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
+            root.setOpaque(false);
+            root.setBackground(new java.awt.Color(0,0,0,0));
+            if (root.getContentPane() instanceof JComponent) {
+                ((JComponent) root.getContentPane()).setOpaque(false);
+            }
+        }
         
         if (style != JRootPane.NONE) 
         {
             installClientDecorations(root);
-        }
-        
-        if (root.getContentPane() instanceof JComponent) {
-            ((JComponent) root.getContentPane()).setOpaque(false);
         }
     }
 
@@ -395,14 +401,6 @@ public class BERootPaneUI extends BasicRootPaneUI
         if (!BeautyEyeLNFHelper.__isFrameBorderOpaque() 
                 && window != null)
         {
-            //** 20111222 by jb2011，让窗口全透明（用以实现窗口的透明边框效果）
-            // BUG：1）目前可知，在jdk1.7.0_u6下，JDialog的半透明边框的透明度比原设计深一倍
-            // BUG：2）目前可知，在jdk1.6.0_u33下+win7平台下，JFrame窗口被调置成透明后，
-            //                该窗口内所在文本都会被反走样（不管你要没有要求反走样），真悲具，这应该
-            //                是官方AWTUtilities.setWindowOpaque(..)bug导致的,1.7.0_u6同样存在该问题，
-            //                使用BeautyEye时，遇到这样的问题只能自行使用__isFrameBorderOpaque中指定的
-            //                不透明边框才行（这样此类的以下代码就不用执行，也就不用触发该bug了），但
-            //                JDialog不受此bug影响，诡异！
             WindowTranslucencyHelper.setWindowOpaque(window, false);
             root.revalidate();
             root.repaint();
@@ -575,9 +573,23 @@ public class BERootPaneUI extends BasicRootPaneUI
         }
         else if (propertyName.equals("contentPane")) 
         {
-            if (e.getNewValue() instanceof JComponent) {
+            if (e.getNewValue() instanceof JComponent && Boolean.TRUE.equals(root.getClientProperty("BeautyEye.frameRound"))) {
                 ((JComponent) e.getNewValue()).setOpaque(false);
             }
+        }
+        else if (propertyName.equals("BeautyEye.frameRound"))
+        {
+            // 动态切换圆角模式！
+            boolean rounded = Boolean.TRUE.equals(e.getNewValue());
+            root.setOpaque(!rounded);
+            if (root.getContentPane() instanceof JComponent) {
+                ((JComponent) root.getContentPane()).setOpaque(!rounded);
+            }
+            if (window != null && !BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
+                WindowTranslucencyHelper.setWindowOpaque(window, !rounded);
+            }
+            root.revalidate();
+            root.repaint();
         }
         else if (propertyName.equals("ancestor")) 
         {
