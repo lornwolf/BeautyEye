@@ -11,17 +11,20 @@
  */
 package org.jb2011.lnf.beautyeye.ch1_titlepane;
 
+import org.jb2011.lnf.beautyeye.utils.BEUtils;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.LayoutManager2;
@@ -53,23 +56,27 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import org.jb2011.lnf.beautyeye.utils.WindowTranslucencyHelper;
 
 /**
- * 窗体的UI实现.
+ * 绐椾綋鐨刄I瀹炵幇.
  * 
  * @author lornwolf
  */
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
-//* 本类的实现参考了java1.5中的MetalRootPaneUI.
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 涓€浜涜鏄?Start
+//* 鏈被鐨勫疄鐜板弬鑰冧簡java1.5涓殑MetalRootPaneUI.
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 涓€浜涜鏄?END
 public class BERootPaneUI extends BasicRootPaneUI 
 {
     @Override
-    public void update(Graphics g, JComponent c) {
-        if (!BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+    public void paint(Graphics g, JComponent c) {
+        boolean rounded = BEUtils.isFrameRound(c);
+        if (rounded) {
+            // 缁堟瀬鍔寔锛氬彧瑕佹湁灞炴€э紝涓嶇 LNF 鐘舵€佸浣曪紝寮哄埗寮€鍚€忔槑
+            Window win = SwingUtilities.getWindowAncestor(c);
+            if (win != null && win.isOpaque()) {
+                WindowTranslucencyHelper.setWindowOpaque(win, false);
+            }
             
-            // 动态圆角半径：开启则为 26，否则为 0 (标准直角)
-            int radius = Boolean.TRUE.equals(c.getClientProperty("BeautyEye.frameRound")) ? 26 : 0;
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
             
             Insets i = c.getInsets();
             int ix = i.left;
@@ -77,23 +84,43 @@ public class BERootPaneUI extends BasicRootPaneUI
             int iw = c.getWidth() - i.left - i.right;
             int ih = c.getHeight() - i.top - i.bottom;
             
-            // 绘制高质量物理分层阴影，彻底告别九宫格黑边/白框
+            // 瀹炴椂瑁佸垏锛岀粷瀵逛笉鐣欐瑙?
+            Shape oldClip = g2.getClip();
+            RoundRectangle2D.Float roundClip = new RoundRectangle2D.Float(ix, iy, iw, ih, 26, 26);
+            if (oldClip == null) {
+                g2.setClip(roundClip);
+            } else {
+                Area area = new Area(oldClip);
+                area.intersect(new Area(roundClip));
+                g2.setClip(area);
+            }
+        }
+        super.paint(g, c);
+    }
+
+    @Override
+    public void update(Graphics g, JComponent c) {
+        boolean rounded = BEUtils.isFrameRound(c);
+        if (rounded || !BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+            
+            // 基础参数
+            int radius = rounded ? 26 : 0;
+            Insets i = c.getInsets();
+            int ix = i.left, iy = i.top, iw = c.getWidth() - i.left - i.right, ih = c.getHeight() - i.top - i.bottom;
+
+            // 1. 绘制高质量分层阴影
             int shadowSize = 18;
-            int yOffset = 4;
-            int alphaStep = 2; 
             for (int j = shadowSize; j >= 0; j--) {
-                g2.setColor(new java.awt.Color(0, 0, 0, alphaStep));
+                g2.setColor(new java.awt.Color(0, 0, 0, 2)); 
                 int arc = radius + j * 2; 
-                g2.fillRoundRect(ix - j, iy - j + yOffset, iw + j * 2, ih + j * 2, arc, arc);
+                g2.fillRoundRect(ix - j, iy - j + 4, iw + j * 2, ih + j * 2, arc, arc);
             }
-            
-            Color bg = null;
+
+            // 2. 绘制圆角背景
             JRootPane root = (JRootPane) c;
-            if (root.getContentPane() != null) {
-                bg = root.getContentPane().getBackground();
-            }
-            if (bg == null) bg = UIManager.getColor("Panel.background");
-            
+            Color bg = (root.getContentPane() != null) ? root.getContentPane().getBackground() : UIManager.getColor("Panel.background");
             g2.setComposite(AlphaComposite.SrcOver);
             g2.setColor(bg);
             g2.fillRoundRect(ix, iy, iw, ih, radius, radius);
@@ -120,15 +147,15 @@ public class BERootPaneUI extends BasicRootPaneUI
         , "RootPane.warningDialogBorder"
     };
     
-    //* 2012-09-19 在BeautyEye v3.2中此常量被lornwolf取消了，因为
-    //* v3.2中启用了相比原MetalRootPaneUI中更精确更好的边框拖放算法
+    //* 2012-09-19 鍦˙eautyEye v3.2涓甯搁噺琚玪ornwolf鍙栨秷浜嗭紝鍥犱负
+    //* v3.2涓惎鐢ㄤ簡鐩告瘮鍘烳etalRootPaneUI涓洿绮剧‘鏇村ソ鐨勮竟妗嗘嫋鏀剧畻娉?
 
     /**
      * Region from edges that dragging is active from.
      */
-    //窗口可拖动敏感触点区域大小要设置多大取决于你知定义border的insets，默认是 5;
+    //绐楀彛鍙嫋鍔ㄦ晱鎰熻Е鐐瑰尯鍩熷ぇ灏忚璁剧疆澶氬ぇ鍙栧喅浜庝綘鐭ュ畾涔塨order鐨刬nsets锛岄粯璁ゆ槸 5;
     private static final int BORDER_DRAG_THICKNESS = 5;
-        //BeautyEyeLNFHelper.__getFrameBorder_BORDER_DRAG_THICKNESS();//为了便 得用户的敏感触点区更大，提高用户体验，此值可加大
+        //BeautyEyeLNFHelper.__getFrameBorder_BORDER_DRAG_THICKNESS();//涓轰簡渚?寰楃敤鎴风殑鏁忔劅瑙︾偣鍖烘洿澶э紝鎻愰珮鐢ㄦ埛浣撻獙锛屾鍊煎彲鍔犲ぇ
 
     /**
      * Window the <code>JRootPane</code> is in.
@@ -171,7 +198,7 @@ public class BERootPaneUI extends BasicRootPaneUI
     private Cursor lastCursor =
         Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
     
-    //* 由jb2011 增加：用于在窗口被激活与不激活时自动设置它的透明度（不激活时设为半透明） 
+    //* 鐢眏b2011 澧炲姞锛氱敤浜庡湪绐楀彛琚縺娲讳笌涓嶆縺娲绘椂鑷姩璁剧疆瀹冪殑閫忔槑搴︼紙涓嶆縺娲绘椂璁句负鍗婇€忔槑锛?
     /** The windows listener. */
     private WindowListener windowsListener = null;
     
@@ -200,17 +227,59 @@ public class BERootPaneUI extends BasicRootPaneUI
      *
      * @param c the JRootPane to install state onto
      */
+    /**
+     * 透明层级面板：它是所有组件的“出口”，在这里强制实施 26px 的圆角裁切。
+     */
+    private class BEClipLayeredPane extends JLayeredPane {
+        @Override
+        public void paintChildren(Graphics g) {
+            if (BEUtils.isFrameRound(root)) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                Insets i = root.getInsets();
+                // 这里的坐标是相对于 LayeredPane 的，所以通常是 0,0
+                int iw = root.getWidth() - i.left - i.right;
+                int ih = root.getHeight() - i.top - i.bottom;
+                
+                // 终极拦截：无论子组件如何画，在这里都被统一修剪
+                g2.setClip(new java.awt.geom.RoundRectangle2D.Float(0, 0, iw, ih, 26, 26));
+                super.paintChildren(g2);
+                g2.dispose();
+            } else {
+                super.paintChildren(g);
+            }
+        }
+    }
+
     public void installUI(JComponent c) 
     { 
         super.installUI(c);
         
         root = (JRootPane)c;
         int style = root.getWindowDecorationStyle();
+        root.addPropertyChangeListener(this);
         
-        // 如果系统支持透明且样式是半透明，则必须开启根面板透明，否则无法实现任何阴影效果
-        if (!BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
+        boolean rounded = BEUtils.isFrameRound(root);
+        // 信号同步：如果开启了圆角，强行劫持透明度与层级面板
+        if (rounded || !BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
             root.setOpaque(false);
             root.setBackground(new java.awt.Color(0,0,0,0));
+            
+            // 物理替换内容容器
+            if (!(root.getLayeredPane() instanceof BEClipLayeredPane)) {
+                JLayeredPane oldPane = root.getLayeredPane();
+                BEClipLayeredPane newPane = new BEClipLayeredPane();
+                newPane.setOpaque(false);
+                
+                // 迁移组件
+                Component[] comps = oldPane.getComponents();
+                for (Component comp : comps) {
+                    newPane.add(comp, oldPane.getLayer(comp));
+                }
+                root.setLayeredPane(newPane);
+            }
+            
             if (root.getContentPane() instanceof JComponent) {
                 ((JComponent) root.getContentPane()).setOpaque(false);
             }
@@ -310,7 +379,7 @@ public class BERootPaneUI extends BasicRootPaneUI
             window.addMouseListener(mouseInputListener);
             window.addMouseMotionListener(mouseInputListener);
             
-            //* add by JS 2011-12-27,给窗口增加监听器：在不活动时设置窗口半透明，活动时还原
+            //* add by JS 2011-12-27,缁欑獥鍙ｅ鍔犵洃鍚櫒锛氬湪涓嶆椿鍔ㄦ椂璁剧疆绐楀彛鍗婇€忔槑锛屾椿鍔ㄦ椂杩樺師
             if(BeautyEyeLNFHelper.translucencyAtFrameInactive)
             {
                 if(windowsListener == null)
@@ -393,11 +462,11 @@ public class BERootPaneUI extends BasicRootPaneUI
         installWindowListeners(root, root.getParent());
         installLayout(root);
         
-        //只有在窗口边框是半透明的情况下，以下才需要设置窗口透明
-        //* 注意：本类中的此处代码的目的就是为了实现半透明边框窗口的
-        //* 正常显示，而且仅针对此目的。如果该边框不为透明，则此处也就不需要设置
-        //* 窗口透明了，那么如果你的程序其它地方需要窗口透明的话，自行.setWindowOpaque(..)
-        //* 就行了，由开发者自先决定，此处就不承载过多的要求了
+        //鍙湁鍦ㄧ獥鍙ｈ竟妗嗘槸鍗婇€忔槑鐨勬儏鍐典笅锛屼互涓嬫墠闇€瑕佽缃獥鍙ｉ€忔槑
+        //* 娉ㄦ剰锛氭湰绫讳腑鐨勬澶勪唬鐮佺殑鐩殑灏辨槸涓轰簡瀹炵幇鍗婇€忔槑杈规绐楀彛鐨?
+        //* 姝ｅ父鏄剧ず锛岃€屼笖浠呴拡瀵规鐩殑銆傚鏋滆杈规涓嶄负閫忔槑锛屽垯姝ゅ涔熷氨涓嶉渶瑕佽缃?
+        //* 绐楀彛閫忔槑浜嗭紝閭ｄ箞濡傛灉浣犵殑绋嬪簭鍏跺畠鍦版柟闇€瑕佺獥鍙ｉ€忔槑鐨勮瘽锛岃嚜琛?setWindowOpaque(..)
+        //* 灏辫浜嗭紝鐢卞紑鍙戣€呰嚜鍏堝喅瀹氾紝姝ゅ灏变笉鎵胯浇杩囧鐨勮姹備簡
         if (!BeautyEyeLNFHelper.__isFrameBorderOpaque() 
                 && window != null)
         {
@@ -577,16 +646,19 @@ public class BERootPaneUI extends BasicRootPaneUI
                 ((JComponent) e.getNewValue()).setOpaque(false);
             }
         }
-        else if (propertyName.equals("BeautyEye.frameRound"))
+        else if (propertyName.equals("BeautyEye.frameRound") || propertyName.equals("frameRound"))
         {
-            // 动态切换圆角模式！
-            boolean rounded = Boolean.TRUE.equals(e.getNewValue());
+            boolean rounded = BEUtils.isFrameRound(root);
             root.setOpaque(!rounded);
+            
+            if (root.getLayeredPane() != null) root.getLayeredPane().setOpaque(!rounded);
             if (root.getContentPane() instanceof JComponent) {
                 ((JComponent) root.getContentPane()).setOpaque(!rounded);
             }
-            if (window != null && !BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
-                WindowTranslucencyHelper.setWindowOpaque(window, !rounded);
+            
+            Window win = SwingUtilities.getWindowAncestor(root);
+            if (win != null) {
+                WindowTranslucencyHelper.setWindowOpaque(win, !rounded);
             }
             root.revalidate();
             root.repaint();
@@ -849,14 +921,14 @@ public class BERootPaneUI extends BasicRootPaneUI
                 }
             }
             if(root.getMenuBar() != null
-                    //* 该 行代码由lornwolf于2012-10-20增加：目的是为解决当
-                    //* MebuBar被设置不可见时任然被错误地当作可视组件占据布局空间，这
-                    //* 在BE LNF中的表现就是当menuBar不可见，它占据的那块空间将会是全透明
-                    //* 的空白区。这个问题在Metal主题中仍然存在(就是设置JFrame.setDefaultLookAndFeelDecorated(true);
-                    //* JDialog.setDefaultLookAndFeelDecorated(true);后的Metal主题状态)，
-                    //* 可能官方不认为这是个bug吧。
-                    //* 为什么无论什么外观当在使用系统窗口边框类型时不会出现这样的情况呢？它
-                    //* 可能是由于窗口外观的实现原理决定的吧（按理说是同一原理），有待深究！！！
+                    //* 璇?琛屼唬鐮佺敱lornwolf浜?012-10-20澧炲姞锛氱洰鐨勬槸涓鸿В鍐冲綋
+                    //* MebuBar琚缃笉鍙鏃朵换鐒惰閿欒鍦板綋浣滃彲瑙嗙粍浠跺崰鎹竷灞€绌洪棿锛岃繖
+                    //* 鍦˙E LNF涓殑琛ㄧ幇灏辨槸褰搈enuBar涓嶅彲瑙侊紝瀹冨崰鎹殑閭ｅ潡绌洪棿灏嗕細鏄叏閫忔槑
+                    //* 鐨勭┖鐧藉尯銆傝繖涓棶棰樺湪Metal涓婚涓粛鐒跺瓨鍦?灏辨槸璁剧疆JFrame.setDefaultLookAndFeelDecorated(true);
+                    //* JDialog.setDefaultLookAndFeelDecorated(true);鍚庣殑Metal涓婚鐘舵€?锛?
+                    //* 鍙兘瀹樻柟涓嶈涓鸿繖鏄釜bug鍚с€?
+                    //* 涓轰粈涔堟棤璁轰粈涔堝瑙傚綋鍦ㄤ娇鐢ㄧ郴缁熺獥鍙ｈ竟妗嗙被鍨嬫椂涓嶄細鍑虹幇杩欐牱鐨勬儏鍐靛憿锛熷畠
+                    //* 鍙兘鏄敱浜庣獥鍙ｅ瑙傜殑瀹炵幇鍘熺悊鍐冲畾鐨勫惂锛堟寜鐞嗚鏄悓涓€鍘熺悊锛夛紝鏈夊緟娣辩┒锛侊紒锛?
                     && root.getMenuBar().isVisible()
                     ) 
             {
@@ -865,13 +937,11 @@ public class BERootPaneUI extends BasicRootPaneUI
                 nextY += mbd.height;
             }
             if(root.getContentPane() != null
-                    //* 该 行代码由lornwolf于2012-10-20增加：目的是为解决与menubar在设置可见性时遇难到的一样的问题
                     && root.getContentPane().isVisible()
                     ) 
             {
-                Dimension cpd = root.getContentPane().getPreferredSize();
-                root.getContentPane().setBounds(0, nextY, w, 
-                        h < nextY ? 0 : h - nextY);
+                int contentH = h < nextY ? 0 : h - nextY;
+                root.getContentPane().setBounds(0, nextY, w, contentH);
             }
         }
 
@@ -1199,11 +1269,11 @@ public class BERootPaneUI extends BasicRootPaneUI
 
         public void mouseExited(MouseEvent ev) {
             Window w = (Window) ev.getSource();
-            // Hack：因Swing鼠标事件问题，拖动过快的话很多时候没法正常地保留和设置lastCursor
-            //       从而导致经常性的退出拖动后，拖动时的鼠标样式还在，这样很不爽，这应该是swing
-            //       的鼠标事件不精确导致的或其它问题。目前不如干脃在退出拖动时强制还原到默认鼠标，
-            //       虽然在极少情况下可能回不到用户真正的lastCursor，但起码能解决目前在BueatyEye中
-            //       因大border而频繁出现的这个问题了，先这么滴吧！
+            // Hack锛氬洜Swing榧犳爣浜嬩欢闂锛屾嫋鍔ㄨ繃蹇殑璇濆緢澶氭椂鍊欐病娉曟甯稿湴淇濈暀鍜岃缃甽astCursor
+            //       浠庤€屽鑷寸粡甯告€х殑閫€鍑烘嫋鍔ㄥ悗锛屾嫋鍔ㄦ椂鐨勯紶鏍囨牱寮忚繕鍦紝杩欐牱寰堜笉鐖斤紝杩欏簲璇ユ槸swing
+            //       鐨勯紶鏍囦簨浠朵笉绮剧‘瀵艰嚧鐨勬垨鍏跺畠闂銆傜洰鍓嶄笉濡傚共鑴冨湪閫€鍑烘嫋鍔ㄦ椂寮哄埗杩樺師鍒伴粯璁ら紶鏍囷紝
+            //       铏界劧鍦ㄦ瀬灏戞儏鍐典笅鍙兘鍥炰笉鍒扮敤鎴风湡姝ｇ殑lastCursor锛屼絾璧风爜鑳借В鍐崇洰鍓嶅湪BueatyEye涓?
+            //       鍥犲ぇborder鑰岄绻佸嚭鐜扮殑杩欎釜闂浜嗭紝鍏堣繖涔堟淮鍚э紒
             w.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
 
@@ -1246,19 +1316,19 @@ public class BERootPaneUI extends BasicRootPaneUI
             }
         }
 
-        //*************************************************************** v3.2前参考自MetalRootPaneUI中的老边框拖放核心算法 START
-        //** 老算法说明：Metal中的算法是假设窗口边框的border是规划的，即上下左右的inset都是一样的，它假定可拖动范围是整个
-        //**             窗体大小（包括border在内的大小）的BORDER_DRAG_THICKNESS常量范围内的上下左右区域，所以它的 算法在
-        //**             此前题下通过较巧妙的方法简单实现没有问题。
-        //** 老算法缺陷：当窗口的边框不规划，如FrameBorderStyle.translucencyAppleLik这种时（上=17,左=27,右=27,下=37），
-        //**             此情况下只能假定一个最小值了，以前是取的17作为统一边框范围距离，那么像下部原本是37的inset，现在拖动
-        //**             范围是17，余下的原本是border里insets的10个像素也被算进窗口内容面板了，这样导致移动到下方时，明明
-        //**            是在边缘位置，却不是处于拖动范围内（要再往下移10像素到达inset的第10~27像素范围内才行），这样就严重
-        //**             影响了用户体验。
-        //********************************************************************* v3.2版启用的新边框拖放核心算法 SART
-        //** 新算法说明：v3.2中启用的新算法的原理是把可拖动范围限定在内容区（即整个窗体大小减去Border后的真正工作区）
-        //**            往外的一个固定的BORDER_DRAG_THICKNESS区域内，即不管理你把窗口的border设置多么不规划，我的用户拖
-        //**            动区永远是这一个范围内，这就保证用户体验，较好的解决了老算法的缺陷。
+        //*************************************************************** v3.2鍓嶅弬鑰冭嚜MetalRootPaneUI涓殑鑰佽竟妗嗘嫋鏀炬牳蹇冪畻娉?START
+        //** 鑰佺畻娉曡鏄庯細Metal涓殑绠楁硶鏄亣璁剧獥鍙ｈ竟妗嗙殑border鏄鍒掔殑锛屽嵆涓婁笅宸﹀彸鐨刬nset閮芥槸涓€鏍风殑锛屽畠鍋囧畾鍙嫋鍔ㄨ寖鍥存槸鏁翠釜
+        //**             绐椾綋澶у皬锛堝寘鎷琤order鍦ㄥ唴鐨勫ぇ灏忥級鐨凚ORDER_DRAG_THICKNESS甯搁噺鑼冨洿鍐呯殑涓婁笅宸﹀彸鍖哄煙锛屾墍浠ュ畠鐨?绠楁硶鍦?
+        //**             姝ゅ墠棰樹笅閫氳繃杈冨阀濡欑殑鏂规硶绠€鍗曞疄鐜版病鏈夐棶棰樸€?
+        //** 鑰佺畻娉曠己闄凤細褰撶獥鍙ｇ殑杈规涓嶈鍒掞紝濡侳rameBorderStyle.translucencyAppleLik杩欑鏃讹紙涓?17,宸?27,鍙?27,涓?37锛夛紝
+        //**             姝ゆ儏鍐典笅鍙兘鍋囧畾涓€涓渶灏忓€间簡锛屼互鍓嶆槸鍙栫殑17浣滀负缁熶竴杈规鑼冨洿璺濈锛岄偅涔堝儚涓嬮儴鍘熸湰鏄?7鐨刬nset锛岀幇鍦ㄦ嫋鍔?
+        //**             鑼冨洿鏄?7锛屼綑涓嬬殑鍘熸湰鏄痓order閲宨nsets鐨?0涓儚绱犱篃琚畻杩涚獥鍙ｅ唴瀹归潰鏉夸簡锛岃繖鏍峰鑷寸Щ鍔ㄥ埌涓嬫柟鏃讹紝鏄庢槑
+        //**            鏄湪杈圭紭浣嶇疆锛屽嵈涓嶆槸澶勪簬鎷栧姩鑼冨洿鍐咃紙瑕佸啀寰€涓嬬Щ10鍍忕礌鍒拌揪inset鐨勭10~27鍍忕礌鑼冨洿鍐呮墠琛岋級锛岃繖鏍峰氨涓ラ噸
+        //**             褰卞搷浜嗙敤鎴蜂綋楠屻€?
+        //********************************************************************* v3.2鐗堝惎鐢ㄧ殑鏂拌竟妗嗘嫋鏀炬牳蹇冪畻娉?SART
+        //** 鏂扮畻娉曡鏄庯細v3.2涓惎鐢ㄧ殑鏂扮畻娉曠殑鍘熺悊鏄妸鍙嫋鍔ㄨ寖鍥撮檺瀹氬湪鍐呭鍖猴紙鍗虫暣涓獥浣撳ぇ灏忓噺鍘籅order鍚庣殑鐪熸宸ヤ綔鍖猴級
+        //**            寰€澶栫殑涓€涓浐瀹氱殑BORDER_DRAG_THICKNESS鍖哄煙鍐咃紝鍗充笉绠＄悊浣犳妸绐楀彛鐨刡order璁剧疆澶氫箞涓嶈鍒掞紝鎴戠殑鐢ㄦ埛鎷?
+        //**            鍔ㄥ尯姘歌繙鏄繖涓€涓寖鍥村唴锛岃繖灏变繚璇佺敤鎴蜂綋楠岋紝杈冨ソ鐨勮В鍐充簡鑰佺畻娉曠殑缂洪櫡銆?
         /**
          * Gets the cursor_new.
          *
@@ -1276,14 +1346,14 @@ public class BERootPaneUI extends BasicRootPaneUI
         }
         
         /**
-         * 新的窗口边框拖动算法的实现是把可拖动区分成8个距形区，当鼠标动到对应
-         * 的区里就计算出是是向哪个方向拖动，比MetalRootPaneUI中的简易方法要明确和精确。
+         * 鏂扮殑绐楀彛杈规鎷栧姩绠楁硶鐨勫疄鐜版槸鎶婂彲鎷栧姩鍖哄垎鎴?涓窛褰㈠尯锛屽綋榧犳爣鍔ㄥ埌瀵瑰簲
+         * 鐨勫尯閲屽氨璁＄畻鍑烘槸鏄悜鍝釜鏂瑰悜鎷栧姩锛屾瘮MetalRootPaneUI涓殑绠€鏄撴柟娉曡鏄庣‘鍜岀簿纭€?
          * <p>
-         * 可拖动判断区示意图：<br>
-         * <u>红色到蓝色的整个区域是窗口的border范围，红色到灰色的区域是固定的可拖动区，红色到灰色的区域是固定的，
-         * 红色到蓝色的区域因border不同而不一样。</u><br>
-         * <b>注意：</b>算法中要注意一种极端情况，就是Border的一部分或全部都小于可拖动区的情况，以下算法应该也
-         * 是没有问题的，无非算出的8可拖动距形区坐标有负的情况，初步测试过没影响，以后还是注意一下！
+         * 鍙嫋鍔ㄥ垽鏂尯绀烘剰鍥撅細<br>
+         * <u>绾㈣壊鍒拌摑鑹茬殑鏁翠釜鍖哄煙鏄獥鍙ｇ殑border鑼冨洿锛岀孩鑹插埌鐏拌壊鐨勫尯鍩熸槸鍥哄畾鐨勫彲鎷栧姩鍖猴紝绾㈣壊鍒扮伆鑹茬殑鍖哄煙鏄浐瀹氱殑锛?
+         * 绾㈣壊鍒拌摑鑹茬殑鍖哄煙鍥燽order涓嶅悓鑰屼笉涓€鏍枫€?/u><br>
+         * <b>娉ㄦ剰锛?/b>绠楁硶涓娉ㄦ剰涓€绉嶆瀬绔儏鍐碉紝灏辨槸Border鐨勪竴閮ㄥ垎鎴栧叏閮ㄩ兘灏忎簬鍙嫋鍔ㄥ尯鐨勬儏鍐碉紝浠ヤ笅绠楁硶搴旇涔?
+         * 鏄病鏈夐棶棰樼殑锛屾棤闈炵畻鍑虹殑8鍙嫋鍔ㄨ窛褰㈠尯鍧愭爣鏈夎礋鐨勬儏鍐碉紝鍒濇娴嬭瘯杩囨病褰卞搷锛屼互鍚庤繕鏄敞鎰忎竴涓嬶紒
          * <table border="1" width="28%" cellpadding="10" height="185" bordercolor="#000080">
          * <tr>
          * <td align="center">
@@ -1295,7 +1365,7 @@ public class BERootPaneUI extends BasicRootPaneUI
          * </tr>
          * <tr>
          * <td width="27" align="center">R8</td>
-         * <td align="center" bordercolor="#FF0000">可视工作区</td>
+         * <td align="center" bordercolor="#FF0000">鍙宸ヤ綔鍖?/td>
          * <td width="25" align="center">R4</td>
          * </tr>
          * <tr>
@@ -1321,7 +1391,7 @@ public class BERootPaneUI extends BasicRootPaneUI
             Insets iss = getRootPane().getInsets();
             int topI = iss.top, bottomI = iss.bottom, leftI = iss.left, rightI = iss.right; 
             
-            //8个拖动检测距形区
+            //8涓嫋鍔ㄦ娴嬭窛褰㈠尯
             Rectangle r1 = new Rectangle(leftI-B,topI-B,B,B);
             Rectangle r2 = new Rectangle(leftI,topI-B,w-leftI-rightI,B);
             Rectangle r3 = new Rectangle(w-rightI,topI-B,B,B);
@@ -1354,5 +1424,5 @@ public class BERootPaneUI extends BasicRootPaneUI
             
             return cc;
         }
-    }//********************************************************************* v3.2版启用的新边框拖放核心算法 END
+    }//********************************************************************* v3.2版本启用的新边框拖放核心算法 END
 }

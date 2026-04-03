@@ -148,18 +148,31 @@ public class BEUtils {
     }
     
     /**
-     * 图形绘制反走样设置.
-     *
-     * @param g2 the g2
-     * @param antiAliasing 是否反走样
+     * 图形绘制抗锯齿设置.
+     * @param g2
+     * @param antiAliasing
      */
-    public static void setAntiAliasing(Graphics2D g2 ,boolean antiAliasing) {
-        if (antiAliasing)
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING
-                    , RenderingHints.VALUE_ANTIALIAS_ON);
-        else
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING
-                    , RenderingHints.VALUE_ANTIALIAS_OFF);
+    public static void setAntiAliasing(Graphics2D g2, boolean antiAliasing) {
+        if (antiAliasing) {
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        } else {
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        }
+    }
+
+    /**
+     * 强力检测是否开启圆角效果（支持布尔值或字符串，支持向上溯源到 Window 层级）.
+     */
+    public static boolean isFrameRound(javax.swing.JComponent c) {
+        if (c == null) return false;
+        Object val = c.getClientProperty("BeautyEye.frameRound");
+        if (val == null) {
+            java.awt.Window win = javax.swing.SwingUtilities.getWindowAncestor(c);
+            if (win instanceof javax.swing.RootPaneContainer) {
+                val = ((javax.swing.RootPaneContainer)win).getRootPane().getClientProperty("BeautyEye.frameRound");
+            }
+        }
+        return val != null && (val.equals(Boolean.TRUE) || val.toString().equalsIgnoreCase("true"));
     }
     
     /**

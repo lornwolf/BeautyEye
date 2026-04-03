@@ -59,11 +59,7 @@ public class NinePatchBorder extends AbstractBorder {
 
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        if (c instanceof javax.swing.JRootPane && !org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.__isFrameBorderOpaque() 
-                && Boolean.TRUE.equals(((javax.swing.JRootPane)c).getClientProperty("BeautyEye.frameRound"))) {
-            // FORGET straight 9-patch textures AND clipping paths! 
-            // The shadow is strictly and perfectly drawn IN THE BACKGROUND of BERootPaneUI itself now.
-            // This class (NinePatchBorder) now simply bows out gracefully for translucent frames, leaving the perfect composite intact.
+        if (c instanceof javax.swing.JComponent && org.jb2011.lnf.beautyeye.utils.BEUtils.isFrameRound((javax.swing.JComponent)c)) {
             return;
         } else {
             // Normal execution for other components or opaque frames
