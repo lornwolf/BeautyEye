@@ -222,13 +222,11 @@ public class BERootPaneUI extends BasicRootPaneUI
             if (BEUtils.isFrameRound(root)) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-                
+
                 Insets i = root.getInsets();
-                // 这里的坐标是相对于 LayeredPane 的，所以通常是 0,0
                 int iw = root.getWidth() - i.left - i.right;
                 int ih = root.getHeight() - i.top - i.bottom;
-                
-                // 终极拦截：无论子组件如何画，在这里都被统一修剪
+
                 g2.setClip(new java.awt.geom.RoundRectangle2D.Float(0, 0, iw, ih, 26, 26));
                 super.paintChildren(g2);
                 g2.dispose();
