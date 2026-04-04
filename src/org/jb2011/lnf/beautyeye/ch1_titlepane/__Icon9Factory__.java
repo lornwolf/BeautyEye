@@ -21,8 +21,7 @@ import org.jb2011.ninepatch4j.NinePatch;
  * @author lornwolf
  * @version 1.0
  */
-public class __Icon9Factory__ extends RawCache<NinePatch>
-{
+public class __Icon9Factory__ extends RawCache<NinePatch> {
     
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs/np";
@@ -35,19 +34,14 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return single instance of __Icon9Factory__
      */
-    public static __Icon9Factory__ getInstance()
-    {
-        if(instance==null)
+    public static __Icon9Factory__ getInstance() {
+        if (instance==null)
             instance = new __Icon9Factory__();
         return instance;
     }
     
-    /* (non-Javadoc)
-     * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
-     */
     @Override
-    protected NinePatch getResource(String relativePath, Class baseClass)
-    {
+    protected NinePatch getResource(String relativePath, Class baseClass) {
         return NinePatchHelper.createNinePatch(baseClass.getResource(relativePath), false);
     }
 
@@ -57,14 +51,7 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      * @param relativePath the relative path
      * @return the raw
      */
-    public NinePatch getRaw(String relativePath)
-    {
+    public NinePatch getRaw(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
-    
-//    public NinePatch getFrameTitleHeadBg_active()
-//    {
-//        return getRaw(IMGS_ROOT+"/head_bg_new1.9.png");
-//    }
-
 }

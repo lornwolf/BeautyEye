@@ -22,17 +22,15 @@ import javax.swing.plaf.basic.BasicListUI;
  * @author lornwolf
  * @version 1.0
  */
-public class BEListUI extends BasicListUI 
-{
-    
+public class BEListUI extends BasicListUI {
+
     /**
      * Creates the ui.
      *
      * @param c the c
      * @return the component ui
      */
-    public static ComponentUI createUI(JComponent c) 
-    {
+    public static ComponentUI createUI(JComponent c) {
         return new BEListUI();
     }
 
@@ -47,8 +45,7 @@ public class BEListUI extends BasicListUI
      * @see #installUI
      * @see CellRendererPane
      */
-    protected void installDefaults()
-    {
+    protected void installDefaults() {
         super.installDefaults();
         
         //2012-08-30*******************************************************【重要说明】 START 对应BEComboBoxUI中的【重要说明】
@@ -60,11 +57,6 @@ public class BEListUI extends BasicListUI
         //*************************************************************** 【重要说明】 END
         //* 则jb2011加入，表示列表单元固定高度，默认值=-1（即意味着行高自动计算）
         //* 使用BE LNF的项目，如要恢复行高算动计算则显示设置列表的固定行高为-1即可！
-        list.setFixedCellHeight(27);//32//30);// TODO 此设置值作一个UIManager属性就可以方便以后设置了，-1是原系统默认值哦（即自动计算单元高）
-        
-        //* 不需要了，它样强制要求它为透明可能会影响以后用户的定制需求，干脆
-        //* 设置它的背景为认白色，也能达到想到的N9白色背景
-//        //此设置将取消列表背景的绘制（以便BE LNF中绘制N9背景图哦）
-//        list.setOpaque(false);
+        list.setFixedCellHeight(27);
     }
 }

@@ -21,9 +21,8 @@ import org.jb2011.lnf.beautyeye.utils.RawCache;
  * @author lornwolf
  * @version 1.0
  */
-public class __IconFactory__ extends RawCache<ImageIcon>
-{
-    
+public class __IconFactory__ extends RawCache<ImageIcon> {
+
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs";
 
@@ -35,19 +34,14 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return single instance of __IconFactory__
      */
-    public static __IconFactory__ getInstance()
-    {
-        if(instance==null)
+    public static __IconFactory__ getInstance() {
+        if (instance==null)
             instance = new __IconFactory__();
         return instance;
     }
     
-    /* (non-Javadoc)
-     * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
-     */
     @Override
-    protected ImageIcon getResource(String relativePath, Class baseClass)
-    {
+    protected ImageIcon getResource(String relativePath, Class baseClass) {
         return new ImageIcon(baseClass.getResource(relativePath));
     }
     
@@ -57,8 +51,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      * @param relativePath the relative path
      * @return the image
      */
-    public ImageIcon getImage(String relativePath)
-    {
+    public ImageIcon getImage(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
     
@@ -67,12 +60,10 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the radio button menu item check icon
      */
-    public ImageIcon getRadioButtonMenuItemCheckIcon()
-    {
+    public ImageIcon getRadioButtonMenuItemCheckIcon() {
         return getImage(IMGS_ROOT+"/RadioButtonMenuItemCheckIcon2.png");
     }
-    public ImageIcon getRadioButtonMenuItemNormalIcon()
-    {
+    public ImageIcon getRadioButtonMenuItemNormalIcon() {
         return getImage(IMGS_ROOT+"/RadioButtonMenuItemCheckIcon_none.png");
     }
     
@@ -81,21 +72,15 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the checkbox menu item selected normal icon
      */
-    public ImageIcon getCheckboxMenuItemSelectedNormalIcon()
-    {
+    public ImageIcon getCheckboxMenuItemSelectedNormalIcon() {
         return getImage(IMGS_ROOT+"/checkbox_menuitem_selected_normal.png");
     }
-//    public ImageIcon getCheckboxMenuItemSelectedRoverIcon()
-//    {
-//        return getImage(IMGS_ROOT+"/checkbox_menuitem_selected_rover.png");
-//    }
     /**
- * Gets the checkbox menu item none icon.
- *
- * @return the checkbox menu item none icon
- */
-public ImageIcon getCheckboxMenuItemNoneIcon()
-    {
+     * Gets the checkbox menu item none icon.
+     *
+     * @return the checkbox menu item none icon
+     */
+    public ImageIcon getCheckboxMenuItemNoneIcon() {
         return getImage(IMGS_ROOT+"/checkbox_menuitem_none.png");
     }
     

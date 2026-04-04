@@ -29,12 +29,11 @@ import org.jb2011.ninepatch4j.NinePatch;
  * @author lornwolf
  */
 public class BETextFieldUI extends BasicTextFieldUI implements BgSwitchable
-    ,org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.__UseParentPaintSurported//WindowsTextFieldUI
-{
-    
+    ,org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.__UseParentPaintSurported {
+
     /** The bg. */
     private NinePatch bg = __Icon9Factory__.getInstance().getTextFieldBgNormal();
-    
+
     /**
      * Creates the ui.
      *
@@ -42,12 +41,11 @@ public class BETextFieldUI extends BasicTextFieldUI implements BgSwitchable
      * @return the bE text field ui
      * {@inheritDoc}
      */
-    public static BETextFieldUI createUI(JComponent c) 
-    {
+    public static BETextFieldUI createUI(JComponent c) {
         addOtherListener(c);
         return new BETextFieldUI();
     }
-    
+
     //* 本方法由lornwolf于2012-09-07日加入
     /**
      * 是否使用父类的绘制实现方法，true表示是.
@@ -60,13 +58,12 @@ public class BETextFieldUI extends BasicTextFieldUI implements BgSwitchable
      *
      * @return true, if is use parent paint
      */
-    public boolean isUseParentPaint()
-    {
+    public boolean isUseParentPaint() {
         return getComponent() != null 
             && ( !(getComponent().getBorder() instanceof UIResource)
                     ||!(getComponent().getBackground() instanceof UIResource));
     }
-    
+
     /**
      * Paints a background for the view.  This will only be
      * called if isOpaque() on the associated component is
@@ -75,113 +72,29 @@ public class BETextFieldUI extends BasicTextFieldUI implements BgSwitchable
      *
      * @param g the graphics context
      */
-    protected void paintBackground(Graphics g)
-    {
-//        Color bgc = editor.getBackground();
-//        g.setColor(bgc);
-//        //先填 充背景
-//        g.fillRect(0, 0, editor.getWidth(), editor.getHeight());
-//        
-//        //(1) ---- 仿Numbus文本框效果
-//        //** top立体效果实现
-//        //第(0,0)开始的第一条线会被后来的border覆盖掉的，所以此处绘制没有意义，不搞了
-////        g.setColor(new Color(0,0,0));
-////        g.drawLine(0, 0, editor.getWidth(), 0);
-//        //第2条线颜色淡一点
-//        g.setColor(new Color(208,208,208));
-//        g.drawLine(0, 1, editor.getWidth(), 1);
-//        //第3条线颜色更淡一点
-//        g.setColor(new Color(231,231,225));
-//        g.drawLine(0, 2, editor.getWidth(), 2);
-        
+    protected void paintBackground(Graphics g) {
         //先调用父类方法把背景刷新下（比如本UI里使用的大圆角NP图如不先刷新背景则会因上下拉动滚动条
         //而致4个圆角位置得不到刷新，从而影响视觉效果（边角有前面的遗留），置于透明边角不被透明像素填
         //充的问题，它有可能是Android的NinePatch技术为了性能做作出的优化——一切全透明像素即意味着不需绘制）
-        super.paintBackground(g);// TODO 出于节约计算资源考生虑，本行代码换成父类中默认填充背景的代码即可
-        
+        super.paintBackground(g);// 出于节约计算资源考生虑，本行代码换成父类中默认填充背景的代码即可
+
         //* 如果用户作了自定义颜色设置则使用父类方法来实现绘制，否则BE LNF中没法支持这些设置哦
-        if(!isUseParentPaint())
-        {
+        if (!isUseParentPaint()) {
             //用新的NP图实现真正的背景填充
             JTextComponent editor = this.getComponent();
             BETextFieldUI.paintBg(g, 0, 0, editor.getWidth(), editor.getHeight()
                     , editor.isEnabled(), bg);
         }
-        
-//        if(this.getComponent().isEnabled())
-//            //*** 重要说明：因使用的NinePatch图片作填充背景，所以后绪任何对JTextField设置
-//            //*** 背景色将不会起效，因为背景是用图片填充而非传统方法绘制出来的
-//            bg.draw((Graphics2D)g, 0, 0, editor.getWidth(), editor.getHeight());
-//        else
-//            __Icon9Factory__.getInstance().getTextFieldBgDisabled()
-//                .draw((Graphics2D)g, 0, 0, editor.getWidth(), editor.getHeight());
-            
-        
-////      //(2) ---- 仿360软件管家文本框效果（不太好看）
-//        //** top立体效果实现
-//        //第(0,0)开始的第一条线会被后来的border覆盖掉的，所以此处绘制没有意义，不搞了
-////        g.setColor(new Color(0,0,0));
-////        g.drawLine(0, 0, editor.getWidth(), 0);
-//        //第2条线颜色淡一点
-//        g.setColor(new Color(232,232,232));
-//        g.drawLine(1, 1, editor.getWidth()-1, 1);
-//        //第3条线颜色更淡一点
-//        g.setColor(new Color(241,241,241));
-//        g.drawLine(1, 2, editor.getWidth()-1, 2);
-//        //第4条线颜色更淡一点
-//        g.setColor(new Color(248,248,248));
-//        g.drawLine(1, 3, editor.getWidth()-1, 3);
-//        //第5条线颜色更淡一点
-//        g.setColor(new Color(252,252,252));
-//        g.drawLine(1, 4, editor.getWidth()-1, 4);
-//        
-//        //** left
-//        //第2条线颜色淡一点
-//        g.setColor(new Color(241,241,241));
-//        g.drawLine(1, 1, 1, editor.getHeight()-1);
-//        //第3条线颜色淡一点
-//        g.setColor(new Color(248,248,248));
-//        g.drawLine(2, 1, 2, editor.getHeight()-1);
-//        //第4条线颜色淡一点
-//        g.setColor(new Color(253,253,253));
-//        g.drawLine(3, 1, 3, editor.getHeight()-1);
-//        
-//        //** right
-//        //第2条线颜色淡一点
-//        g.setColor(new Color(241,241,241));
-//        g.drawLine(editor.getWidth()-1, 1, editor.getWidth()-1, editor.getHeight()-1);
-//        //第3条线颜色淡一点
-//        g.setColor(new Color(248,248,248));
-//        g.drawLine(editor.getWidth()-2, 1, editor.getWidth()-2, editor.getHeight()-1);
-//        //第4条线颜色淡一点
-//        g.setColor(new Color(253,253,253));
-//        g.drawLine(editor.getWidth()-3, 1, editor.getWidth()-3, editor.getHeight()-1);
-//        
-//        //** bottom
-//        //第2条线颜色淡一点
-//        g.setColor(new Color(248,248,248));
-//        g.drawLine(1, editor.getHeight()-1, editor.getWidth()-1, editor.getHeight()-1);
-//        //第3条线颜色淡一点
-//        g.setColor(new Color(252,252,252));
-//        g.drawLine(1, editor.getHeight()-2, editor.getWidth()-1, editor.getHeight()-2);
     }
-    
-    /* (non-Javadoc)
-     * @see org.jb2011.lnf.beautyeye.ch6_textcoms.__UI__.BgSwitchable#switchBgToNomal()
-     */
-    public void switchBgToNomal()
-    {
+
+    public void switchBgToNomal() {
         this.bg = __Icon9Factory__.getInstance().getTextFieldBgNormal();
     }
-    
-    /* (non-Javadoc)
-     * @see org.jb2011.lnf.beautyeye.ch6_textcoms.__UI__.BgSwitchable#switchBgToFocused()
-     */
-    public void switchBgToFocused()
-    {
+
+    public void switchBgToFocused() {
         this.bg = __Icon9Factory__.getInstance().getTextFieldBgFocused();
     }
-    
+
     /**
      * Paint bg.
      *
@@ -194,9 +107,8 @@ public class BETextFieldUI extends BasicTextFieldUI implements BgSwitchable
      * @param bg the bg
      */
     public static void paintBg(Graphics g, int x, int y, int w , int h
-            , boolean enabled, NinePatch bg)
-    {
-        if(enabled)
+            , boolean enabled, NinePatch bg) {
+        if (enabled)
             //*** 重要说明：因使用的NinePatch图片作填充背景，所以后绪任何对JTextField设置
             //*** 背景色将不会起效，因为背景是用图片填充而非传统方法绘制出来的
             bg.draw((Graphics2D)g, x, y, w, h);
@@ -204,21 +116,14 @@ public class BETextFieldUI extends BasicTextFieldUI implements BgSwitchable
             __Icon9Factory__.getInstance().getTextFieldBgDisabled()
                 .draw((Graphics2D)g, x, y, w, h);
     }
-    
+
     /**
      * 为组件添加焦点监听器（获得/取消焦点时可以自动设置/取消一个彩色的边框效果，以体高UI体验）
      * 、右键菜单监听器（有复制/粘贴等功能）.
      *
      * @param c the c
      */
-    public static void addOtherListener(JComponent c)
-    {
+    public static void addOtherListener(JComponent c) {
         c.addFocusListener(FocusListenerImpl.getInstance());
-//        c.addMouseListener(new NLLookAndFeel.EditMenu());
     }
-    
-    
-    
-
 }
-

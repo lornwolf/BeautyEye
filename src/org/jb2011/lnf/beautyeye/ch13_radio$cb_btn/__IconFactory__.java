@@ -15,30 +15,28 @@ import javax.swing.ImageIcon;
 
 import org.jb2011.lnf.beautyeye.utils.RawCache;
 
-// TODO: Auto-generated Javadoc
 /**
  * 普通图片工厂类.
  * 
  * @author lornwolf
  * @version 1.0
  */
-public class __IconFactory__ extends RawCache<ImageIcon>
-{
-    
+public class __IconFactory__ extends RawCache<ImageIcon> {
+
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs";
 
     /** The instance. */
     private static __IconFactory__ instance = null;
 
+
     /**
      * Gets the single instance of __IconFactory__.
      *
      * @return single instance of __IconFactory__
      */
-    public static __IconFactory__ getInstance()
-    {
-        if(instance==null)
+    public static __IconFactory__ getInstance() {
+        if (instance==null)
             instance = new __IconFactory__();
         return instance;
     }
@@ -47,8 +45,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
      */
     @Override
-    protected ImageIcon getResource(String relativePath, Class baseClass)
-    {
+    protected ImageIcon getResource(String relativePath, Class baseClass) {
         return new ImageIcon(baseClass.getResource(relativePath));
     }
     
@@ -58,8 +55,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      * @param relativePath the relative path
      * @return the image
      */
-    public ImageIcon getImage(String relativePath)
-    {
+    public ImageIcon getImage(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
     
@@ -68,8 +64,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the radio button icon_disable
      */
-    public ImageIcon getRadioButtonIcon_disable()
-    {
+    public ImageIcon getRadioButtonIcon_disable() {
         return getImage(IMGS_ROOT+"/rb_disable.png");
     }
     
@@ -78,8 +73,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the radio button icon_normal
      */
-    public ImageIcon getRadioButtonIcon_normal()
-    {
+    public ImageIcon getRadioButtonIcon_normal() {
         return getImage(IMGS_ROOT+"/rb_normal.png");
     }
     
@@ -88,8 +82,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the radio button icon_pressed
      */
-    public ImageIcon getRadioButtonIcon_pressed()
-    {
+    public ImageIcon getRadioButtonIcon_pressed() {
         return getImage(IMGS_ROOT+"/rb_pressed.png");
     }
     
@@ -98,8 +91,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the radio button icon_unchecked_disable
      */
-    public ImageIcon getRadioButtonIcon_unchecked_disable()
-    {
+    public ImageIcon getRadioButtonIcon_unchecked_disable() {
         return getImage(IMGS_ROOT+"/rb_un_disable.png");
     }
     
@@ -108,8 +100,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the radio button icon_unchecked_normal
      */
-    public ImageIcon getRadioButtonIcon_unchecked_normal()
-    {
+    public ImageIcon getRadioButtonIcon_unchecked_normal() {
         return getImage(IMGS_ROOT+"/rb_un_normal.png");
     }
     
@@ -118,8 +109,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the radio button icon_unchecked_pressed
      */
-    public ImageIcon getRadioButtonIcon_unchecked_pressed()
-    {
+    public ImageIcon getRadioButtonIcon_unchecked_pressed() {
         return getImage(IMGS_ROOT+"/rb_un_pressed.png");
     }
     
@@ -128,8 +118,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the check box button icon_disable
      */
-    public ImageIcon getCheckBoxButtonIcon_disable()
-    {
+    public ImageIcon getCheckBoxButtonIcon_disable() {
         return getImage(IMGS_ROOT+"/cb_disable.png");
     }
     
@@ -138,8 +127,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the check box button icon_normal
      */
-    public ImageIcon getCheckBoxButtonIcon_normal()
-    {
+    public ImageIcon getCheckBoxButtonIcon_normal() {
         return getImage(IMGS_ROOT+"/cb_normal.png");
     }
     
@@ -148,8 +136,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the check box button icon_pressed
      */
-    public ImageIcon getCheckBoxButtonIcon_pressed()
-    {
+    public ImageIcon getCheckBoxButtonIcon_pressed() {
         return getImage(IMGS_ROOT+"/cb_pressed.png");
     }
     
@@ -158,8 +145,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the check box button icon_unchecked_disable
      */
-    public ImageIcon getCheckBoxButtonIcon_unchecked_disable()
-    {
+    public ImageIcon getCheckBoxButtonIcon_unchecked_disable() {
         return getImage(IMGS_ROOT+"/cb_un_disable.png");
     }
     
@@ -168,8 +154,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the check box button icon_unchecked_normal
      */
-    public ImageIcon getCheckBoxButtonIcon_unchecked_normal()
-    {
+    public ImageIcon getCheckBoxButtonIcon_unchecked_normal() {
         return getImage(IMGS_ROOT+"/cb_un_normal.png");
     }
     
@@ -178,8 +163,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the check box button icon_unchecked_pressed
      */
-    public ImageIcon getCheckBoxButtonIcon_unchecked_pressed()
-    {
+    public ImageIcon getCheckBoxButtonIcon_unchecked_pressed() {
         return getImage(IMGS_ROOT+"/cb_un_pressed.png");
     }
 }

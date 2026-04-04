@@ -126,9 +126,6 @@ public class BEButtonUI extends BasicButtonUI
     // ********************************
     //            Defaults
     // ********************************
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicButtonUI#installDefaults(javax.swing.AbstractButton)
-     */
     protected void installDefaults(AbstractButton b) {
         super.installDefaults(b);
         b.setOpaque(false);
@@ -143,17 +140,12 @@ public class BEButtonUI extends BasicButtonUI
             defaults_initialized = true;
         }
 
-//        BEXPStyle xp = BEXPStyle.getXP();
-//        if (xp != null) 
         {
-            b.setBorder(new XPEmptyBorder(new Insets(3,3,3,3)));//xp.getBorder(b, getXPButtonType(b)));
+            b.setBorder(new XPEmptyBorder(new Insets(3,3,3,3)));
             LookAndFeel.installProperty(b, "rolloverEnabled", Boolean.TRUE);
         }
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicButtonUI#uninstallDefaults(javax.swing.AbstractButton)
-     */
     protected void uninstallDefaults(AbstractButton b) {
         super.uninstallDefaults(b);
         defaults_initialized = false;
@@ -172,37 +164,14 @@ public class BEButtonUI extends BasicButtonUI
     //         Paint Methods
     // ********************************
 
-//    /**
-//     * Overridden method to render the text without the mnemonic
-//     */
-//    protected void paintText(Graphics g, AbstractButton b, Rectangle textRect, String text) 
-//    {
-//        WindowsGraphicsUtils.paintText(g, b, textRect, text, getTextShiftOffset());
-//    } 
-
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicButtonUI#paintFocus(java.awt.Graphics, javax.swing.AbstractButton, java.awt.Rectangle, java.awt.Rectangle, java.awt.Rectangle)
-     */
     protected void paintFocus(Graphics g, AbstractButton b, Rectangle viewRect, Rectangle textRect, Rectangle iconRect){
         //* 由lornwolf于2012-10-16日注释掉以下行：目的是修正当JButton处于JToolBar时不能绘制焦点的问题
-//        if (b.getParent() instanceof JToolBar) {
-//            // Windows doesn't draw the focus rect for buttons in a toolbar.
-//            return;
-//        }
-
-        //** 被jb2011注释掉：目的是使得在任何情况下都绘制\获得焦点后的虚线框
-//        if (NLXPStyle.getXP() != null) {
-//            return;
-//        }
 
         // focus painted same color as text on Basic??
         int width = b.getWidth();
         int height = b.getHeight();
         g.setColor(getFocusColor());
         
-        //** modified by jb2011：绘制虚线方法改成可以设置虚线步进的方法，步进设为2则更好看一点
-//        BasicGraphicsUtils.drawDashedRect(g, dashedRectGapX, dashedRectGapY,
-//                width - dashedRectGapWidth, height - dashedRectGapHeight);
         // 绘制虚线框
         BEUtils.drawDashedRect(g, dashedRectGapX, dashedRectGapY,
                 width - dashedRectGapWidth, height - dashedRectGapHeight);
@@ -213,18 +182,10 @@ public class BEButtonUI extends BasicButtonUI
                 width - dashedRectGapWidth, height - dashedRectGapHeight);
     }
 
-//    protected void paintButtonPressed(Graphics g, AbstractButton b)
-//    {
-//        setTextShiftOffset();
-//    }
-
     // ********************************
     //          Layout Methods
     // ********************************
-    /* (non-Javadoc)
- * @see javax.swing.plaf.basic.BasicButtonUI#getPreferredSize(javax.swing.JComponent)
- */
-public Dimension getPreferredSize(JComponent c) {
+    public Dimension getPreferredSize(JComponent c) {
         Dimension d = super.getPreferredSize(c);
 
         /* Ensure that the width and height of the button is odd,
@@ -244,94 +205,23 @@ public Dimension getPreferredSize(JComponent c) {
      * allocating them in each paint call substantially reduced the time
      * it took paint to run.  Obviously, this method can't be re-entered.
      */
-//    private static Rectangle viewRect = new Rectangle();
 
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicButtonUI#paint(java.awt.Graphics, javax.swing.JComponent)
-     */
     public void paint(Graphics g, JComponent c) {
-//        if (NLXPStyle.getXP() != null) 
         {
             paintXPButtonBackground(nomalColor,g, c);
         }
         super.paint(g, c);
     }
 
-//    static Part getXPButtonType(AbstractButton b) { 
-//        boolean toolbar = (b.getParent() instanceof JToolBar);
-//        return toolbar ? Part.TP_BUTTON : Part.BP_PUSHBUTTON; 
-//    }
-
-    /**
- * Paint xp button background.
- *
- * @param nomalColor the nomal color
- * @param g the g
- * @param c the c
- */
-public static void paintXPButtonBackground(NormalColor nomalColor,Graphics g, JComponent c)
-    {
+    public static void paintXPButtonBackground(NormalColor nomalColor,Graphics g, JComponent c) {
         AbstractButton b = (AbstractButton) c;
 
-//        BEXPStyle xp = BEXPStyle.getXP();
-
         boolean toolbar = (b.getParent() instanceof JToolBar);
-//        Part part = getXPButtonType(b);
 
-        if (b.isContentAreaFilled())// && xp != null)
-        {
+        if (b.isContentAreaFilled()) {
             ButtonModel model = b.getModel();
-//            Skin skin = xp.getSkin(b, part);
 
             // normal, rollover/activated/focus, pressed, disabled, default
-//            State state = State.NORMAL;
-            if (toolbar)
-            {
-//                if (model.isArmed() && model.isPressed())
-//                {
-//                    state = State.PRESSED;
-//                }
-//                else if (!model.isEnabled())
-//                {
-//                    state = State.DISABLED;
-//                }
-//                else if (model.isSelected() && model.isRollover())
-//                {
-//                    state = State.HOTCHECKED;
-//                }
-//                else if (model.isSelected())
-//                {
-//                    state = State.CHECKED;
-//                }
-//                else if (model.isRollover())
-//                {
-//                    state = State.HOT;
-//                }
-            }
-            else
-            {
-//                if (model.isArmed() && model.isPressed() || model.isSelected())
-//                {
-//                    state = State.PRESSED;
-//                }
-//                else if (!model.isEnabled())
-//                {
-//                    state = State.DISABLED;
-//                }
-//                else if (model.isRollover() || model.isPressed())
-//                {
-//                    state = State.HOT;
-//                }
-//                else if (b instanceof JButton
-//                        && ((JButton) b).isDefaultButton())
-//                {
-//                    state = State.DEFAULTED;
-//                }
-//                else if (c.hasFocus())
-//                {
-//                    state = State.HOT;
-//                }
-            }
             Dimension d = c.getSize();
             int dx = 0;
             int dy = 0;
@@ -362,66 +252,40 @@ public static void paintXPButtonBackground(NormalColor nomalColor,Graphics g, JC
             }
             
             /*************************** 以下代码由jb2011改造自WindowsButtonUI START ********************/
-            if(toolbar)
-            {
+            if (toolbar) {
                 //此状态下JToggleButton和JButton使用各自的背景实现，2012-10-16前无论是不是JToggleButton都是使用该种实是不太合理的
-                if(model.isRollover()||model.isPressed())
-                {
+                if (model.isRollover()||model.isPressed()) {
                     if(c instanceof JToggleButton)
                         __Icon9Factory__.getInstance().getToggleButtonIcon_RoverGreen().draw((Graphics2D)g, dx, dy, dw, dh);
                     else
                         __Icon9Factory__.getInstance().getButtonIcon_PressedOrange().draw((Graphics2D)g, dx, dy, dw, dh);
                 }
-                else if(model.isSelected())//state == State.CHECKED)//||state == State.HOTCHECKED)
-                {
+                else if (model.isSelected()) {
                     __Icon9Factory__.getInstance().getToggleButtonIcon_CheckedGreen().draw((Graphics2D)g, dx, dy, dw, dh);
                 }
-                else
-                {
-                    //TODO 其它状态下的按钮背景样式需要完善，要不然看起来太硬！
-//                    skin.paintSkin(g, dx, dy, dw, dh, state);
+                else {
                 }
-            }
-            else
-            {
-                try
-                {
-                    //TODO 其它状态下的按钮背景样式需要完善，要不然看起来太硬！
-                    
-//                    if(state == State.PRESSED)
-                    if(model.isArmed() && model.isPressed() || model.isSelected())
+            } else {
+                try {
+                    if (model.isArmed() && model.isPressed() || model.isSelected())
                         __Icon9Factory__.getInstance().getButtonIcon_PressedOrange().draw((Graphics2D)g, dx, dy, dw, dh);
-//                    else if(state == State.DISABLED)
                     else if (!model.isEnabled())
                         __Icon9Factory__.getInstance().getButtonIcon_DisableGray().draw((Graphics2D)g, dx, dy, dw, dh);
-                    else if(model.isRollover())
+                    else if (model.isRollover())
                         __Icon9Factory__.getInstance().getButtonIcon_rover().draw((Graphics2D)g, dx, dy, dw, dh);
-                    else
-                    {
-                        if(nomalColor==NormalColor.green)
-                        {
+                    else {
+                        if (nomalColor==NormalColor.green) {
                             __Icon9Factory__.getInstance().getButtonIcon_NormalGreen().draw((Graphics2D)g, dx, dy, dw, dh);
                         }
-                        else if(nomalColor==NormalColor.red)
-                        {
+                        else if (nomalColor==NormalColor.red) {
                             __Icon9Factory__.getInstance().getButtonIcon_NormalRed().draw((Graphics2D)g, dx, dy, dw, dh);
                         }
-                        else if(nomalColor==NormalColor.blue)
-                        {
+                        else if (nomalColor==NormalColor.blue) {
                             __Icon9Factory__.getInstance().getButtonIcon_NormalBlue().draw((Graphics2D)g, dx, dy, dw, dh);
                         }
-                        else if(nomalColor==NormalColor.lightBlue)
-                        {
+                        else if (nomalColor==NormalColor.lightBlue) {
                             __Icon9Factory__.getInstance().getButtonIcon_NormalLightBlue().draw((Graphics2D)g, dx, dy, dw, dh);
                         }
-//                        else if(nomalColor==NormalColor.red)
-//                        {
-//                            //红色按钮禁用状态时为更好地突出禁用状态，用深灰按钮
-//                            if(state == State.DISABLED)
-//                                __Icon9Factory__.getInstance().getButtonIcon_NormalGray().draw((Graphics2D)g, dx, dy, dw, dh);
-//                            else
-//                                __Icon9Factory__.getInstance().getButtonIcon_NormalRed().draw((Graphics2D)g, dx, dy, dw, dh);
-//                        }
                         else
                             __Icon9Factory__.getInstance().getButtonIcon_NormalGray().draw((Graphics2D)g, dx, dy, dw, dh);
                     }
@@ -492,16 +356,10 @@ public static void paintXPButtonBackground(NormalColor nomalColor,Graphics g, JC
             super(m.top+2, m.left+2, m.bottom+2, m.right+2);
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.border.AbstractBorder#getBorderInsets(java.awt.Component)
-         */
         public Insets getBorderInsets(Component c)       {
             return getBorderInsets(c, getBorderInsets());
         }
 
-        /* (non-Javadoc)
-         * @see javax.swing.border.EmptyBorder#getBorderInsets(java.awt.Component, java.awt.Insets)
-         */
         public Insets getBorderInsets(Component c, Insets insets)       {
             insets = super.getBorderInsets(c, insets);
                 

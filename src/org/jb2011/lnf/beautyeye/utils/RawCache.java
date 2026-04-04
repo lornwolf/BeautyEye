@@ -20,8 +20,7 @@ import java.util.HashMap;
  * @author lornwolf, 2010-09-11
  * @version 1.0
  */
-public abstract class RawCache<T>
-{
+public abstract class RawCache<T> {
     
     /** 本地磁盘资源缓存中心（key=path,value=image对象）. */
     private HashMap<String,T> rawCache = new HashMap<String,T>();
@@ -34,22 +33,17 @@ public abstract class RawCache<T>
      * @param baseClass 基准类，指定此类则获取本地磁盘资源时会以此类为基准取本地磁盘资源的相对物理目录
      * @return T
      */
-    public T getRaw(String relativePath,Class baseClass)
-    {
+    public T getRaw(String relativePath,Class baseClass) {
         T ic=null;
         
         String key = relativePath+baseClass.getCanonicalName();
-        if(rawCache.containsKey(key))
+        if (rawCache.containsKey(key))
             ic = rawCache.get(key);
-        else
-        {
-            try
-            {
+        else {
+            try {
                 ic = getResource(relativePath, baseClass);
                 rawCache.put(key, ic);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("取本地磁盘资源文件出错,path="+key+","+e.getMessage());
                 e.printStackTrace();
             }

@@ -15,20 +15,17 @@ import java.awt.Insets;
 
 import org.jb2011.lnf.beautyeye.widget.border.NinePatchBorder;
 
-// TODO: Auto-generated Javadoc
 /**
  * 滚动面板默认Border的实现类。.
  *
  * @author lornwolf
  */
-public class ScrollPaneBorder extends NinePatchBorder
-{
+public class ScrollPaneBorder extends NinePatchBorder {
     
     /**
      * Instantiates a new scroll pane border.
      */
-    public ScrollPaneBorder()
-    {
+    public ScrollPaneBorder() {
         super(new Insets(6,6,8,6)//5,4,6,4
                 , __Icon9Factory__.getInstance().getScrollPaneBorderBg());
     }

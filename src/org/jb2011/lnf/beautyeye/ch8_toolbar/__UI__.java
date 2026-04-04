@@ -23,13 +23,12 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
+public class __UI__ {
+
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         //~* @since 3.4, add by lornwolf 2012-11-05
         //~* 【BeautyEye外观的特有定制属性】：true表示BEToolBarUI里，将使用其它典型外观
         //~*  一样的默认纯色填充背景（颜色由ToolBar.background属性指定）, 否则将使用BeautyEye
@@ -47,10 +46,8 @@ public class __UI__
         UIManager.put("ToolBar.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));
         //工具栏的border实现
         UIManager.put("ToolBar.border",new BorderUIResource(
-//                com.sun.java.swing.plaf.windows.WindowsBorders.getToolBarBorder()));
                 new org.jb2011.lnf.beautyeye.ch8_toolbar.BEToolBarUI.ToolBarBorder(UIManager.getColor("ToolBar.shadow"),
                         UIManager.getColor("ToolBar.highlight"), new Insets(6, 0, 11, 0))));
-//                BorderFactory.createEmptyBorder(5, 0, 8, 0)));//5, 5, 8, 5)));
         //分隔条ui实现
         UIManager.put("ToolBarSeparatorUI"
                 , org.jb2011.lnf.beautyeye.ch8_toolbar.BEToolBarSeparatorUI.class.getName());

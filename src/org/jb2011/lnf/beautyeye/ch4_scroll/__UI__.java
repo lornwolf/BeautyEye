@@ -19,18 +19,15 @@ import javax.swing.plaf.ColorUIResource;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
+public class __UI__ {
     
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 视口的相关ui值设定
         UIManager.put("Viewport.background",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         UIManager.put("Viewport.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));

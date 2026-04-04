@@ -31,49 +31,40 @@ import javax.swing.plaf.basic.BasicSeparatorUI;
  * @author lornwolf, 2012-11-05
  * @version 1.0
  */
-public class BESeparatorUI extends BasicSeparatorUI 
-{ 
+public class BESeparatorUI extends BasicSeparatorUI {
     /**
      * Creates the ui.
      *
      * @param c the c
      * @return the component ui
      */
-    public static ComponentUI createUI( JComponent c )
-    {
+    public static ComponentUI createUI(JComponent c) {
         return new BESeparatorUI();
     }
     
-    protected void installDefaults( JSeparator s )
-    {
+    protected void installDefaults(JSeparator s) {
         LookAndFeel.installColors( s, "Separator.background", "Separator.foreground" );
         LookAndFeel.installProperty( s, "opaque", Boolean.FALSE);
     }
     
     @Override
-    public void paint( Graphics g, JComponent c )
-    {
+    public void paint(Graphics g, JComponent c) {
         //** 绘制border的底线
         //虚线样式
         Stroke oldStroke = ((Graphics2D)g).getStroke();
         Stroke sroke = new BasicStroke(1, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_BEVEL, 0, new float[]{2, 2}, 0);//实线，空白
-        ((Graphics2D)g).setStroke(sroke);//
-//        super.paint(g, c);
+        ((Graphics2D)g).setStroke(sroke);
         
         Dimension s = c.getSize();
 
-        if ( ((JSeparator)c).getOrientation() == JSeparator.VERTICAL )
-        {
-//            System.out.println("c.getBackground()c.getBackground()c.getBackground()="+c.getBackground());
+        if (((JSeparator)c).getOrientation() == JSeparator.VERTICAL) {
           g.setColor( c.getForeground() );
           g.drawLine( 0, 0, 0, s.height );
 
           g.setColor( c.getBackground() );
           g.drawLine( 1, 0, 1, s.height );
-        }
-        else  // HORIZONTAL
-        {
+        } else { // HORIZONTAL
           g.setColor( c.getForeground() );
           g.drawLine( 0, 0, s.width, 0 );
 

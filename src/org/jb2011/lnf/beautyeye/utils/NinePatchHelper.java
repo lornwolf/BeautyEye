@@ -24,8 +24,7 @@ import org.jb2011.ninepatch4j.NinePatch;
  * @author lornwolf, 2011-12-22
  * @version 1.0
  */
-public class NinePatchHelper
-{
+public class NinePatchHelper {
     /**
      * Creates the nine patch.
      *
@@ -34,14 +33,11 @@ public class NinePatchHelper
      * @return the nine patch
      * @see NinePatch#load(URL, boolean)
      */
-    public static NinePatch createNinePatch(URL fileUrl, boolean convert)
-    {
-        try
-        {
+    public static NinePatch createNinePatch(URL fileUrl, boolean convert) {
+        try {
             return NinePatch.load(fileUrl, convert);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -57,8 +53,7 @@ public class NinePatchHelper
      * @throws IOException Signals that an I/O exception has occurred.
      * @see NinePatch#load(InputStream, boolean, boolean)
      */
-    public static NinePatch createNinePatch(InputStream stream, boolean is9Patch,boolean convert) throws IOException
-    {
+    public static NinePatch createNinePatch(InputStream stream, boolean is9Patch,boolean convert) throws IOException {
         return NinePatch.load(stream, is9Patch, convert);
     }
     
@@ -71,8 +66,7 @@ public class NinePatchHelper
      * @return the nine patch
      * @see NinePatch#load(BufferedImage, boolean, boolean)
      */
-    public static NinePatch createNinePatch(BufferedImage image, boolean is9Patch,boolean convert)
-    {
+    public static NinePatch createNinePatch(BufferedImage image, boolean is9Patch,boolean convert) {
         return NinePatch.load(image, is9Patch, convert);
     }
 }

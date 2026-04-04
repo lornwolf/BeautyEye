@@ -20,21 +20,17 @@ import javax.swing.plaf.ColorUIResource;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
-    
+public class __UI__ {
+
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         UIManager.put("Tree.background",new ColorUIResource(Color.white));
         UIManager.put("Tree.textBackground",new ColorUIResource(Color.white));
-//        UIManager.put("Tree.drawsFocusBorderAroundIcon",new Boolean(false));
         UIManager.put("Tree.selectionForeground",new ColorUIResource(BeautyEyeLNFHelper.commonSelectionForegroundColor));
         UIManager.put("Tree.selectionBackground",new ColorUIResource(BeautyEyeLNFHelper.commonSelectionBackgroundColor));
         UIManager.put("Tree.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));
@@ -44,9 +40,7 @@ public class __UI__
         UIManager.put("Tree.closedIcon",__IconFactory__.getInstance().getTreeDefaultClosedIcon_16_16());
         UIManager.put("Tree.leafIcon",__IconFactory__.getInstance().getTreeDefaultLeafIcon_16_16());
         UIManager.put("Tree.expandedIcon",__IconFactory__.getInstance().getTreeA());
-//                ,new org.jb2011.lnf.windows2.ch16.BETreeUI.ExpandedIcon());
         UIManager.put("Tree.collapsedIcon",__IconFactory__.getInstance().getTreeB());
-//                ,new org.jb2011.lnf.windows2.ch16.BETreeUI.CollapsedIcon());
         
         //不绘制层次线
         UIManager.put("Tree.paintLines", false);//default is true
