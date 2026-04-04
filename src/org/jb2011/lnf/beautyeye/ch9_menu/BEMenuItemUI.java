@@ -60,10 +60,10 @@ public class BEMenuItemUI extends BasicMenuItemUI {
             __Icon9Factory__.getInstance().getBgIcon_ItemSelected()
                     .draw(g2, 0, 0, menuWidth, menuHeight);
         } else {
-            if (!enforceTransparent) {
-                g.setColor(menuItem.getBackground());
-                g.fillRect(0, 0, menuWidth, menuHeight);
-            }
+            // 用父容器背景色清除高亮残留（模拟透明效果，与含子菜单的菜单项保持一致）
+            java.awt.Container parent = menuItem.getParent();
+            g.setColor(parent != null ? parent.getBackground() : menuItem.getBackground());
+            g.fillRect(0, 0, menuWidth, menuHeight);
         }
         g.setColor(oldColor);
     }
