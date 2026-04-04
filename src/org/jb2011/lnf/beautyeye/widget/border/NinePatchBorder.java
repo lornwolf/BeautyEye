@@ -59,6 +59,11 @@ public class NinePatchBorder extends AbstractBorder {
 
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        this.np.draw((Graphics2D)g, x, y, width, height);
+        if (c instanceof javax.swing.JComponent && org.jb2011.lnf.beautyeye.utils.BEUtils.isFrameRound((javax.swing.JComponent)c)) {
+            return;
+        } else {
+            // Normal execution for other components or opaque frames
+            this.np.draw((Graphics2D)g, x, y, width, height);
+        }
     }
 }

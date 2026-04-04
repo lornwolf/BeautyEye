@@ -15,9 +15,11 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.LookAndFeel;
+import javax.swing.RepaintManager;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import org.jb2011.lnf.beautyeye.utils.BERepaintManager;
 import org.jb2011.lnf.beautyeye.utils.JVM;
 import org.jb2011.lnf.beautyeye.widget.border.BEShadowBorder;
 import org.jb2011.lnf.beautyeye.widget.border.BEShadowBorder3;
@@ -170,6 +172,15 @@ public class BeautyEyeLNFHelper {
      * @see org.jb2011.lnf.beautyeye.ch20_filechooser.__UI__#uiImpl_win()
      */
     protected static void implLNF() {
+        // 安装自定义 RepaintManager，修复圆角窗口动态添加组件后圆角丢失的问题。
+        // 问题根因：Swing 增量重绘时会以第一个 opaque 祖先为起点，
+        //           绕过 BEClipLayeredPane 中的圆角裁切。
+        // 解决方案：拦截圆角窗口后代的重绘请求，将脏区域重定向到 LayeredPane，
+        //           确保绘制路径始终经过圆角裁切逻辑。
+        if (!(RepaintManager.currentManager(null) instanceof BERepaintManager)) {
+            RepaintManager.setCurrentManager(new BERepaintManager());
+        }
+
         //自定义窗口的L&F实现
         org.jb2011.lnf.beautyeye.ch1_titlepane.__UI__.uiImpl();
         //自定义JTabbedPane的L&F实现
