@@ -31,6 +31,7 @@ import java.awt.LayoutManager2;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.InputEvent;
@@ -38,6 +39,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JComponent;
@@ -63,27 +65,38 @@ import org.jb2011.lnf.beautyeye.utils.WindowTranslucencyHelper;
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
 //* 本类的实现参考了java1.5中的MetalRootPaneUI.
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
-public class BERootPaneUI extends BasicRootPaneUI 
+public class BERootPaneUI extends BasicRootPaneUI
 {
+    // 阴影图像缓存：避免每次重绘都实时计算 19 层半透明圆角矩形（软件渲染模式下极其昂贵）
+    private BufferedImage shadowCache = null;
+    private int shadowCacheW = -1;
+    private int shadowCacheH = -1;
+
+    // 圆角窗口透明化只需执行一次，缓存已处理状态避免 paint() 每次调用 getWindowAncestor
+    private boolean translucencyApplied = false;
+
     @Override
     public void paint(Graphics g, JComponent c) {
         boolean rounded = BEUtils.isFrameRound(c);
         if (rounded) {
-            // 终极劫持：只要有属性，不管 LNF 状态如何，强制开启透明
-            Window win = SwingUtilities.getWindowAncestor(c);
-            if (win != null && win.isOpaque()) {
-                WindowTranslucencyHelper.setWindowOpaque(win, false);
+            // 只有在尚未设置透明时才调用，避免每次 paint() 都执行 getWindowAncestor（expensive）
+            if (!translucencyApplied) {
+                Window win = SwingUtilities.getWindowAncestor(c);
+                if (win != null && win.isOpaque()) {
+                    WindowTranslucencyHelper.setWindowOpaque(win, false);
+                }
+                translucencyApplied = true;
             }
-            
+
             Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-            
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
             Insets i = c.getInsets();
             int ix = i.left;
             int iy = i.top;
             int iw = c.getWidth() - i.left - i.right;
             int ih = c.getHeight() - i.top - i.bottom;
-            
+
             // 实时裁切，绝对不留死角
             Shape oldClip = g2.getClip();
             RoundRectangle2D.Float roundClip = new RoundRectangle2D.Float(ix, iy, iw, ih, 26, 26);
@@ -98,24 +111,47 @@ public class BERootPaneUI extends BasicRootPaneUI
         super.paint(g, c);
     }
 
+    /**
+     * 构建阴影缓存图像（仅在窗口尺寸变化时重建，避免每帧实时计算）。
+     */
+    private BufferedImage buildShadowCache(int totalW, int totalH, int radius) {
+        int shadowSize = 18;
+        // 缓存图像需要比窗口稍大以容纳向外扩展的阴影
+        BufferedImage img = new BufferedImage(totalW + shadowSize * 2, totalH + shadowSize * 2, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = img.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        for (int j = shadowSize; j >= 0; j--) {
+            g2.setColor(new Color(0, 0, 0, 2));
+            int arc = radius + j * 2;
+            // 偏移 shadowSize 是为了让向外扩展的部分落在缓存图像范围内
+            g2.fillRoundRect(shadowSize - j, shadowSize - j + 4, totalW + j * 2, totalH + j * 2, arc, arc);
+        }
+        g2.dispose();
+        return img;
+    }
+
     @Override
     public void update(Graphics g, JComponent c) {
         boolean rounded = BEUtils.isFrameRound(c);
         if (rounded || !BeautyEyeLNFHelper.__isFrameBorderOpaque()) {
             Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-            
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
             // 基础参数
             int radius = rounded ? 26 : 0;
             Insets i = c.getInsets();
             int ix = i.left, iy = i.top, iw = c.getWidth() - i.left - i.right, ih = c.getHeight() - i.top - i.bottom;
 
-            // 1. 绘制高质量分层阴影
-            int shadowSize = 18;
-            for (int j = shadowSize; j >= 0; j--) {
-                g2.setColor(new java.awt.Color(0, 0, 0, 2)); 
-                int arc = radius + j * 2; 
-                g2.fillRoundRect(ix - j, iy - j + 4, iw + j * 2, ih + j * 2, arc, arc);
+            // 1. 绘制阴影（使用缓存图像，仅窗口尺寸变化时重建，避免每帧实时计算 19 层半透明圆角矩形）
+            if (rounded) {
+                int shadowSize = 18;
+                if (shadowCache == null || shadowCacheW != iw || shadowCacheH != ih) {
+                    shadowCache = buildShadowCache(iw, ih, radius);
+                    shadowCacheW = iw;
+                    shadowCacheH = ih;
+                }
+                // 绘制到 ix-shadowSize, iy-shadowSize 使阴影向外扩展
+                g2.drawImage(shadowCache, ix - shadowSize, iy - shadowSize, null);
             }
 
             // 2. 绘制圆角背景
@@ -287,7 +323,7 @@ public class BERootPaneUI extends BasicRootPaneUI
      *
      * @param c the JRootPane to uninstall state from
      */
-    public void uninstallUI(JComponent c) 
+    public void uninstallUI(JComponent c)
     {
         super.uninstallUI(c);
         uninstallClientDecorations(root);
@@ -295,6 +331,11 @@ public class BERootPaneUI extends BasicRootPaneUI
         layoutManager = null;
         mouseInputListener = null;
         root = null;
+        // 重置缓存状态，以防同一 UI 实例被复用
+        shadowCache = null;
+        shadowCacheW = -1;
+        shadowCacheH = -1;
+        translucencyApplied = false;
     }
 
     /**
