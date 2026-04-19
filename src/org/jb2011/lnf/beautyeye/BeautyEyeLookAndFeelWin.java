@@ -37,9 +37,8 @@ import org.jb2011.lnf.beautyeye.winlnfutils.WinUtils;
  * @author lornwolf
  * @version 1.1
  */
-public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
-{
-    static{
+public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel {
+    static {
         initLookAndFeelDecorated();
     }
 
@@ -50,8 +49,7 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
      * @see org.jb2011.lnf.beautyeye.ch20_filechooser.__UI__#uiImpl_win()
      * @see #initForVista()
      */
-    public BeautyEyeLookAndFeelWin()
-    {
+    public BeautyEyeLookAndFeelWin() {
         super();
 
         //取消Metal LNF中默认的粗体字
@@ -73,60 +71,61 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
     /**
      * 针对Vista及更新的windows平台进行补救性重新设置以便与BeautyEye LNF的审美进行适配.
      */
-    protected void initForVista()
-    {
-        if(WinUtils.isOnVista())
-        {
+    protected void initForVista() {
+        if (WinUtils.isOnVista()) {
             UIManager.put("CheckBoxMenuItem.margin",new InsetsUIResource(0,0,0,0));
             UIManager.put("RadioButtonMenuItem.margin",new InsetsUIResource(0,0,0,0));
             UIManager.put("Menu.margin",new InsetsUIResource(0,0,0,0));
             UIManager.put("MenuItem.margin",new InsetsUIResource(0,0,0,0));
 
             UIManager.put("Menu.border",new BorderUIResource(BorderFactory.createEmptyBorder(1,3,2,3)));
-            UIManager.put("MenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(1,0,2,0)));
-            UIManager.put("CheckBoxMenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(4,2,4,2)));
-            UIManager.put("RadioButtonMenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(4,0,4,0)));
+            UIManager.put("MenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(1,3,2,3)));
+            UIManager.put("CheckBoxMenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(4,3,4,3)));
+            UIManager.put("RadioButtonMenuItem.border",new BorderUIResource(BorderFactory.createEmptyBorder(4,3,4,3)));
 
             UIManager.put("CheckBoxMenuItem.checkIcon"
                     ,new org.jb2011.lnf.beautyeye.ch9_menu.BECheckBoxMenuItemUI.CheckBoxMenuItemIcon().setUsedForVista(true));
             UIManager.put("RadioButtonMenuItem.checkIcon"
                     ,new org.jb2011.lnf.beautyeye.ch9_menu.BERadioButtonMenuItemUI.RadioButtonMenuItemIcon().setUsedForVista(true));
+
+            //为Menu和MenuItem设置统一尺寸的checkIcon，确保Vista下子菜单目录与普通菜单项左侧对齐
+            javax.swing.Icon emptyCheckIcon = new javax.swing.Icon() {
+                public void paintIcon(java.awt.Component c, java.awt.Graphics g, int x, int y) {}
+                public int getIconWidth() { return 16; }
+                public int getIconHeight() { return 16; }
+            };
+            UIManager.put("Menu.checkIcon", emptyCheckIcon);
+            UIManager.put("MenuItem.checkIcon", emptyCheckIcon);
         }
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "BeautyEyeWin";
     }
 
     @Override
-    public String getID()
-    {
+    public String getID() {
         return "BeautyEyeWin";
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "BeautyEye windows-platform L&F developed by lornwolf.";
     }
 
     @Override
-    public boolean getSupportsWindowDecorations()
-    {
+    public boolean getSupportsWindowDecorations() {
         return true;
     }
 
     @Override
-    public boolean isNativeLookAndFeel()
-    {
+    public boolean isNativeLookAndFeel() {
         return false;
     }
 
     @Override
-    public boolean isSupportedLookAndFeel()
-    {
+    public boolean isSupportedLookAndFeel() {
         return true;
     }
 
@@ -134,8 +133,7 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
      * {@inheritDoc}
      */
     @Override
-    public UIDefaults getDefaults()
-    {
+    public UIDefaults getDefaults() {
         UIDefaults table = super.getDefaults();
         // MetalLookAndFeel.getDefaults()在super.initComponentDefaults()之后
         // 还会调用currentTheme.addCustomEntriesToTable(table)，重新用ActiveValue
@@ -148,8 +146,7 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
     /**
      * {@inheritDoc}
      */
-    protected void initComponentDefaults(UIDefaults table)
-    {
+    protected void initComponentDefaults(UIDefaults table) {
         super.initComponentDefaults(table);
         initOtherResourceBundle(table);
     }
@@ -159,8 +156,7 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
      * 这导致用户通过setFont()设置的字体被覆盖。此方法用Windows系统字体替换
      * Metal的默认字体，恢复原WindowsLookAndFeel的字体行为。
      */
-    private void overrideMetalFontsWithSystemFont(UIDefaults table)
-    {
+    private void overrideMetalFontsWithSystemFont(UIDefaults table) {
         Font sysFont = (Font) Toolkit.getDefaultToolkit().getDesktopProperty("win.defaultGUI.font");
         if (sysFont == null)
             return;
@@ -182,8 +178,7 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
             "InternalFrame.titleFont"
         };
 
-        for (String key : fontKeys)
-        {
+        for (String key : fontKeys) {
             table.put(key, fontResource);
         }
     }
@@ -192,24 +187,19 @@ public class BeautyEyeLookAndFeelWin extends MetalLookAndFeel
      * Initialize the defaults table with the name of the other ResourceBundle
      * used for getting localized defaults.
      */
-    protected void initOtherResourceBundle(UIDefaults table)
-    {
-        table.addResourceBundle( "org.jb2011.lnf.beautyeye.resources.beautyeye" );
+    protected void initOtherResourceBundle(UIDefaults table) {
+        table.addResourceBundle("org.jb2011.lnf.beautyeye.resources.beautyeye");
     }
 
     /**
      * 据BeautyEyeLNFHelper.frameBorderStyle指明的窗口边框类型来
      * 决定是否使用操作系统相关的窗口装饰样式.
      */
-    static void initLookAndFeelDecorated()
-    {
-        if(BeautyEyeLNFHelper.frameBorderStyle == FrameBorderStyle.osLookAndFeelDecorated)
-        {
+    static void initLookAndFeelDecorated() {
+        if (BeautyEyeLNFHelper.frameBorderStyle == FrameBorderStyle.osLookAndFeelDecorated) {
             JFrame.setDefaultLookAndFeelDecorated(false);
             JDialog.setDefaultLookAndFeelDecorated(false);
-        }
-        else
-        {
+        } else {
             JFrame.setDefaultLookAndFeelDecorated(true);
             JDialog.setDefaultLookAndFeelDecorated(true);
         }

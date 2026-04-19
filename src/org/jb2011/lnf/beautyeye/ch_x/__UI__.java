@@ -27,16 +27,15 @@ import org.jb2011.lnf.beautyeye.widget.border.BEDashedRoundRecBorder;
  * @author lornwolf
  * @version 1.1
  */
-public class __UI__
-{
+public class __UI__ {
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         UIManager.put("control",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         UIManager.put("Separator.foreground",new ColorUIResource(new Color(180,180,180)));
         UIManager.put("ToolTip.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));
+        UIManager.put("ToolTip.font", new javax.swing.plaf.FontUIResource("Microsoft YaHei", java.awt.Font.PLAIN, 14));
         
         UIManager.put("Separator.background",new ColorUIResource(Color.white));
         UIManager.put("Panel.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));
@@ -49,11 +48,10 @@ public class __UI__
         UIManager.put("ColorChooser.background",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         UIManager.put("ColorChooser.swatchesDefaultRecentColor",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         
-        UIManager.put("TitledBorder.titleColor",new ColorUIResource(new Color(58,135,173)));//TitleBorder的标题颜色
+        UIManager.put("TitledBorder.titleColor",new ColorUIResource(new Color(58,135,173)));
         //TitledBorder的默认border实现（windows LNF中默认是圆色灰色实线距形）
         UIManager.put("TitledBorder.border",new BorderUIResource(new BEDashedRoundRecBorder(BeautyEyeLNFHelper.commonFocusedBorderColor)));
-        
-//        UIManager.put("OptionPaneUI",org.jb2011.lnf.windows2.ch3.NLOptionPaneUI.class.getName());
+
         //** Ui里的实现逻辑：此属性为true时将导致JOptionPane里的各按钮按BasicOptionPaneUI里设定的Insets进行
         //** UI展现：当按钮数<=2时使用的Insets=new Instes(2,8,2,8)，否则使用new Instes(2,4,2,4)，
         //** 这样的逻辑下，BeautyEye L&F实现里会使得按钮高度缩小而不好看，所以要关闭此属性

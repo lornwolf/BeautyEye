@@ -21,9 +21,8 @@ import org.jb2011.ninepatch4j.NinePatch;
  * @author lornwolf
  * @version 1.0
  */
-public class __Icon9Factory__ extends RawCache<NinePatch>
-{
-    
+public class __Icon9Factory__ extends RawCache<NinePatch> {
+
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs/np";
 
@@ -35,19 +34,14 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      *
      * @return single instance of __Icon9Factory__
      */
-    public static __Icon9Factory__ getInstance()
-    {
-        if(instance==null)
+    public static __Icon9Factory__ getInstance() {
+        if (instance==null)
             instance = new __Icon9Factory__();
         return instance;
     }
-    
-    /* (non-Javadoc)
-     * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
-     */
+
     @Override
-    protected NinePatch getResource(String relativePath, Class baseClass)
-    {
+    protected NinePatch getResource(String relativePath, Class baseClass) {
         return NinePatchHelper.createNinePatch(baseClass.getResource(relativePath), false);
     }
 
@@ -57,50 +51,44 @@ public class __Icon9Factory__ extends RawCache<NinePatch>
      * @param relativePath the relative path
      * @return the raw
      */
-    public NinePatch getRaw(String relativePath)
-    {
+    public NinePatch getRaw(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
 
-    
     /**
      * Gets the text field bg normal.
      *
      * @return the text field bg normal
      */
-    public NinePatch getTextFieldBgNormal()
-    {
+    public NinePatch getTextFieldBgNormal() {
         return getRaw(IMGS_ROOT+"/bg_login_text_normal.9.png");
     }
-    
+
     /**
      * Gets the text field bg focused.
      *
      * @return the text field bg focused
      */
-    public NinePatch getTextFieldBgFocused()
-    {
+    public NinePatch getTextFieldBgFocused() {
         return getRaw(IMGS_ROOT+"/bg_login_text_pressed.9.png");
     }
-    
+
     /**
      * Gets the text field bg disabled.
      *
      * @return the text field bg disabled
      */
-    public NinePatch getTextFieldBgDisabled()
-    {
+    public NinePatch getTextFieldBgDisabled() {
         return getRaw(IMGS_ROOT+"/bg_login_text_disable.9.png");
     }
-    
+
     //一个白色背景，用于JTextArea、JTextPane、JEditorPane等需要JScrollPane的地方
     /**
      * Gets the null white bg.
      *
      * @return the null white bg
      */
-    public NinePatch getNullWhiteBg()
-    {
+    public NinePatch getNullWhiteBg() {
         return getRaw(IMGS_ROOT+"/null_white_bg.9.png");
     }
 }

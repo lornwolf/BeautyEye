@@ -25,29 +25,24 @@ import org.jb2011.ninepatch4j.NinePatch;
  * 
  * @author lornwolf
  */
-public class ImageBgPanel extends JPanel
-{
-    
+public class ImageBgPanel extends JPanel {
+
     /** The draw bg. */
     private boolean drawBg = true;
-    
+
     /** The n9. */
     private NinePatch n9 = null;
-    
+
     /**
      * Instantiates a new image bg panel.
      */
-    public ImageBgPanel()
-    {
+    public ImageBgPanel() {
         this.setOpaque(false);
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.JComponent#paintChildren(java.awt.Graphics)
-     */
-    public void paintChildren(Graphics g)
-    {
-        if(drawBg && n9 != null)
+    @Override
+    public void paintChildren(Graphics g) {
+        if (drawBg && n9 != null)
             n9.draw((Graphics2D)g, 0, 0, this.getWidth(), this.getHeight());
         super.paintChildren(g);
     }
@@ -59,11 +54,10 @@ public class ImageBgPanel extends JPanel
      * @param constraints the constraints
      * @param index the index
      */
-    protected void addImpl(Component comp, Object constraints, int index) 
-    {
-        if(comp!=null&&comp instanceof JComponent)
+    protected void addImpl(Component comp, Object constraints, int index) {
+        if (comp != null && comp instanceof JComponent)
             ((JComponent)comp).setOpaque(false);
-        super.addImpl(comp,constraints,index);
+        super.addImpl(comp, constraints, index);
     }
 
     /**
@@ -71,19 +65,17 @@ public class ImageBgPanel extends JPanel
      *
      * @return true, if is draw bg
      */
-    public boolean isDrawBg()
-    {
+    public boolean isDrawBg() {
         return drawBg;
     }
-    
+
     /**
      * Sets the draw bg.
      *
      * @param drawBg the draw bg
      * @return the image bg panel
      */
-    public ImageBgPanel setDrawBg(boolean drawBg)
-    {
+    public ImageBgPanel setDrawBg(boolean drawBg) {
         this.drawBg = drawBg;
         return this;
     }
@@ -93,19 +85,17 @@ public class ImageBgPanel extends JPanel
      *
      * @return the n9
      */
-    public NinePatch getN9()
-    {
+    public NinePatch getN9() {
         return n9;
     }
-    
+
     /**
      * Sets the n9.
      *
      * @param n9 the n9
      * @return the image bg panel
      */
-    public ImageBgPanel setN9(NinePatch n9)
-    {
+    public ImageBgPanel setN9(NinePatch n9) {
         this.n9 = n9;
         return this;
     }

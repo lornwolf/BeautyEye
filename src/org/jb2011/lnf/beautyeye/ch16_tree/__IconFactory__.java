@@ -15,16 +15,14 @@ import javax.swing.ImageIcon;
 
 import org.jb2011.lnf.beautyeye.utils.RawCache;
 
-// TODO: Auto-generated Javadoc
 /**
  * 普通图片工厂类.
  * 
  * @author lornwolf
  * @version 1.0
  */
-public class __IconFactory__ extends RawCache<ImageIcon>
-{
-    
+public class __IconFactory__ extends RawCache<ImageIcon> {
+
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs";
 
@@ -36,9 +34,8 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return single instance of __IconFactory__
      */
-    public static __IconFactory__ getInstance()
-    {
-        if(instance==null)
+    public static __IconFactory__ getInstance() {
+        if (instance==null)
             instance = new __IconFactory__();
         return instance;
     }
@@ -47,8 +44,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
      */
     @Override
-    protected ImageIcon getResource(String relativePath, Class baseClass)
-    {
+    protected ImageIcon getResource(String relativePath, Class baseClass) {
         return new ImageIcon(baseClass.getResource(relativePath));
     }
     
@@ -58,8 +54,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      * @param relativePath the relative path
      * @return the image
      */
-    public ImageIcon getImage(String relativePath)
-    {
+    public ImageIcon getImage(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
     
@@ -68,8 +63,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the tree default open icon_16_16
      */
-    public ImageIcon getTreeDefaultOpenIcon_16_16()
-    {
+    public ImageIcon getTreeDefaultOpenIcon_16_16() {
         return getImage(IMGS_ROOT+"/treeDefaultOpen1.png");
     }
     
@@ -78,8 +72,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the tree default closed icon_16_16
      */
-    public ImageIcon getTreeDefaultClosedIcon_16_16()
-    {
+    public ImageIcon getTreeDefaultClosedIcon_16_16() {
         return getImage(IMGS_ROOT+"/treeDefaultClosed1.png");
     }
     
@@ -88,8 +81,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the tree default leaf icon_16_16
      */
-    public ImageIcon getTreeDefaultLeafIcon_16_16()
-    {
+    public ImageIcon getTreeDefaultLeafIcon_16_16() {
         return getImage(IMGS_ROOT+"/leaf1.png");
     }
     
@@ -98,8 +90,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the tree a
      */
-    public ImageIcon getTreeA()
-    {
+    public ImageIcon getTreeA() {
         return getImage(IMGS_ROOT+"/a.png");
     }
     
@@ -108,9 +99,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the tree b
      */
-    public ImageIcon getTreeB()
-    {
+    public ImageIcon getTreeB() {
         return getImage(IMGS_ROOT+"/b.png");
     }
-
 }

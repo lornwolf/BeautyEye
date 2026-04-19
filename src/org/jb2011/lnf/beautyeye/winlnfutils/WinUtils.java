@@ -25,14 +25,13 @@ import javax.swing.UIManager;
 
 import org.jb2011.lnf.beautyeye.utils.MySwingUtilities2;
 
-// TODO: Auto-generated Javadoc
 //* 本类中方法参考自 com.sun.java.swing.plaf.windows.WindowsGraphicsUtils
 //* 拷贝至此为是使BE LNF在某些实现上与WindowsLNF一致而又要达到跨平台效果而做
 /**
  * The Class WinUtils.
  */
-public class WinUtils
-{
+public class WinUtils {
+
     //* copy from WindowsLookAndFeel START 未做修改
     // Toggle flag for drawing the mnemonic state
     /** The is mnemonic hidden. */
@@ -52,6 +51,7 @@ public class WinUtils
         }
         return isMnemonicHidden;
     }
+
     //* 注意：该方法在java7中移到了OSInfo非公开类了哦
     /**
      * Checks if is on vista.
@@ -97,25 +97,14 @@ public class WinUtils
     public static void paintText(Graphics g, AbstractButton b, 
             Rectangle textRect, String text,
             int textShiftOffset) {
-//        FontMetrics fm = SwingUtilities2.getFontMetrics(b, g);
         FontMetrics fm = MySwingUtilities2.getFontMetrics(
                 b, g);//* modified by lornwolf 为了非公开api的兼容性
 
         int mnemIndex = b.getDisplayedMnemonicIndex();
         // W2K Feature: Check to see if the Underscore should be rendered.
-//        if (WindowsLookAndFeel.isMnemonicHidden() == true) {
         if (isMnemonicHidden() == true) {//* modified by lornwolf
             mnemIndex = -1;
         }
-//
-//        XPStyle xp = XPStyle.getXP();
-//        if (xp != null && !(b instanceof JMenuItem)) 
-//        {
-//            paintXPText(b, g, textRect.x + textShiftOffset, 
-//                    textRect.y + fm.getAscent() + textShiftOffset,
-//                    text, mnemIndex);
-//        } 
-//        else 
         {
             paintClassicText(b, g, textRect.x + textShiftOffset, 
                     textRect.y + fm.getAscent() + textShiftOffset,
@@ -139,9 +128,9 @@ public class WinUtils
 
         /* Draw the Text */
         Color color = b.getForeground();
-        if(model.isEnabled()) {
+        if (model.isEnabled()) {
             /*** paint the text normally */
-            if(!(b instanceof JMenuItem && model.isArmed()) 
+            if (!(b instanceof JMenuItem && model.isArmed()) 
                     && !(b instanceof JMenu && (model.isSelected() || model.isRollover()))) {
                 /* We shall not set foreground color for selected menu or
                  * armed menuitem. Foreground must be set in appropriate
@@ -155,7 +144,7 @@ public class WinUtils
         } else {    /*** paint the text disabled ***/
             color        = UIManager.getColor("Button.shadow");
             Color shadow = UIManager.getColor("Button.disabledShadow");
-            if(model.isArmed()) {
+            if (model.isArmed()) {
                 color = UIManager.getColor("Button.disabledForeground");
             } else {
                 if (shadow == null) {
@@ -183,8 +172,7 @@ public class WinUtils
      * @param c the c
      * @return true, if is left to right
      */
-    public static boolean isLeftToRight(Component c)
-    {
+    public static boolean isLeftToRight(Component c) {
         return c.getComponentOrientation().isLeftToRight();
     }
     //* copy from WindowsGraphicsUtils END

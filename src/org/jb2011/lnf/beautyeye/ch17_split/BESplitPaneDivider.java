@@ -28,48 +28,45 @@ import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import org.jb2011.lnf.beautyeye.utils.BEUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * 分栏面板上的分隔线实现类.
  * <p>
- * TODO 两个Touch按钮的位置等都是可以定制的，目前没有更好的美化灵感，以后可以再深入优先。
+ * 两个Touch按钮的位置等都是可以定制的，目前没有更好的美化灵感，以后可以再深入优先。
  * 
  * @author lornwolf, 2012-07-13
  * @version 1.0
  */
-public class BESplitPaneDivider extends BasicSplitPaneDivider
-{
+public class BESplitPaneDivider extends BasicSplitPaneDivider {
+
     //copy from BasicSplitPaneDivider
     /** The one touch size. */
     private int oneTouchSize;
 
     //* add by jb201
-    //* TODO 本常量可以做成UIManager属性以便未来使用者进行配置哦
     /** The TOUC h_ butto n_ color. */
     protected final Color TOUCH_BUTTON_COLOR = new Color(58,135,173);
     
     //* add by jb201
     //在水平SplitePane状态下，中间触碰装饰区装饰按钮的宽度 
     /** The Constant TOUCH_DECRATED_BUTTON_W. */
-    protected final static int TOUCH_DECRATED_BUTTON_W = 5;//* TODO 本常量可以做成UIManager属性以便未来使用者进行配置哦
+    protected final static int TOUCH_DECRATED_BUTTON_W = 5;
     //在水平SplitePane状态下，中间触碰装饰区装饰按钮的高度 
     /** The Constant TOUCH_DECRATED_BUTTON_H. */
-    protected final static int TOUCH_DECRATED_BUTTON_H = 30;//* TODO 本常量可以做成UIManager属性以便未来使用者进行配置哦
+    protected final static int TOUCH_DECRATED_BUTTON_H = 30;
 
     //分隔条线直线的颜色 
     /** The Constant TOUCH_DECRATED_BUTTON_COLOR. */
-    protected final static Color TOUCH_DECRATED_BUTTON_COLOR = new Color(180,180,180);//* TODO 本颜色常量可以做成UIManager属性以便未来使用者进行配置哦
+    protected final static Color TOUCH_DECRATED_BUTTON_COLOR = new Color(180,180,180);
     //分隔条线直线的高亮颜色（用来形成高对比度的立体效果） 
     /** The Constant TOUCH_DECRATED_BUTTON_HILIGHT_COLOR. */
-    protected final static Color TOUCH_DECRATED_BUTTON_HILIGHT_COLOR = Color.white;//* TODO 本颜色常量可以做成UIManager属性以便未来使用者进行配置哦
+    protected final static Color TOUCH_DECRATED_BUTTON_HILIGHT_COLOR = Color.white;
     
     /**
      * Creates a new Windows SplitPaneDivider.
      *
      * @param ui the ui
      */
-    public BESplitPaneDivider(BasicSplitPaneUI ui) 
-    {
+    public BESplitPaneDivider(BasicSplitPaneUI ui) {
         super(ui);
 
         //copy from BasicSplitPaneDivider (replaced sun.swing.DefaultLookup with UIManager)
@@ -83,20 +80,15 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
      *
      * @param g the g
      */
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         Color bgColor = (splitPane.hasFocus()) ?
                 UIManager.getColor("SplitPane.shadow") :getBackground();
         Dimension size = getSize();
         Graphics2D g2=((Graphics2D)g);
         BEUtils.setAntiAliasing((Graphics2D)g, true);
-//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//                RenderingHints.VALUE_ANTIALIAS_ON);
-        if(bgColor != null)
-        {
+        if (bgColor != null) {
             int orient = this.splitPane.getOrientation();
-            if(orient==JSplitPane.HORIZONTAL_SPLIT)
-            {
+            if (orient==JSplitPane.HORIZONTAL_SPLIT) {
                 int halfWidth=size.width/2;
                 int halfHeight=size.height/2;
                 
@@ -107,8 +99,7 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
                         BasicStroke.JOIN_BEVEL, 0, new float[]{2, 2}, 0);//实线，空白
                 ((Graphics2D)g).setStroke(sroke);
                 
-                g.setColor(TOUCH_DECRATED_BUTTON_COLOR);//bgColor);
-//                g.fillRect(0, 0, size.width, size.height);
+                g.setColor(TOUCH_DECRATED_BUTTON_COLOR);
                 g.drawLine(halfWidth+0, 0, halfWidth+0, size.height);
                 //在竖线右边再画一个高对比度的竖线从而形成立体效果
                 g.setColor(TOUCH_DECRATED_BUTTON_HILIGHT_COLOR);
@@ -118,14 +109,12 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
 
                 //------------------------再填充触碰装饰区
                 int decratedButton_w = TOUCH_DECRATED_BUTTON_W;
-                int decratedButton_h= TOUCH_DECRATED_BUTTON_H;//18;
+                int decratedButton_h= TOUCH_DECRATED_BUTTON_H;
                 int diverTouchStartX = halfWidth - decratedButton_w/2 ;
                 __Icon9Factory__.getInstance().getSplitTouchBg1()
                     .draw((Graphics2D)g, diverTouchStartX, halfHeight - decratedButton_h/2
                             , decratedButton_w, decratedButton_h);
-            }
-            else
-            {
+            } else {
                 int halfHeight = size.height/2;
                 int halfWidth = size.width/2;
                 
@@ -136,8 +125,7 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
                         BasicStroke.JOIN_BEVEL, 0, new float[]{2, 2}, 0);//实线，空白
                 ((Graphics2D)g).setStroke(sroke);
                 
-                g.setColor(TOUCH_DECRATED_BUTTON_COLOR);//bgColor);
-//                g.fillRect(0, 0, size.width, size.height);
+                g.setColor(TOUCH_DECRATED_BUTTON_COLOR);
                 g.drawLine(0, halfHeight +0, size.width, halfHeight +0);
                 //在竖线下边再画一个高对比度的横线从而形成立体效果
                 g.setColor(TOUCH_DECRATED_BUTTON_HILIGHT_COLOR);
@@ -147,19 +135,18 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
 
                 //------------------------再填充触碰装饰区
                 int decratedButton_w = TOUCH_DECRATED_BUTTON_W;
-                int decratedButton_h= TOUCH_DECRATED_BUTTON_H;//18;
+                int decratedButton_h= TOUCH_DECRATED_BUTTON_H;
                 int diverTouchStartY = halfHeight - decratedButton_w/2;
                 __Icon9Factory__.getInstance().getSplitTouchBg1()
                     .draw((Graphics2D)g, halfWidth - decratedButton_h, diverTouchStartY
                             , decratedButton_h, decratedButton_w);
             }
-//            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//                    RenderingHints.VALUE_ANTIALIAS_OFF);
             BEUtils.setAntiAliasing((Graphics2D)g, false);
         }
 
         super.paint(g);
     }
+
 
     //copy from BasicSplitPaneDivider and modified by jb2011
     //因父类方法继承重用设计不佳，此处只能全部拷过来代码，再行修改。
@@ -170,18 +157,13 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
      *
      * @return the j button
      */
-    protected JButton createLeftOneTouchButton()
-    {
-        JButton b = new JButton()
-        {
-            public void setBorder(Border b)
-            {
+    protected JButton createLeftOneTouchButton() {
+        JButton b = new JButton() {
+            public void setBorder(Border b) {
             }
 
-            public void paint(Graphics g)
-            {
-                if (splitPane != null)
-                {
+            public void paint(Graphics g) {
+                if (splitPane != null) {
                     int[] xs = new int[3];
                     int[] ys = new int[3];
                     int blockSize;
@@ -192,13 +174,12 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
 
                     //modified by jb2011
                     // ... then draw the arrow.
-                    g.setColor(TOUCH_BUTTON_COLOR);//Color.black);
+                    g.setColor(TOUCH_BUTTON_COLOR);
 
                     //* 开启反走样
                     BEUtils.setAntiAliasing((Graphics2D)g, true);
                     
-                    if (orientation == JSplitPane.VERTICAL_SPLIT)
-                    {
+                    if (orientation == JSplitPane.VERTICAL_SPLIT) {
                         blockSize = Math.min(getHeight(), oneTouchSize);
                         xs[0] = blockSize;
                         xs[1] = 0;
@@ -207,9 +188,7 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
                         ys[1] = ys[2] = blockSize;
                         g.drawPolygon(xs, ys, 3); // Little trick to make the
                         // arrows of equal size
-                    }
-                    else
-                    {
+                    } else {
                         blockSize = Math.min(getWidth(), oneTouchSize);
                         xs[0] = xs[2] = blockSize;
                         xs[1] = 0;
@@ -225,8 +204,7 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
             }
 
             // Don't want the button to participate in focus traversable.
-            public boolean isFocusTraversable()
-            {
+            public boolean isFocusTraversable() {
                 return false;
             }
         };
@@ -273,8 +251,7 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
                         xs[2] = 0;
                         ys[0] = blockSize;
                         ys[1] = ys[2] = 0;
-                    }
-                    else {
+                    } else {
                         blockSize = Math.min(getWidth(), oneTouchSize);
                         xs[0] = xs[2] = 0;
                         xs[1] = blockSize;
@@ -284,7 +261,7 @@ public class BESplitPaneDivider extends BasicSplitPaneDivider
                     }
 
                     //modified by jb2011
-                    g.setColor(TOUCH_BUTTON_COLOR);//Color.black);
+                    g.setColor(TOUCH_BUTTON_COLOR);
 
                     g.fillPolygon(xs, ys, 3);
                     

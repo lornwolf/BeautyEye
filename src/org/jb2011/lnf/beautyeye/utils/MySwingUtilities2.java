@@ -27,11 +27,6 @@ import javax.swing.JComponent;
  * 实现的，以便解决兼容性问题。.
  *
  */
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 Start
-//此类中方法一一对应于官方非公开的SwingUtilities2类中的方法,
-//只因该类是非公开类，在不同版本里会被移动，甚至未来有被取消的可能哦，
-//所以这了最大化兼容1.5版jdk，所以做个类通过反射来调用该jre里的SwingUtilities2实现
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 一些说明 END
 public class MySwingUtilities2 {
 
     /**
@@ -159,8 +154,7 @@ public class MySwingUtilities2 {
       * @param g the g
       * @return true, if is printing
       */
-     static boolean isPrinting(Graphics g)
-     {
+     static boolean isPrinting(Graphics g) {
           if (USE_SUN_UTILITIES2) {
               Object result = invokeSwingUtilities2StaticMethod("isPrinting"
                               , new Class[]{Graphics.class}

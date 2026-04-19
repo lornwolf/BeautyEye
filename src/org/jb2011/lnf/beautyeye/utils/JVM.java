@@ -14,7 +14,6 @@ package org.jb2011.lnf.beautyeye.utils;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-// TODO: Auto-generated Javadoc
 /**
  * Deals with the different version of the Java Virtual Machine. <br>
  */
@@ -49,9 +48,9 @@ public class JVM {
     
     /** The is jd k1_6_ u11. */
     public static boolean isJDK1_6_U11 = false;
-//    public static boolean isJDK1_6_U12 = false;
+
     /** The Constant JDK1_7. */
-public final static int JDK1_7 = 30;
+    public final static int JDK1_7 = 30;
     
     /** The Constant JDK1_8. */
     public final static int JDK1_8 = 31;
@@ -120,27 +119,21 @@ public final static int JDK1_7 = 30;
         } 
         else if (p_JavaVersion.startsWith("1.7.")) {
             jdkVersion = JDK1_7;
-        } 
-        else if (p_JavaVersion.startsWith("1.6.")) 
-        {
+        } else if (p_JavaVersion.startsWith("1.6.")) {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel".equals(info.getClassName())
-                        ||"javax.swing.plaf.nimbus.NimbusLookAndFeel".equals(info.getClassName())) //java1.7及以后版本该类被移至此
-                {
+                        ||"javax.swing.plaf.nimbus.NimbusLookAndFeel".equals(info.getClassName())) {
                     jdkVersion = JDK1_6_U10_AND_AFTER;//意味java版本是大于或等于java1.6.0_10
                     break;
                 }
             }
 
             //如果是1.6.0_10及以上版本，再来看看具体是哪个版本
-            if(jdkVersion == JDK1_6_U10_AND_AFTER)
-            {
-                if(p_JavaVersion.startsWith("1.6.0_10"))//java 1.6.0 update 10
+            if (jdkVersion == JDK1_6_U10_AND_AFTER) {
+                if (p_JavaVersion.startsWith("1.6.0_10"))//java 1.6.0 update 10
                     isJDK1_6_U10 = true;
-                if(p_JavaVersion.startsWith("1.6.0_11"))//java 1.6.0 update 11
+                if (p_JavaVersion.startsWith("1.6.0_11"))//java 1.6.0 update 11
                     isJDK1_6_U11 = true;
-//                else if(p_JavaVersion.startsWith("1.6.0_12"))//java 1.6.0 update 12
-//                    isJDK1_6_U12 = true;
             }
 
             jdkVersion = jdkVersion == 0 ? JDK1_6 : jdkVersion;
@@ -227,19 +220,6 @@ public final static int JDK1_7 = 30;
         ||jdkVersion==JDK1_6_U10_AND_AFTER;//如果JDK是1.6_u10及以上那当然也是JDK1.6大版本了
     }
 
-//    /**
-//     * Determines if the version of JDK1_6 has Nimbus Look and Feel installed.
-//     * 是否是JDK1.6_u10及以上版本（这个版本很重要，包括Nimbus新主题及透明窗口等新特性）.
-//     * <p>
-//     * 另一个需要注意地方：窗口透明在此版本上存在一个BUG：6750920，所以此版本在BE LNF将不作为支持窗口透明特性
-//     * 
-//     * @return {@code true} if Nimbus is available and the version is 1.6;
-//     *         {@code false} otherwise
-//     */
-//    public boolean isOneDotSixUpdate10() {
-//        return jdkVersion == JDK1_6_U10_AND_AFTER;
-//    }
-    
     /**
      * Determines if the version of JDK1_6 has Nimbus Look and Feel installed.
      * 是否是JDK1.6_u10及以上版本（这个版本很重要，包括Nimbus新主题及透明窗口等新特性）.
@@ -250,10 +230,6 @@ public final static int JDK1_7 = 30;
      *         {@code false} otherwise
      */
     public boolean isOneDotSixUpdate12OrAfter() {
-//        return jdkVersion == JDK1_6_U12;
-//        if(isJDK1_6_U12)
-//            return true;
-//        else
             //如何时判断是12以上版呢？大版本是update10及以上 且 不是u10也不是u11，那必然就是u12或以上版本了
             return (jdkVersion == JDK1_6_U10_AND_AFTER
                         && !isJDK1_6_U10 && !isJDK1_6_U11)

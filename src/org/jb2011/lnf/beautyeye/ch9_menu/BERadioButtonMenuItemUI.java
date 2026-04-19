@@ -28,15 +28,13 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicRadioButtonMenuItemUI;
 
-// TODO: Auto-generated Javadoc
 /**
  * JRadioButtonMenuItem的UI实现.
  *
  * @author lornwolf
  * @version 1.0
  */
-public class BERadioButtonMenuItemUI extends BasicRadioButtonMenuItemUI 
-{
+public class BERadioButtonMenuItemUI extends BasicRadioButtonMenuItemUI {
     
     /**
      * Creates the ui.
@@ -44,8 +42,7 @@ public class BERadioButtonMenuItemUI extends BasicRadioButtonMenuItemUI
      * @param b the b
      * @return the component ui
      */
-    public static ComponentUI createUI(JComponent b) 
-    {
+    public static ComponentUI createUI(JComponent b) {
         return new BERadioButtonMenuItemUI();
     }    
     
@@ -58,34 +55,23 @@ public class BERadioButtonMenuItemUI extends BasicRadioButtonMenuItemUI
      * @param bgColor selection background color
      * @since 1.4
      */
-    protected void paintBackground(Graphics g, JMenuItem menuItem, Color bgColor) 
-    {
+    protected void paintBackground(Graphics g, JMenuItem menuItem, Color bgColor) {
         ButtonModel model = menuItem.getModel();
         Color oldColor = g.getColor();
         int menuWidth = menuItem.getWidth();
         int menuHeight = menuItem.getHeight();
 
-        if(menuItem.isOpaque()) 
-        {
-            if (model.isArmed()|| (menuItem instanceof JMenu && model.isSelected())) 
-            {
+        if (menuItem.isOpaque()) {
+            if (model.isArmed()|| (menuItem instanceof JMenu && model.isSelected())) {
                 g.setColor(bgColor);
                 g.fillRect(0,0, menuWidth, menuHeight);
-            } 
-            else 
-            {
+            } else {
                 g.setColor(menuItem.getBackground());
                 g.fillRect(0,0, menuWidth, menuHeight);
             }
             g.setColor(oldColor);
-        }
-        else if (model.isArmed() || (menuItem instanceof JMenu &&
-                model.isSelected())) 
-        {
-//            g.setColor(bgColor);
-//            g.fillRect(0,0, menuWidth, menuHeight);
-//            g.setColor(oldColor);
-            
+        } else if (model.isArmed() || (menuItem instanceof JMenu &&
+                model.isSelected())) {
             //由jb2011改用NinePatch图来填充
             __Icon9Factory__.getInstance().getBgIcon_ItemSelected()
                 .draw((Graphics2D)g, 0, 0, menuWidth, menuHeight);
@@ -97,8 +83,7 @@ public class BERadioButtonMenuItemUI extends BasicRadioButtonMenuItemUI
     /**
      * The Class RadioButtonMenuItemIcon.
      */
-    public static class RadioButtonMenuItemIcon implements Icon, UIResource, Serializable
-    {
+    public static class RadioButtonMenuItemIcon implements Icon, UIResource, Serializable {
         /** 
          * 本常量用于标识是否运行于Vista及更新的windows平台.
          * （当然，目前该变量只会在BeautyEyeLookAndFeelWin中被设置，即如果使
@@ -114,45 +99,29 @@ public class BERadioButtonMenuItemUI extends BasicRadioButtonMenuItemUI
         private Image normalImg = __IconFactory__.getInstance()
                 .getRadioButtonMenuItemNormalIcon().getImage();
         
-        /* (non-Javadoc)
-         * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
-         */
-        public void paintIcon(Component c, Graphics g, int x, int y) 
-        {
+        public void paintIcon(Component c, Graphics g, int x, int y) {
             AbstractButton b = (AbstractButton) c;
-//            ButtonModel model = b.getModel();
-            if (b.isSelected() == true) 
-            {
-//                g.fillRoundRect(x+3,y+3, getIconWidth()-6, getIconHeight()-6,4, 4);
+            if (b.isSelected() == true) {
                 g.drawImage(selectedImg
                         , x+(usedForVista?5:-4)//* 注意：当用于windows平台专用主类且处于Vista及更高版win时要做不一样的处理哦
                         ,y+(usedForVista?-3:-4), null);
-            }
-            else
-            {
+            } else {
                 g.drawImage(normalImg
                         , x+(usedForVista?5:-4)//* 注意：当用于windows平台专用主类且处于Vista及更高版win时要做不一样的处理哦
                         ,y+(usedForVista?-3:-4), null);
             }
         }
         
-        /* (non-Javadoc)
-         * @see javax.swing.Icon#getIconWidth()
-         */
-        public int getIconWidth() { return 16; }//default 6
-        
-        /* (non-Javadoc)
-         * @see javax.swing.Icon#getIconHeight()
-         */
-        public int getIconHeight() { return 16; }//default 6
-        
+        public int getIconWidth() { return 16; }
+
+        public int getIconHeight() { return 16; }
+
         /**
          * Checks if is used for vista.
          *
          * @return true, if is used for vista
          */
-        public boolean isUsedForVista()
-        {
+        public boolean isUsedForVista() {
             return usedForVista;
         }
         
@@ -162,8 +131,7 @@ public class BERadioButtonMenuItemUI extends BasicRadioButtonMenuItemUI
          * @param usedForVista the used for vista
          * @return the radio button menu item icon
          */
-        public RadioButtonMenuItemIcon setUsedForVista(boolean usedForVista)
-        {
+        public RadioButtonMenuItemIcon setUsedForVista(boolean usedForVista) {
             this.usedForVista = usedForVista;
             return this;
         }

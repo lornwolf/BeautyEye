@@ -27,7 +27,6 @@ import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI.NormalColor;
 import org.jb2011.lnf.beautyeye.utils.BEUtils;
 import org.jb2011.lnf.beautyeye.utils.MySwingUtilities2;
 
-// TODO: Auto-generated Javadoc
 /**
  * JToggleButton的UI实现类。.
  *
@@ -73,15 +72,9 @@ public class BEToggleButtonUI extends BasicToggleButtonUI//WindowsToggleButtonUI
     // ********************************
     //         Paint Methods
     // ********************************
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicToggleButtonUI#paint(java.awt.Graphics, javax.swing.JComponent)
-     */
     public void paint(Graphics g, JComponent c) 
     {
-////        if (NLXPStyle.getXP() != null) 
-//        {
-            BEButtonUI.paintXPButtonBackground(nomalColor,g, c);
-//        }
+        BEButtonUI.paintXPButtonBackground(nomalColor,g, c);
         super.paint(g, c);
     }
     
@@ -135,9 +128,6 @@ public class BEToggleButtonUI extends BasicToggleButtonUI//WindowsToggleButtonUI
     
     // Method signature defined here overriden in subclasses. 
     // Perhaps this class should be abstract?
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicButtonUI#paintFocus(java.awt.Graphics, javax.swing.AbstractButton, java.awt.Rectangle, java.awt.Rectangle, java.awt.Rectangle)
-     */
     protected void paintFocus(Graphics g, AbstractButton b,
             Rectangle viewRect, Rectangle textRect, Rectangle iconRect)
     {

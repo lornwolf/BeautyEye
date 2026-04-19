@@ -21,14 +21,12 @@ import org.jb2011.lnf.beautyeye.utils.BEUtils;
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
+public class __UI__ {
     
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 窗体ui的各项属性设定
         //*~ 本属性是lornwolf自已设定的，Java的Metal主题默认对非Frame对象的窗口图标取的是InternalFrame.icon，这是不对的
         UIManager.put("Frame.icon",__IconFactory__.getInstance().getFrameIcon_16_16());
@@ -52,12 +50,8 @@ public class __UI__
         //设定用于演示之用的“设置”按钮图标
         UIManager.put("Frame.setupIcon",__IconFactory__.getInstance().getFrameSetupIcon());
         
-//        UIManager.put("activeCaption",new ColorUIResource(Windows2LookAndFeel.activeCaption));
         UIManager.put("activeCaptionText",new ColorUIResource(BeautyEyeLNFHelper.activeCaptionTextColor));
-//        UIManager.put("activeCaptionBorder",new ColorUIResource(Windows2LookAndFeel.activeCaptionBorder));
-//        UIManager.put("inactiveCaption",new ColorUIResource(GraphicHandler.getColor(activeCaption,64,42,22)));
         UIManager.put("inactiveCaptionText",new ColorUIResource(BEUtils.getColor(BeautyEyeLNFHelper.activeCaptionTextColor,-49,-27,-7)));
-//        UIManager.put("inactiveCaptionBorder",new ColorUIResource(GraphicHandler.getColor(activeCaptionBorder,64,42,22)));
         //此属性即是BeautyEye LNF的窗口标题栏实现
         UIManager.put("RootPaneUI", BERootPaneUI.class.getName());
         

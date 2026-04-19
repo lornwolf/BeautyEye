@@ -18,26 +18,23 @@ import javax.swing.UIDefaults;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTableUI;
 
-// TODO: Auto-generated Javadoc
 /**
  * JTable的UI实现类。.
  *
  * @author lornwolf
  */
-public class BETableUI extends BasicTableUI
-{
-    
+public class BETableUI extends BasicTableUI {
+
     /** The default renderers by column class. */
     UIDefaults defaultRenderersByColumnClass;
-    
+
     /**
      * Creates the ui.
      *
      * @param c the c
      * @return the component ui
      */
-    public static ComponentUI createUI(JComponent c) 
-    {
+    public static ComponentUI createUI(JComponent c) {
         return new BETableUI();
     }
 
@@ -50,8 +47,7 @@ public class BETableUI extends BasicTableUI
      * @see #installUI
      */
     @Override
-    protected void installDefaults() 
-    {
+    protected void installDefaults() {
         super.installDefaults();
         //行高设置为25看起来会舒服些
         table.setRowHeight(25);

@@ -38,8 +38,7 @@ import javax.swing.UIManager;
 /**
  * The Class BEUtils.
  */
-public class BEUtils
-{
+public class BEUtils {
     /**
      * 使用RescaleOp对图片进行滤镜处理.
      * 
@@ -53,10 +52,8 @@ public class BEUtils
      * @since 3.5
      */
     public static ImageIcon filterWithRescaleOp(ImageIcon iconBottom
-            , float redFilter, float greenFilter, float blueFilter, float alphaFilter)
-    {
-        try
-        {
+            , float redFilter, float greenFilter, float blueFilter, float alphaFilter) {
+        try {
             int w = iconBottom.getIconWidth(), h = iconBottom.getIconHeight();
 
             //原图
@@ -70,13 +67,10 @@ public class BEUtils
             RescaleOp rop = new RescaleOp(scales, offsets, null);
 
             //执行
-            //        gg.drawImage(bi, rop, 0, 0);//用这一行代码没效果，用下一行代码即可！
             rop.filter(bi, bi);
             return new ImageIcon(bi);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             LogHelper.error("filterWithRescaleOp出错了，"+e.getMessage()+",iconBottom="+iconBottom);
             return new ImageIcon();
         }
@@ -107,8 +101,7 @@ public class BEUtils
      * @author lornwolf, 2013-04-05
      * @since 3.5
      */
-    public static void draw4RecCorner(Graphics g,int x,int y,int w,int h,int β,Color c)
-    {
+    public static void draw4RecCorner(Graphics g,int x,int y,int w,int h,int β,Color c) {
         Color oldColor = g.getColor();
         
         g.setColor(c);
@@ -138,41 +131,48 @@ public class BEUtils
      * @param opaque true表示要设置成不透明，否则表示要设置成透明
      */
     public static void componentsOpaque(java.awt.Component[] comps
-            , boolean opaque)
-    {
-        if(comps == null)
+            , boolean opaque) {
+        if (comps == null)
             return;
-        for (Component c : comps)
-        {
+        for (Component c : comps) {
             //递归设置它的子组件
-            if(c instanceof Container)
-            {
-                if(c instanceof JComponent)
+            if (c instanceof Container) {
+                if (c instanceof JComponent)
                     ((JComponent)c).setOpaque(opaque);
                 componentsOpaque(((Container)c).getComponents(), opaque);
-            }
-            else
-            {
-                if(c instanceof JComponent)
+            } else {
+                if (c instanceof JComponent)
                     ((JComponent)c).setOpaque(opaque);
             }
         }
     }
     
     /**
-     * 图形绘制反走样设置.
-     *
-     * @param g2 the g2
-     * @param antiAliasing 是否反走样
+     * 图形绘制抗锯齿设置.
+     * @param g2
+     * @param antiAliasing
      */
-    public static void setAntiAliasing(Graphics2D g2 ,boolean antiAliasing)
-    {
-        if(antiAliasing)
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING
-                    , RenderingHints.VALUE_ANTIALIAS_ON);
-        else
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING
-                    , RenderingHints.VALUE_ANTIALIAS_OFF);
+    public static void setAntiAliasing(Graphics2D g2, boolean antiAliasing) {
+        if (antiAliasing) {
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        } else {
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        }
+    }
+
+    /**
+     * 强力检测是否开启圆角效果（支持布尔值或字符串，支持向上溯源到 Window 层级）.
+     */
+    public static boolean isFrameRound(javax.swing.JComponent c) {
+        if (c == null) return false;
+        Object val = c.getClientProperty("BeautyEye.frameRound");
+        if (val == null) {
+            java.awt.Window win = javax.swing.SwingUtilities.getWindowAncestor(c);
+            if (win instanceof javax.swing.RootPaneContainer) {
+                val = ((javax.swing.RootPaneContainer)win).getRootPane().getClientProperty("BeautyEye.frameRound");
+            }
+        }
+        return val != null && (val.equals(Boolean.TRUE) || val.toString().equalsIgnoreCase("true"));
     }
     
     /**
@@ -189,8 +189,7 @@ public class BEUtils
      */
     public static void fillTriangle(Graphics g
             ,int x1,int y1,int x2,int y2
-            ,int x3,int y3,Color c)
-    {
+            ,int x3,int y3,Color c) {
         int[] x = new int[3],y = new int[3];
         // A simple triangle.
         x[0]=x1; x[1]=x2; x[2]=x3;
@@ -213,8 +212,7 @@ public class BEUtils
      * @param width the width
      * @param height the height
      */
-    public static void drawDashedRect(Graphics g,int x,int y,int width,int height) 
-    {
+    public static void drawDashedRect(Graphics g,int x,int y,int width,int height) {
         drawDashedRect(g,x,y,width,height,6,6,2,2);
     }
     
@@ -234,9 +232,7 @@ public class BEUtils
      * add by js,2009-08-30
      */
     public static void drawDashedRect(Graphics g,int x,int y,int width,int height
-            ,int arcWidth, int arcHeight, int separator_solid, int separator_space) 
-    {
-//        drawDashedRect(g,x,y,width,height,step,true,true,true,true);
+            ,int arcWidth, int arcHeight, int separator_solid, int separator_space) {
         BEUtils.setAntiAliasing((Graphics2D)g, true);
         
         //虚线样式
@@ -269,31 +265,27 @@ public class BEUtils
      * @param bottom the bottom
      * @param right the right
      */
-    public static void drawDashedRect(Graphics g,int x,int y,int width,int height,int step//,boolean drawLeft$Right
-            ,boolean top,boolean left,boolean bottom,boolean right) 
-    {
+    public static void drawDashedRect(Graphics g,int x,int y,int width,int height,int step
+            ,boolean top,boolean left,boolean bottom,boolean right) {
         int vx,vy;
 
         int drawStep = step==0?1:2*step;
         int drawLingStep = step==0?1:step;
         // draw upper and lower horizontal dashes
-        for (vx = x; vx < (x + width); vx+=drawStep) 
-        {
-            if(top)
+        for (vx = x; vx < (x + width); vx+=drawStep) {
+            if (top)
                 g.fillRect(vx, y, drawLingStep, 1);
-            if(bottom)
+            if (bottom)
                 g.fillRect(vx, y + height-1, drawLingStep, 1);
         }
 
-//        if(drawLeft$Right)
-            // draw left and right vertical dashes
-            for (vy = y; vy < (y + height); vy+=drawStep) 
-            {
-                if(left)
-                    g.fillRect(x, vy, 1, drawLingStep);
-                if(right)
-                    g.fillRect(x+width-1, vy, 1, drawLingStep);
-            }
+        // draw left and right vertical dashes
+        for (vy = y; vy < (y + height); vy+=drawStep) {
+            if (left)
+                g.fillRect(x, vy, 1, drawLingStep);
+            if (right)
+                g.fillRect(x+width-1, vy, 1, drawLingStep);
+        }
     }
     
     /**
@@ -305,8 +297,7 @@ public class BEUtils
      * @param b Blue通道的增加值（可以是负）
      * @return the color
      */
-    public static Color getColor(Color basic,int r, int g, int b)
-    {
+    public static Color getColor(Color basic,int r, int g, int b) {
         return new Color(getColorInt(basic.getRed()+r)
                 ,getColorInt(basic.getGreen()+g)
                 ,getColorInt(basic.getBlue()+b)
@@ -323,8 +314,7 @@ public class BEUtils
      * @param a Alpha通道的增加值（可以是负）
      * @return the color
      */
-    public static Color getColor(Color basic,int r, int g, int b,int a)
-    {
+    public static Color getColor(Color basic,int r, int g, int b,int a) {
         return new Color(getColorInt(basic.getRed()+r)
                 ,getColorInt(basic.getGreen()+g)
                 ,getColorInt(basic.getBlue()+b)
@@ -337,8 +327,7 @@ public class BEUtils
      * @param rgb the rgb
      * @return the color int
      */
-    public static int getColorInt(int rgb)
-    {
+    public static int getColorInt(int rgb) {
         return rgb<0?0:(rgb>255?255:rgb);
     }
     
@@ -350,8 +339,7 @@ public class BEUtils
      * @return the str pix width
      * @see FontMetrics#stringWidth(String)
      */
-    public static int getStrPixWidth(FontMetrics fm,String str)
-    {
+    public static int getStrPixWidth(FontMetrics fm,String str) {
         return fm.stringWidth(str+"");
     }
     
@@ -363,8 +351,7 @@ public class BEUtils
      * @return the str pix width
      * @see #getStrPixWidth(FontMetrics, String)
      */
-    public static int getStrPixWidth(Font f,String str)
-    {
+    public static int getStrPixWidth(Font f,String str) {
         return getStrPixWidth(Toolkit.getDefaultToolkit().getFontMetrics(f),str);
     }
     
@@ -390,8 +377,7 @@ public class BEUtils
      * @param image 填充图片，该图片一宽1像素高N像素（据这1像素宽进行重复填充即可达到目的）
      * @return the texture paint
      */
-    public static TexturePaint createTexturePaint(Image image) 
-    {
+    public static TexturePaint createTexturePaint(Image image) {
         int imageWidth = image.getWidth(null);
         int imageHeight = image.getHeight(null);
         BufferedImage bi = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
@@ -408,22 +394,16 @@ public class BEUtils
      * @param defaultValue the default value
      * @return the int
      */
-    public static int getInt(Object key, int defaultValue)
-    {
+    public static int getInt(Object key, int defaultValue) {
         Object value = UIManager.get(key);
 
-        if (value instanceof Integer)
-        {
+        if (value instanceof Integer) {
             return ((Integer) value).intValue();
         }
-        if (value instanceof String)
-        {
-            try
-            {
+        if (value instanceof String) {
+            try {
                 return Integer.parseInt((String) value);
-            }
-            catch (NumberFormatException nfe)
-            {
+            } catch (NumberFormatException nfe) {
             }
         }
         return defaultValue;
@@ -441,8 +421,7 @@ public class BEUtils
      * @param arc the arc
      */
     public static void fillTextureRoundRec(Graphics2D g2,Color baseColor
-            ,int x,int y,int w,int h,int arc)
-    {
+            ,int x,int y,int w,int h,int arc) {
         fillTextureRoundRec(g2,baseColor
                 , x, y, w, h,arc,35);
     }
@@ -460,8 +439,7 @@ public class BEUtils
      * @param colorDelta 渐变起色（上）与渐变止色（下）的RGB色差（矢量），正表示变淡，负表示加深
      */
     public static void fillTextureRoundRec(Graphics2D g2,Color baseColor
-            ,int x,int y,int w,int h,int arc,int colorDelta)
-    {
+            ,int x,int y,int w,int h,int arc,int colorDelta) {
         setAntiAliasing(g2, true);
         //矩形填充
         Paint oldpaint = g2.getPaint();

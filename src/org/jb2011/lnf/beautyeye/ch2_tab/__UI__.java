@@ -16,18 +16,15 @@ import javax.swing.plaf.ColorUIResource;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
+public class __UI__ {
     
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         UIManager.put("TabbedPane.background",new ColorUIResource(BeautyEyeLNFHelper.commonBackgroundColor));
         UIManager.put("TabbedPane.foreground",new ColorUIResource(BeautyEyeLNFHelper.commonForegroundColor));
         //false表示tab在边框虑线之上而不是重叠效果

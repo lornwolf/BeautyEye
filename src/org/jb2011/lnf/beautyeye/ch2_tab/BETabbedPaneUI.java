@@ -49,7 +49,6 @@ public class BETabbedPaneUI extends BasicTabbedPaneUI {
      */
     protected void setRolloverTab(int index)  {
         // Rollover is only supported on XP
-        // if (XPStyle.getXP() != null)
         {
             int oldRolloverTab = getRolloverTab();
             super.setRolloverTab(index);

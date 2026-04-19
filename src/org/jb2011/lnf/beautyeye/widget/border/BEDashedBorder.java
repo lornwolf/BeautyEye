@@ -20,21 +20,19 @@ import javax.swing.plaf.UIResource;
 
 import org.jb2011.lnf.beautyeye.utils.BEUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * 虚线边框Border.
  * 
  * @author lornwolf
  */
-public class BEDashedBorder extends LineBorder implements UIResource 
-{
-    
+public class BEDashedBorder extends LineBorder implements UIResource {
+
     /** 虚线段绘制步进. */
     private int step = 3;
-    
+
     /** The right. */
-    private boolean top = true,left = true,bottom = true,right = true;
-    
+    private boolean top = true, left = true, bottom = true, right = true;
+
     /**
      * Instantiates a new bE dashed border.
      *
@@ -44,8 +42,7 @@ public class BEDashedBorder extends LineBorder implements UIResource
      * @param bottom the bottom
      * @param right the right
      */
-    public BEDashedBorder(Color color,boolean top,boolean left,boolean bottom,boolean right) 
-    {
+    public BEDashedBorder(Color color, boolean top, boolean left, boolean bottom, boolean right) {
         super(color);
         this.top = top;
         this.left = left;
@@ -64,28 +61,24 @@ public class BEDashedBorder extends LineBorder implements UIResource
      * @param bottom the bottom
      * @param right the right
      */
-    public BEDashedBorder(Color color, int thickness,int step
-            ,boolean top,boolean left,boolean bottom,boolean right) 
-    {
+    public BEDashedBorder(Color color, int thickness, int step
+            , boolean top, boolean left, boolean bottom, boolean right) {
         super(color, thickness);
-        this.step=step;
+        this.step = step;
         this.top = top;
         this.left = left;
         this.bottom = bottom;
         this.right = right;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.border.LineBorder#paintBorder(java.awt.Component, java.awt.Graphics, int, int, int, int)
-     */
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
-    {
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         Color oldColor = g.getColor();
         int i;
 
         g.setColor(lineColor);
-        for(i = 0; i < thickness; i++)  
-            BEUtils.drawDashedRect(g, x+i, y+i, width-i-i, height-i-i,step,top,left,bottom,right);
+        for (i = 0; i < thickness; i++)
+            BEUtils.drawDashedRect(g, x + i, y + i, width - i - i, height - i - i, step, top, left, bottom, right);
         g.setColor(oldColor);
     }
 }

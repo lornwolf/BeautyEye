@@ -15,30 +15,28 @@ import javax.swing.ImageIcon;
 
 import org.jb2011.lnf.beautyeye.utils.RawCache;
 
-// TODO: Auto-generated Javadoc
 /**
  * 普通图片工厂类.
  * 
  * @author lornwolf
  * @version 1.0
  */
-public class __IconFactory__ extends RawCache<ImageIcon>
-{
-    
+public class __IconFactory__ extends RawCache<ImageIcon> {
+
     /** 相对路径根（默认是相对于本类的相对物理路径）. */
     public final static String IMGS_ROOT="imgs";
 
     /** The instance. */
     private static __IconFactory__ instance = null;
 
+
     /**
      * Gets the single instance of __IconFactory__.
      *
      * @return single instance of __IconFactory__
      */
-    public static __IconFactory__ getInstance()
-    {
-        if(instance==null)
+    public static __IconFactory__ getInstance() {
+        if (instance==null)
             instance = new __IconFactory__();
         return instance;
     }
@@ -47,8 +45,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      * @see org.jb2011.lnf.beautyeye.utils.RawCache#getResource(java.lang.String, java.lang.Class)
      */
     @Override
-    protected ImageIcon getResource(String relativePath, Class baseClass)
-    {
+    protected ImageIcon getResource(String relativePath, Class baseClass) {
         return new ImageIcon(baseClass.getResource(relativePath));
     }
     
@@ -58,8 +55,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      * @param relativePath the relative path
      * @return the image
      */
-    public ImageIcon getImage(String relativePath)
-    {
+    public ImageIcon getImage(String relativePath) {
         return  getRaw(relativePath,this.getClass());
     }
     
@@ -68,8 +64,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the slider tick1
      */
-    public ImageIcon getSliderTick1()
-    {
+    public ImageIcon getSliderTick1() {
         return getImage(IMGS_ROOT+"/slider_tick1.png");
     }
     
@@ -78,8 +73,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the slider tick1_notrangle
      */
-    public ImageIcon getSliderTick1_notrangle()
-    {
+    public ImageIcon getSliderTick1_notrangle() {
         return getImage(IMGS_ROOT+"/slider_tick1_notrangle.png");
     }
     
@@ -88,8 +82,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the slider tick1_disable
      */
-    public ImageIcon getSliderTick1_disable()
-    {
+    public ImageIcon getSliderTick1_disable() {
         return getImage(IMGS_ROOT+"/slider_tick1_dark.png");
     }
     
@@ -98,8 +91,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the slider tick1_notrangle_disable
      */
-    public ImageIcon getSliderTick1_notrangle_disable()
-    {
+    public ImageIcon getSliderTick1_notrangle_disable() {
         return getImage(IMGS_ROOT+"/slider_tick1_notrangle_dark.png");
     }
     
@@ -108,8 +100,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the slider tick1_vertical
      */
-    public ImageIcon getSliderTick1_vertical()
-    {
+    public ImageIcon getSliderTick1_vertical() {
         return getImage(IMGS_ROOT+"/slider_tick1_v.png");
     }
     
@@ -118,19 +109,16 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the slider tick1_notrangle_vertical
      */
-    public ImageIcon getSliderTick1_notrangle_vertical()
-    {
+    public ImageIcon getSliderTick1_notrangle_vertical() {
         return getImage(IMGS_ROOT+"/slider_tick1_notrangle_v.png");
     }
-    
     
     /**
      * Gets the slider tick1_ vertica l_disable.
      *
      * @return the slider tick1_ vertica l_disable
      */
-    public ImageIcon getSliderTick1_VERTICAL_disable()
-    {
+    public ImageIcon getSliderTick1_VERTICAL_disable() {
         return getImage(IMGS_ROOT+"/slider_tick1_v_dark.png");
     }
     
@@ -139,8 +127,7 @@ public class __IconFactory__ extends RawCache<ImageIcon>
      *
      * @return the slider tick1_notrangle_ vertica l_disable
      */
-    public ImageIcon getSliderTick1_notrangle_VERTICAL_disable()
-    {
+    public ImageIcon getSliderTick1_notrangle_VERTICAL_disable() {
         return getImage(IMGS_ROOT+"/slider_tick1_notrangle_v_dark.png");
     }
 }

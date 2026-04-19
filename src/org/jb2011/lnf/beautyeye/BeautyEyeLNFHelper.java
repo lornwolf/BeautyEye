@@ -15,9 +15,11 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.LookAndFeel;
+import javax.swing.RepaintManager;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import org.jb2011.lnf.beautyeye.utils.BERepaintManager;
 import org.jb2011.lnf.beautyeye.utils.JVM;
 import org.jb2011.lnf.beautyeye.widget.border.BEShadowBorder;
 import org.jb2011.lnf.beautyeye.widget.border.BEShadowBorder3;
@@ -32,8 +34,7 @@ import org.jb2011.lnf.beautyeye.widget.border.PlainGrayBorder;
  * @author lornwolf, 2012-05
  * @version 1.0
  */
-public class BeautyEyeLNFHelper
-{
+public class BeautyEyeLNFHelper {
     /** 
      * 开关量：用于开启/关闭BeautyEye LNF的调试信息输出.
      * <p>
@@ -60,8 +61,8 @@ public class BeautyEyeLNFHelper
      * <p><b>注意：</b>如需设置本参数，请确保它在UIManager.setLookAndFeel前被设置，否则将不会起效哦.
      * @see FrameBorderStyle
      */
-    public static FrameBorderStyle frameBorderStyle = 
-        isSurportedTranslucency()?FrameBorderStyle.translucencyAppleLike:FrameBorderStyle.generalNoTranslucencyShadow;
+    public static FrameBorderStyle frameBorderStyle =
+        isSurportedTranslucency() ? FrameBorderStyle.translucencyAppleLike : FrameBorderStyle.generalNoTranslucencyShadow;
     
     /** 
      * 颜色全局变量：正常情况下的窗口文本颜色.
@@ -71,7 +72,7 @@ public class BeautyEyeLNFHelper
      * <p>
      * 窗体不活动(inactivite)时的颜色将据此自动计算出来，无需额外设置.
      * 默认是黑色（new Color(0,0,0)）. */
-    public static Color activeCaptionTextColor = new Color(0,0,0);//黑色
+    public static Color activeCaptionTextColor = new Color(0, 0, 0);
     
     /** 
      * 颜色全局变量：多数组件的背景色.
@@ -80,7 +81,7 @@ public class BeautyEyeLNFHelper
      * <p>
      * 默认是浅灰色（new Color(250,250,250)）. 
      * @since 3.2 */
-    public static Color commonBackgroundColor = new Color(250,250,250);//240,240,240); //248,248,248);//255,255,255);//
+    public static Color commonBackgroundColor = new Color(250, 250, 250);
     /** 
      * 颜色全局变量：多数组件的前景色（文本颜色）.
      * <p>
@@ -88,7 +89,7 @@ public class BeautyEyeLNFHelper
      * <p>
      * 默认是深灰色（new Color(60,60,60)）. 
      * @since 3.2 */
-    public static Color commonForegroundColor = new Color(60,60,60);//102,102,102);
+    public static Color commonForegroundColor = new Color(60, 60, 60);
     /** 
      * 颜色全局变量：某些组件的焦点边框颜色.
      * 当前主要用于按钮等焦点边框的绘制颜色.
@@ -97,7 +98,7 @@ public class BeautyEyeLNFHelper
      * <p>
      * 默认是浅灰色（new Color(250,250,250)）. 
      * @since 3.2 */
-    public static Color commonFocusedBorderColor = new Color(162,162,162);
+    public static Color commonFocusedBorderColor = new Color(162, 162, 162);
     /** 
      * 颜色全局变量：某些组件被禁用时的文本颜色.
      * 当前主要用于菜单项中.
@@ -106,7 +107,7 @@ public class BeautyEyeLNFHelper
      * <p>
      * 默认是浅灰色（new Color(172,168,153)）. 
      * @since 3.2 */
-    public static Color commonDisabledForegroundColor = new Color(172,168,153);
+    public static Color commonDisabledForegroundColor = new Color(172, 168, 153);
     /** 
      * 颜色全局变量：多数组件中文本被选中时的背景色.当前主要用于各文本组件等.
      * <p>
@@ -114,7 +115,7 @@ public class BeautyEyeLNFHelper
      * <p>
      * 默认是深灰色（new Color(2,129,216)）. 
      * @since 3.2 */
-    public static Color commonSelectionBackgroundColor = new Color(2,129,216);//78,155,193));//58,135,173));//235,217,147));//new Color(255,237,167));
+    public static Color commonSelectionBackgroundColor = new Color(2, 129, 216);
     /** 
      * 颜色全局变量：多数组件中文本被选中时的前景色（文本颜色）.当前主要用于各文本组件、菜单项等.
      * <p>
@@ -122,7 +123,7 @@ public class BeautyEyeLNFHelper
      * <p>
      * 默认是深灰色（new Color(255,255,255)）. 
      * @since 3.2 */
-    public static Color commonSelectionForegroundColor = new Color(255,255,255);
+    public static Color commonSelectionForegroundColor = new Color(255, 255, 255);
     
     /**
      * 开关量：用于默认设置或不设置窗口（Frame及其子类）的设置此窗体的最大化边界.
@@ -170,8 +171,16 @@ public class BeautyEyeLNFHelper
      * @see org.jb2011.lnf.beautyeye.ch19_list.__UI__#uiImpl()
      * @see org.jb2011.lnf.beautyeye.ch20_filechooser.__UI__#uiImpl_win()
      */
-    protected static void implLNF()
-    {
+    protected static void implLNF() {
+        // 安装自定义 RepaintManager，修复圆角窗口动态添加组件后圆角丢失的问题。
+        // 问题根因：Swing 增量重绘时会以第一个 opaque 祖先为起点，
+        //           绕过 BEClipLayeredPane 中的圆角裁切。
+        // 解决方案：拦截圆角窗口后代的重绘请求，将脏区域重定向到 LayeredPane，
+        //           确保绘制路径始终经过圆角裁切逻辑。
+        if (!(RepaintManager.currentManager(null) instanceof BERepaintManager)) {
+            RepaintManager.setCurrentManager(new BERepaintManager());
+        }
+
         //自定义窗口的L&F实现
         org.jb2011.lnf.beautyeye.ch1_titlepane.__UI__.uiImpl();
         //自定义JTabbedPane的L&F实现
@@ -219,8 +228,7 @@ public class BeautyEyeLNFHelper
      *
      * @return "org.jb2011.lnf.beautyeye.BeautyEyeLookAndFeelCross"
      */
-    public static String getBeautyEyeLNFStrCrossPlatform()
-    {
+    public static String getBeautyEyeLNFStrCrossPlatform() {
         return "org.jb2011.lnf.beautyeye.BeautyEyeLookAndFeelCross";
     }
     
@@ -229,8 +237,7 @@ public class BeautyEyeLNFHelper
      *
      * @return "org.jb2011.lnf.beautyeye.BeautyEyeLookAndFeelWin"
      */
-    public static String getBeautyEyeLNFStrWindowsPlatform()
-    {
+    public static String getBeautyEyeLNFStrWindowsPlatform() {
         return "org.jb2011.lnf.beautyeye.BeautyEyeLookAndFeelWin";
     }
     
@@ -239,8 +246,7 @@ public class BeautyEyeLNFHelper
      *
      * @return {@code new BeautyEyeLookAndFeelCross()}
      */
-    public static LookAndFeel getBeautyEyeLNFCrossPlatform()
-    {
+    public static LookAndFeel getBeautyEyeLNFCrossPlatform() {
         return new BeautyEyeLookAndFeelCross();
     }
     
@@ -249,8 +255,7 @@ public class BeautyEyeLNFHelper
      *
      * @return {@code new BeautyEyeLookAndFeelWin()}
      */
-    public static LookAndFeel getBeautyEyeLNFWindowsPlatform()
-    {
+    public static LookAndFeel getBeautyEyeLNFWindowsPlatform() {
         return new BeautyEyeLookAndFeelWin();
     }
     
@@ -266,17 +271,13 @@ public class BeautyEyeLNFHelper
      * @see #getBeautyEyeLNFStrCrossPlatform()
      * @see org.jb2011.lnf.beautyeye.utils.Platform
      */
-    public static void launchBeautyEyeLNF() throws Exception
-    {
-        if(org.jb2011.lnf.beautyeye.utils.Platform.isWindows())
-        {
-            if(BeautyEyeLNFHelper.debug)
+    public static void launchBeautyEyeLNF() throws Exception {
+        if (org.jb2011.lnf.beautyeye.utils.Platform.isWindows()) {
+            if (BeautyEyeLNFHelper.debug)
                 System.out.println("已智能启用Windows平台专用的BeautyEye外观实现(您也可自行启用跨平台实现).");
             UIManager.setLookAndFeel(getBeautyEyeLNFStrWindowsPlatform());
-        }
-        else
-        {
-            if(BeautyEyeLNFHelper.debug)
+        } else {
+            if (BeautyEyeLNFHelper.debug)
                 System.out.println("已智能启用跨平台的通用BeautyEye外观实现.");
             UIManager.setLookAndFeel(getBeautyEyeLNFStrCrossPlatform());
         }
@@ -290,10 +291,9 @@ public class BeautyEyeLNFHelper
      * 
      * @return true表示支持，否则不支持
      */
-    public static boolean isSurportedTranslucency()
-    {
+    public static boolean isSurportedTranslucency() {
         //是否支持窗口透明：必须java1.6.0_u12及以后版本才支持
-        return JVM.current().isOneDotSixUpdate12OrAfter();//JDK1_6_U10);//为什么要到u12才支持？因u10里的窗口透明存在BUG 6750920
+        return JVM.current().isOneDotSixUpdate12OrAfter();
     }
     
     /**
@@ -313,8 +313,7 @@ public class BeautyEyeLNFHelper
      * @return true, if successful
      * @since 3.2
      */
-    public static boolean __isFrameBorderOpaque()
-    {
+    public static boolean __isFrameBorderOpaque() {
         return frameBorderStyle == FrameBorderStyle.osLookAndFeelDecorated 
             || frameBorderStyle == FrameBorderStyle.generalNoTranslucencyShadow;
     }
@@ -326,10 +325,8 @@ public class BeautyEyeLNFHelper
      * @return 当frameBorderStyle=={@link FrameBorderStyle#defaultLookAndFeelDecorated}
      * 时返回无意义的BorderFactory.createEmptyBorder()，否则返回指定边框对象
      */
-    public static Border __getFrameBorder()
-    {
-        switch(frameBorderStyle)
-        {
+    public static Border __getFrameBorder() {
+        switch (frameBorderStyle) {
             case osLookAndFeelDecorated:
                 return BorderFactory.createEmptyBorder();
             case translucencyAppleLike:
@@ -341,64 +338,10 @@ public class BeautyEyeLNFHelper
                 return new PlainGrayBorder();
         }
     }
-//    /**
-//     * <b>开发者无需关注本方法.</b>
-//     * <p>
-//     * 根据设置的frameBorderStyle来返回正确的窗口边框边角的拖动区大小.
-//     * <p>
-//     * <b>重要说明：</b>本方法中的边框类型及其对应的边框类必须与方法 {@link #__getFrameBorder()}
-//     * 完全一致！
-//     * 
-//     * @return 当frameBorderStyle=={@link FrameBorderStyle#defaultLookAndFeelDecorated}
-//     * 时返回null，否则返回指定边框对象
-//     */
-//    public static int __getFrameBorder_CORNER_DRAG_WIDTH()
-//    {
-//        switch(frameBorderStyle)
-//        {
-//            case osLookAndFeelDecorated:
-//                return 16;
-//            case translucencyAppleLike:
-//                return BEShadowBorder3.CORNER_DRAG_WIDTH();
-//            case translucencySmallShadow:
-//                return new BEShadowBorder().CORNER_DRAG_WIDTH();
-//            case generalNoTranslucencyShadow:
-//            default:
-//                return new PlainGrayBorder().CORNER_DRAG_WIDTH();
-//        }
-//    }
-//    /**
-//     * <b>开发者无需关注本方法.</b>
-//     * <p>
-//     * 根据设置的frameBorderStyle来返回正确的窗口边框拖动区大小.
-//     * <p>
-//     * <b>重要说明：</b>本方法中的边框类型及其对应的边框类必须与方法 {@link #__getFrameBorder()}
-//     * 完全一致！
-//     * 
-//     * @return 当frameBorderStyle=={@link FrameBorderStyle#defaultLookAndFeelDecorated}
-//     * 时返回null，否则返回指定边框对象
-//     */
-//    public static int __getFrameBorder_BORDER_DRAG_THICKNESS()
-//    {
-//        switch(frameBorderStyle)
-//        {
-//            case osLookAndFeelDecorated:
-//                return 5;
-//            case translucencyAppleLike:
-//                return BEShadowBorder3.BORDER_DRAG_THICKNESS();
-//            case translucencySmallShadow:
-//                return new BEShadowBorder().BORDER_DRAG_THICKNESS();
-//            case generalNoTranslucencyShadow:
-//            default:
-//                return new PlainGrayBorder().BORDER_DRAG_THICKNESS();
-//        }
-//    }
-    
     /**
      * BeautyEye LNF 的窗口边框样式.
      */
-    public enum FrameBorderStyle
-    {
+    public enum FrameBorderStyle {
         
         /** 使用本地系统的窗口装饰样式（本样式将能带来最佳性能，使用操作系统默认窗口样式）. */
         osLookAndFeelDecorated,
@@ -419,8 +362,7 @@ public class BeautyEyeLNFHelper
      * 取消默认的NainePatch图实现的边框填充、背景填充等，具体设置哪
      * 些东西可以取消默认的NinePatch图填充的方式详见各自的类注释。
      */
-    public interface __UseParentPaintSurported
-    {
+    public interface __UseParentPaintSurported {
         
         /**
          * 是否使用父类的绘制实现方法，true表示是.

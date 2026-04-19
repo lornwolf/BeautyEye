@@ -15,7 +15,6 @@ import java.awt.Insets;
 
 import org.jb2011.lnf.beautyeye.widget.__Icon9Factory__;
 
-// TODO: Auto-generated Javadoc
 /**
  * 一个NinePatch图实现的不透明边框border.
  * <p>
@@ -25,31 +24,16 @@ import org.jb2011.lnf.beautyeye.widget.__Icon9Factory__;
  * @version 1.0
  * @see org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.FrameBorderStyle#generalNoTranslucencyShadow
  */
-public class PlainGrayBorder extends NinePatchBorder
-{
-    
+public class PlainGrayBorder extends NinePatchBorder {
+
     /** The Constant IS. */
     private final static int IS = 5;
-    
+
     /**
      * Instantiates a new plain gray border.
      */
-    public PlainGrayBorder()
-    {
-        super(new Insets(IS,IS,IS,IS)
-            , __Icon9Factory__.getInstance().getBorderIcon_plainGray());
+    public PlainGrayBorder() {
+        super(new Insets(IS, IS, IS, IS)
+                , __Icon9Factory__.getInstance().getBorderIcon_plainGray());
     }
-    
-    //* 2012-09-19 在BeautyEye v3.2中的BERootPaneUI，lornwolf启用了相比
-    //* 原MetalRootPaneUI中更精确更好的边框拖放算法，以下方法暂时弃用，以后可以删除了！
-//    //当用本border作边框时，窗口可拖动敏感触点区大小值
-//    public static int BORDER_DRAG_THICKNESS()
-//    {
-//        return IS;
-//    }
-//    //当用本border作边框时，窗口边角可拖动敏感触点区大小值
-//    public static int CORNER_DRAG_WIDTH()
-//    {
-//        return 16;//使用MetalLookAndFeel的默认值比较合适哦
-//    }
 }

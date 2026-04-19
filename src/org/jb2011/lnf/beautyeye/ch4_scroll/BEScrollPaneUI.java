@@ -23,14 +23,12 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicScrollPaneUI;
 
-// TODO: Auto-generated Javadoc
 /**
  * 滚动面板的UI实现类。.
  *
  * @author lornwolf(jb2011@163.com
  */
-public class BEScrollPaneUI extends BasicScrollPaneUI
-{
+public class BEScrollPaneUI extends BasicScrollPaneUI {
     
     /**
      * Creates the ui.
@@ -38,20 +36,11 @@ public class BEScrollPaneUI extends BasicScrollPaneUI
      * @param x the x
      * @return the component ui
      */
-    public static ComponentUI createUI(JComponent x) 
-    {
+    public static ComponentUI createUI(JComponent x) {
         return new BEScrollPaneUI();
     }
     
-    /* (non-Javadoc)
-     * @see javax.swing.plaf.basic.BasicScrollPaneUI#installDefaults(javax.swing.JScrollPane)
-     */
-    protected void installDefaults(JScrollPane scrollpane) 
-    {
+    protected void installDefaults(JScrollPane scrollpane) {
         super.installDefaults(scrollpane);
-        
-//        /* ~~注：ScrollPane.opaque这个属性是jb2011自已加的，目的是控制滚动面板及其Viewport的透明性 */
-//        scrollpane.setOpaque(UIManager.getBoolean("ScrollPane.opaque"));
-//        scrollpane.getViewport().setOpaque(UIManager.getBoolean("ScrollPane.opaque"));
     }
 }

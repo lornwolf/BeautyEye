@@ -17,23 +17,20 @@ import javax.swing.UIManager;
 import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.ColorUIResource;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class __UI__.
  */
-public class __UI__
-{
-    
+public class __UI__ {
+
     /**
      * Ui impl.
      */
-    public static void uiImpl()
-    {
+    public static void uiImpl() {
         UIManager.put("SplitPane.shadow",new ColorUIResource(new Color(200,200,200)));// 本属性在BE LNF中暂时没用到
         //JSplitePane的默认背景色
-        UIManager.put("SplitPane.background",new ColorUIResource(new Color(250,250,250)));//238,241,243)));
+        UIManager.put("SplitPane.background",new ColorUIResource(new Color(250,250,250)));
         //JSplitePane的边框实现
-        UIManager.put("SplitPane.border",new BorderUIResource(new org.jb2011.lnf.beautyeye.ch4_scroll.ScrollPaneBorder()));//BorderFactory.createEmptyBorder(0, 0, 0, 0)));
+        UIManager.put("SplitPane.border",new BorderUIResource(new org.jb2011.lnf.beautyeye.ch4_scroll.ScrollPaneBorder()));
         UIManager.put("SplitPaneUI",org.jb2011.lnf.beautyeye.ch17_split.BESplitPaneUI.class.getName());
         
         //分隔条拖动时的颜色（说明：此值可以设置alpha通道以便达到半透明效果哦）

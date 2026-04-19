@@ -20,38 +20,30 @@ import javax.swing.plaf.UIResource;
 
 import org.jb2011.lnf.beautyeye.utils.BEUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * 虚线圆角边框Border.
- * <p>
- * TODO 目前圆角大小和虚线间隔等目前都是固定的，进一步重构后可以进行重用哦.
  * 
  * @author lornwolf
  */
-public class BEDashedRoundRecBorder extends LineBorder implements UIResource 
-{
-    
+public class BEDashedRoundRecBorder extends LineBorder implements UIResource {
+
     /** The separator space. */
-    private int arcWidth=6,arcHeight=6,separatorSolid=2, separatorSpace=2;
-    
+    private int arcWidth = 6, arcHeight = 6, separatorSolid = 2, separatorSpace = 2;
+
     /**
      * 构造方法.
      *
      * @param color 虚线颜色
      */
-    public BEDashedRoundRecBorder(Color color) 
-    {
+    public BEDashedRoundRecBorder(Color color) {
         super(color);
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.border.LineBorder#paintBorder(java.awt.Component, java.awt.Graphics, int, int, int, int)
-     */
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
-    {
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         Color oldColor = g.getColor();
         g.setColor(lineColor);
-        BEUtils.drawDashedRect(g, x, y, width, height,arcWidth,arcHeight,separatorSolid,separatorSpace);
+        BEUtils.drawDashedRect(g, x, y, width, height, arcWidth, arcHeight, separatorSolid, separatorSpace);
         g.setColor(oldColor);
     }
 
@@ -60,8 +52,7 @@ public class BEDashedRoundRecBorder extends LineBorder implements UIResource
      *
      * @return the arc width
      */
-    public int getArcWidth()
-    {
+    public int getArcWidth() {
         return arcWidth;
     }
 
@@ -71,8 +62,7 @@ public class BEDashedRoundRecBorder extends LineBorder implements UIResource
      * @param arcWidth the arc width
      * @return the bE dashed round rec border
      */
-    public BEDashedRoundRecBorder setArcWidth(int arcWidth)
-    {
+    public BEDashedRoundRecBorder setArcWidth(int arcWidth) {
         this.arcWidth = arcWidth;
         return this;
     }
@@ -82,8 +72,7 @@ public class BEDashedRoundRecBorder extends LineBorder implements UIResource
      *
      * @return the arc height
      */
-    public int getArcHeight()
-    {
+    public int getArcHeight() {
         return arcHeight;
     }
 
@@ -93,8 +82,7 @@ public class BEDashedRoundRecBorder extends LineBorder implements UIResource
      * @param arcHeight the arc height
      * @return the bE dashed round rec border
      */
-    public BEDashedRoundRecBorder setArcHeight(int arcHeight)
-    {
+    public BEDashedRoundRecBorder setArcHeight(int arcHeight) {
         this.arcHeight = arcHeight;
         return this;
     }
@@ -104,8 +92,7 @@ public class BEDashedRoundRecBorder extends LineBorder implements UIResource
      *
      * @return the separator solid
      */
-    public int getSeparatorSolid()
-    {
+    public int getSeparatorSolid() {
         return separatorSolid;
     }
 
@@ -115,8 +102,7 @@ public class BEDashedRoundRecBorder extends LineBorder implements UIResource
      * @param separatorSolid the separator solid
      * @return the bE dashed round rec border
      */
-    public BEDashedRoundRecBorder setSeparatorSolid(int separatorSolid)
-    {
+    public BEDashedRoundRecBorder setSeparatorSolid(int separatorSolid) {
         this.separatorSolid = separatorSolid;
         return this;
     }
@@ -126,8 +112,7 @@ public class BEDashedRoundRecBorder extends LineBorder implements UIResource
      *
      * @return the separator space
      */
-    public int getSeparatorSpace()
-    {
+    public int getSeparatorSpace() {
         return separatorSpace;
     }
 
@@ -137,10 +122,9 @@ public class BEDashedRoundRecBorder extends LineBorder implements UIResource
      * @param separatorSpace the separator space
      * @return the bE dashed round rec border
      */
-    public BEDashedRoundRecBorder setSeparatorSpace(int separatorSpace)
-    {
+    public BEDashedRoundRecBorder setSeparatorSpace(int separatorSpace) {
         this.separatorSpace = separatorSpace;
         return this;
     }
-    
+
 }
